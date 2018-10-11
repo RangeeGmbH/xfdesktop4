@@ -3475,6 +3475,7 @@ void xfdesktop_dnd_menu (XfdesktopIconViewManager *manager,
                          gint16 col,
                          guint time_)
 {
+    return;
     static GdkDragAction    actions[] = { GDK_ACTION_COPY, GDK_ACTION_MOVE, GDK_ACTION_LINK };
     static const gchar      *action_names[] = { N_ ("Copy _Here") , N_ ("_Move Here") , N_ ("_Link Here") };
     static const gchar      *action_icons[] = { "stock_folder-copy", "stock_folder-move", NULL };

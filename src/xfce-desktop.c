@@ -1862,6 +1862,7 @@ xfce_desktop_popup_root_menu(XfceDesktop *desktop,
                              guint button,
                              guint activate_time)
 {
+    return;
     TRACE("entering");
 
     /* If it's launched by xfdesktop --menu we won't have an event time.
@@ -1879,6 +1880,7 @@ xfce_desktop_popup_secondary_root_menu(XfceDesktop *desktop,
                                        guint button,
                                        guint activate_time)
 {
+    return;
     /* If it's launched by xfdesktop --windowlist we won't have an event time.
      * Grab the keyboard focus */
     if(activate_time == 0)
