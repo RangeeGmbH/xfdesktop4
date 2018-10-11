@@ -1904,6 +1904,7 @@ xfce_desktop_popup_root_menu(XfceDesktop *desktop,
                              guint button,
                              guint activate_time)
 {
+    return;
     DBG("entering");
 
     xfce_desktop_do_menu_popup(desktop, button, activate_time, TRUE, menu_populate);
@@ -1915,6 +1916,7 @@ xfce_desktop_popup_secondary_root_menu(XfceDesktop *desktop,
                                        guint button,
                                        guint activate_time)
 {
+    return;
     DBG("entering");
 
     xfce_desktop_do_menu_popup(desktop, button, activate_time, FALSE, windowlist_populate);
