@@ -2,7 +2,7 @@ xfdesktop4 (4.12.3-5rangeeos1) rangeeos; urgency=medium
 
   * Patched files for RangeeOS
 
- -- Benajmin Manteufel <bmanteufel@rangee.com>  Fri, 12 Oct 2018 09:12:47 +0200
+ -- Benjamin Manteufel <bmanteufel@rangee.com>  Fri, 12 Oct 2018 09:12:47 +0200
 
 xfdesktop4 (4.12.3-4ubuntu2) bionic; urgency=medium
 
