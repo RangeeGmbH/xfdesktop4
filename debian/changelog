@@ -1,3 +1,9 @@
+xfdesktop4 (4.14.2-1rangeeos1) rangeeos; urgency=medium
+
+  * Patched files for RangeeOS
+
+ -- René Vögeli <rvoegeli@rangee.com>  Thu, 16 Jul 2020 13:22:22 +0200
+
 xfdesktop4 (4.14.2-1) unstable; urgency=medium
 
   [ Debian Janitor ]
