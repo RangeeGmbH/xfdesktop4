@@ -59,6 +59,7 @@ enum
 
 enum
 {
+  TARGET_TEXT_URI_LIST,
   TARGET_GNOME_COPIED_FILES,
   TARGET_UTF8_STRING,
 };
@@ -130,6 +131,7 @@ typedef struct
 
 static const GtkTargetEntry clipboard_targets[] =
 {
+  { "text/uri-list", 0, TARGET_TEXT_URI_LIST },
   { "x-special/gnome-copied-files", 0, TARGET_GNOME_COPIED_FILES },
   { "UTF8_STRING", 0, TARGET_UTF8_STRING }
 };
@@ -422,7 +424,7 @@ xfdesktop_clipboard_manager_targets_received (GtkClipboard     *clipboard,
   GdkAtom                *targets;
   gint                    n_targets;
   gint                    n;
-  
+
   g_return_if_fail (GTK_IS_CLIPBOARD (clipboard));
   g_return_if_fail (XFDESKTOP_IS_CLIPBOARD_MANAGER (manager));
   g_return_if_fail (manager->clipboard == clipboard);
@@ -442,7 +444,7 @@ xfdesktop_clipboard_manager_targets_received (GtkClipboard     *clipboard,
 
       g_free (targets);
     }
-  
+
   /* notify listeners that we have a new clipboard state */
   g_signal_emit (G_OBJECT (manager), manager_signals[CHANGED], 0);
   g_object_notify (G_OBJECT (manager), "can-paste");
@@ -462,6 +464,7 @@ xfdesktop_clipboard_manager_get_callback (GtkClipboard     *clipboard,
   GList                  *file_list = NULL;
   gchar                  *string_list;
   gchar                  *data;
+  gchar                 **uris;
 
   g_return_if_fail (GTK_IS_CLIPBOARD (clipboard));
   g_return_if_fail (XFDESKTOP_IS_CLIPBOARD_MANAGER (manager));
@@ -475,6 +478,12 @@ xfdesktop_clipboard_manager_get_callback (GtkClipboard     *clipboard,
 
   switch (target_info)
     {
+    case TARGET_TEXT_URI_LIST:
+      uris = xfdesktop_file_utils_file_list_to_uri_array (file_list);
+      gtk_selection_data_set_uris (selection_data, uris);
+      g_strfreev (uris);
+      break;
+
     case TARGET_GNOME_COPIED_FILES:
       data = g_strconcat (manager->files_cutted ? "cut\n" : "copy\n", string_list, NULL);
       gtk_selection_data_set (selection_data,
@@ -553,9 +562,9 @@ xfdesktop_clipboard_manager_transfer_files (XfdesktopClipboardManager *manager,
   /* setup the new file list */
   for (lp = files, manager->files = NULL; lp != NULL; lp = lp->next)
     {
-      file = g_object_ref (G_OBJECT (lp->data));
+      file = XFDESKTOP_FILE_ICON(g_object_ref (G_OBJECT (lp->data)));
       manager->files = g_list_prepend (manager->files, file);
-      g_object_weak_ref(G_OBJECT(file), 
+      g_object_weak_ref(G_OBJECT(file),
                         (GWeakNotify)xfdesktop_clipboard_manager_file_destroyed,
                         manager);
     }
@@ -613,7 +622,7 @@ xfdesktop_clipboard_manager_get_for_display (GdkDisplay *display)
 
   /* allocate a new manager */
   manager = g_object_new (XFDESKTOP_TYPE_CLIPBOARD_MANAGER, NULL);
-  manager->clipboard = g_object_ref (G_OBJECT (clipboard));
+  manager->clipboard = GTK_CLIPBOARD (g_object_ref (G_OBJECT (clipboard)));
   g_object_set_qdata (G_OBJECT (clipboard), xfdesktop_clipboard_manager_quark, manager);
 
   /* listen for the "owner-change" signal on the clipboard */
@@ -721,7 +730,7 @@ xfdesktop_clipboard_manager_paste_files (XfdesktopClipboardManager *manager,
 
   /* prepare the paste request */
   request = g_slice_new0 (XfdesktopClipboardPasteRequest);
-  request->manager = g_object_ref (G_OBJECT (manager));
+  request->manager = XFDESKTOP_CLIPBOARD_MANAGER (g_object_ref (G_OBJECT (manager)));
   request->target_file = g_object_ref (target_file);
   request->widget = widget;
 

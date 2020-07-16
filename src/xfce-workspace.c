@@ -73,7 +73,7 @@
 #include "xfce-workspace.h"
 #include "xfce-desktop-enum-types.h"
 
-struct _XfceWorkspacePriv
+struct _XfceWorkspacePrivate
 {
     GdkScreen *gscreen;
 
@@ -116,7 +116,7 @@ static void xfce_workspace_disconnect_backdrop_settings(XfceWorkspace *workspace
 
 static void xfce_workspace_remove_backdrops(XfceWorkspace *workspace);
 
-G_DEFINE_TYPE(XfceWorkspace, xfce_workspace, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(XfceWorkspace, xfce_workspace, G_TYPE_OBJECT)
 
 
 /**
@@ -144,12 +144,13 @@ xfce_workspace_set_xfconf_property_string(XfceWorkspace *workspace,
 {
     XfconfChannel *channel = workspace->priv->channel;
     char buf[1024];
+    GdkDisplay *display;
     gchar *monitor_name = NULL;
 
     TRACE("entering");
 
-    monitor_name = gdk_screen_get_monitor_plug_name(workspace->priv->gscreen,
-                                                    monitor_num);
+    display = gdk_display_get_default();
+    monitor_name = g_strdup(gdk_monitor_get_model(gdk_display_get_monitor(display, monitor_num)));
 
     /* Get the backdrop's image property */
     if(monitor_name == NULL) {
@@ -176,14 +177,15 @@ xfce_workspace_set_xfconf_property_value(XfceWorkspace *workspace,
     XfconfChannel *channel = workspace->priv->channel;
     char buf[1024];
     gchar *monitor_name = NULL;
+    GdkDisplay *display;
 #ifdef G_ENABLE_DEBUG
     gchar *contents = NULL;
 #endif
 
     TRACE("entering");
 
-    monitor_name = gdk_screen_get_monitor_plug_name(workspace->priv->gscreen,
-                                                    monitor_num);
+    display = gdk_display_get_default();
+    monitor_name = g_strdup(gdk_monitor_get_model(gdk_display_get_monitor(display, monitor_num)));
 
     /* Get the backdrop's image property */
     if(monitor_name == NULL) {
@@ -305,7 +307,7 @@ xfce_workspace_monitors_changed(XfceWorkspace *workspace,
         /* When spanning screens we only need one backdrop */
         n_monitors = 1;
     } else {
-        n_monitors = gdk_screen_get_n_monitors(gscreen);
+        n_monitors = gdk_display_get_n_monitors(gdk_screen_get_display(workspace->priv->gscreen));
     }
 
     /* Remove all backdrops so that the correct monitor is added/removed and
@@ -348,8 +350,6 @@ xfce_workspace_class_init(XfceWorkspaceClass *klass)
 {
     GObjectClass *gobject_class = (GObjectClass *)klass;
 
-    g_type_class_add_private(klass, sizeof(XfceWorkspacePriv));
-
     gobject_class->finalize = xfce_workspace_finalize;
     gobject_class->set_property = xfce_workspace_set_property;
     gobject_class->get_property = xfce_workspace_get_property;
@@ -368,8 +368,7 @@ xfce_workspace_class_init(XfceWorkspaceClass *klass)
 static void
 xfce_workspace_init(XfceWorkspace *workspace)
 {
-    workspace->priv = G_TYPE_INSTANCE_GET_PRIVATE(workspace, XFCE_TYPE_WORKSPACE,
-                                                XfceWorkspacePriv);
+    workspace->priv = xfce_workspace_get_instance_private(workspace);
 }
 
 static void
@@ -455,6 +454,12 @@ xfce_workspace_migrate_backdrop_first_color(XfceWorkspace *workspace,
 
     TRACE("entering");
 
+    /* TODO: migrate from color1 (and older) to the new rgba1 */
+    if(TRUE) {
+        TRACE("warning: we aren't migrating from GdkColor to GdkRGBA yet");
+        return;
+    }
+
     /* Use the old property format */
     g_snprintf(buf, sizeof(buf), "%smonitor%d/",
                workspace->priv->property_prefix, monitor);
@@ -480,6 +485,12 @@ xfce_workspace_migrate_backdrop_second_color(XfceWorkspace *workspace,
     GValue value = { 0, };
 
     TRACE("entering");
+
+    /* TODO: migrate from color1 (and older) to the new rgba1 */
+    if(TRUE) {
+        TRACE("warning: we aren't migrating from GdkColor to GdkRGBA yet");
+        return;
+    }
 
     /* Use the old property format */
     g_snprintf(buf, sizeof(buf), "%smonitor%d/",
@@ -598,11 +609,13 @@ xfce_workspace_connect_backdrop_settings(XfceWorkspace *workspace,
     XfconfChannel *channel = workspace->priv->channel;
     char buf[1024];
     gint pp_len;
+    GdkDisplay *display;
     gchar *monitor_name = NULL;
 
     TRACE("entering");
 
-    monitor_name = gdk_screen_get_monitor_plug_name(workspace->priv->gscreen, monitor);
+    display = gdk_display_get_default();
+    monitor_name = g_strdup(gdk_monitor_get_model(gdk_display_get_monitor(display, monitor)));
 
     if(monitor_name == NULL) {
         g_snprintf(buf, sizeof(buf), "%smonitor%d/workspace%d/",
@@ -624,19 +637,19 @@ xfce_workspace_connect_backdrop_settings(XfceWorkspace *workspace,
                            G_OBJECT(backdrop), "color-style");
 
     buf[pp_len] = 0;
-    g_strlcat(buf, "color1", sizeof(buf));
+    g_strlcat(buf, "rgba1", sizeof(buf));
     if(!xfconf_channel_has_property(channel, buf)) {
         xfce_workspace_migrate_backdrop_first_color(workspace, backdrop, monitor);
     }
-    workspace->priv->first_color_id[monitor] = xfconf_g_property_bind_gdkcolor(channel, buf,
+    workspace->priv->first_color_id[monitor] = xfconf_g_property_bind_gdkrgba(channel, buf,
                                                             G_OBJECT(backdrop), "first-color");
 
     buf[pp_len] = 0;
-    g_strlcat(buf, "color2", sizeof(buf));
+    g_strlcat(buf, "rgba2", sizeof(buf));
     if(!xfconf_channel_has_property(channel, buf)) {
         xfce_workspace_migrate_backdrop_second_color(workspace, backdrop, monitor);
     }
-    workspace->priv->second_color_id[monitor] = xfconf_g_property_bind_gdkcolor(channel, buf,
+    workspace->priv->second_color_id[monitor] = xfconf_g_property_bind_gdkrgba(channel, buf,
                                                             G_OBJECT(backdrop), "second-color");
 
     buf[pp_len] = 0;
@@ -693,13 +706,10 @@ static void
 xfce_workspace_remove_backdrops(XfceWorkspace *workspace)
 {
     guint i;
-    guint n_monitors;
 
     g_return_if_fail(XFCE_IS_WORKSPACE(workspace));
 
-    n_monitors = gdk_screen_get_n_monitors(workspace->priv->gscreen);
-
-    for(i = 0; i < n_monitors && i < workspace->priv->nbackdrops; ++i) {
+    for(i = 0; i < workspace->priv->nbackdrops; ++i) {
         xfce_workspace_disconnect_backdrop_settings(workspace,
                                                     workspace->priv->backdrops[i],
                                                     i);
@@ -740,7 +750,7 @@ xfce_workspace_new(GdkScreen *gscreen,
 
     workspace->priv->gscreen = gscreen;
     workspace->priv->workspace_num = number;
-    workspace->priv->channel = g_object_ref(G_OBJECT(channel));
+    workspace->priv->channel = XFCONF_CHANNEL(g_object_ref(G_OBJECT(channel)));
     workspace->priv->property_prefix = g_strdup(property_prefix);
 
     return workspace;

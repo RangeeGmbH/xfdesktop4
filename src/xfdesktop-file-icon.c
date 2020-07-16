@@ -48,8 +48,8 @@ static void xfdesktop_file_icon_get_property(GObject *object,
                                              GValue *value,
                                              GParamSpec *pspec);
 
-G_DEFINE_ABSTRACT_TYPE(XfdesktopFileIcon, xfdesktop_file_icon,
-                       XFDESKTOP_TYPE_ICON)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE(XfdesktopFileIcon, xfdesktop_file_icon,
+                                    XFDESKTOP_TYPE_ICON)
 
 enum
 {
@@ -63,12 +63,10 @@ xfdesktop_file_icon_class_init(XfdesktopFileIconClass *klass)
     GObjectClass *gobject_class = (GObjectClass *)klass;
     XfdesktopIconClass *icon_class = (XfdesktopIconClass *)klass;
 
-    g_type_class_add_private(klass, sizeof(XfdesktopFileIconPrivate));
-
     gobject_class->finalize = xfdesktop_file_icon_finalize;
     gobject_class->set_property = xfdesktop_file_icon_set_property;
     gobject_class->get_property = xfdesktop_file_icon_get_property;
-    
+
     icon_class->activated = xfdesktop_file_icon_activated;
 
     g_object_class_install_property(gobject_class,
@@ -82,9 +80,7 @@ xfdesktop_file_icon_class_init(XfdesktopFileIconClass *klass)
 static void
 xfdesktop_file_icon_init(XfdesktopFileIcon *icon)
 {
-    icon->priv = G_TYPE_INSTANCE_GET_PRIVATE(icon,
-                                             XFDESKTOP_TYPE_FILE_ICON,
-                                             XfdesktopFileIconPrivate);
+    icon->priv = xfdesktop_file_icon_get_instance_private(icon);
 }
 
 static void
@@ -144,12 +140,12 @@ xfdesktop_file_icon_activated(XfdesktopIcon *icon)
     GFile *file = xfdesktop_file_icon_peek_file(file_icon);
     GtkWidget *icon_view, *toplevel;
     GdkScreen *gscreen;
-    
+
     TRACE("entering");
 
     if(!info)
         return FALSE;
-    
+
     icon_view = xfdesktop_icon_peek_icon_view(icon);
     toplevel = gtk_widget_get_toplevel(icon_view);
     gscreen = gtk_widget_get_screen(icon_view);
@@ -160,7 +156,7 @@ xfdesktop_file_icon_activated(XfdesktopIcon *icon)
         xfdesktop_file_utils_execute(NULL, file, NULL, gscreen, GTK_WINDOW(toplevel));
     else
         xfdesktop_file_utils_launch(file, gscreen, GTK_WINDOW(toplevel));
-    
+
     return TRUE;
 }
 
@@ -169,11 +165,11 @@ GFileInfo *
 xfdesktop_file_icon_peek_file_info(XfdesktopFileIcon *icon)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->peek_file_info)
        return klass->peek_file_info(icon);
     else
@@ -184,11 +180,11 @@ GFileInfo *
 xfdesktop_file_icon_peek_filesystem_info(XfdesktopFileIcon *icon)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->peek_filesystem_info)
        return klass->peek_filesystem_info(icon);
     else
@@ -199,11 +195,11 @@ GFile *
 xfdesktop_file_icon_peek_file(XfdesktopFileIcon *icon)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->peek_file)
        return klass->peek_file(icon);
     else
@@ -215,11 +211,11 @@ xfdesktop_file_icon_update_file_info(XfdesktopFileIcon *icon,
                                      GFileInfo *info)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_if_fail(XFDESKTOP_IS_FILE_ICON(icon));
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->update_file_info)
        klass->update_file_info(icon, info);
 }
@@ -228,11 +224,11 @@ gboolean
 xfdesktop_file_icon_can_rename_file(XfdesktopFileIcon *icon)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), FALSE);
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->can_rename_file)
        return klass->can_rename_file(icon);
     else
@@ -243,11 +239,11 @@ gboolean
 xfdesktop_file_icon_can_delete_file(XfdesktopFileIcon *icon)
 {
     XfdesktopFileIconClass *klass;
-    
+
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), FALSE);
-    
+
     klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
-    
+
     if(klass->can_delete_file)
        return klass->can_delete_file(icon);
     else

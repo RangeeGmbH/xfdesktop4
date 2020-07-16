@@ -42,7 +42,7 @@ typedef void (*XfdesktopIconViewIconFiniFunc)(XfdesktopIconView *icon_view);
 struct _XfdesktopIconView
 {
     GtkWidget parent;
-    
+
     /*< private >*/
     XfdesktopIconViewPrivate *priv;
 };
@@ -50,7 +50,7 @@ struct _XfdesktopIconView
 struct _XfdesktopIconViewClass
 {
     GtkWidgetClass parent;
-    
+
     /*< signals >*/
     void (*icon_selection_changed)(XfdesktopIconView *icon_view);
     void (*icon_activated)(XfdesktopIconView *icon_view);
@@ -61,7 +61,7 @@ struct _XfdesktopIconViewClass
     void (*select_cursor_item)(XfdesktopIconView *icon_view);
     void (*toggle_cursor_item)(XfdesktopIconView *icon_view);
 
-    gboolean (*activate_cursor_item)(XfdesktopIconView *icon_view);
+    gboolean (*activate_selected_items)(XfdesktopIconView *icon_view);
 
     gboolean (*move_cursor)(XfdesktopIconView *icon_view,
                             GtkMovementStep step,
@@ -113,6 +113,9 @@ void xfdesktop_icon_view_unselect_all(XfdesktopIconView *icon_view);
 void xfdesktop_icon_view_set_icon_size(XfdesktopIconView *icon_view,
                                        guint icon_size);
 guint xfdesktop_icon_view_get_icon_size(XfdesktopIconView *icon_view);
+
+void xfdesktop_icon_view_set_primary(XfdesktopIconView *icon_view,
+                                     gboolean primary);
 
 void xfdesktop_icon_view_set_font_size(XfdesktopIconView *icon_view,
                                        gdouble font_size_points);

@@ -22,7 +22,7 @@
 #ifndef __XFDESKTOP_FILE_UTILS_H__
 #define __XFDESKTOP_FILE_UTILS_H__
 
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #ifdef HAVE_THUNARX
 #include <thunarx/thunarx.h>
@@ -33,8 +33,8 @@
 gboolean xfdesktop_file_utils_is_desktop_file(GFileInfo *info);
 gboolean xfdesktop_file_utils_file_is_executable(GFileInfo *info);
 gchar *xfdesktop_file_utils_format_time_for_display(guint64 file_time);
-GKeyFile *xfdesktop_file_utils_query_key_file(GFile *file, 
-                                              GCancellable *cancellable, 
+GKeyFile *xfdesktop_file_utils_query_key_file(GFile *file,
+                                              GCancellable *cancellable,
                                               GError **error);
 gchar *xfdesktop_file_utils_get_display_name(GFile *file,
                                              GFileInfo *info);
@@ -113,9 +113,6 @@ gboolean xfdesktop_file_utils_transfer_files(GdkDragAction action,
 
 
 gboolean xfdesktop_file_utils_dbus_init(void);
-DBusGProxy *xfdesktop_file_utils_peek_trash_proxy(void);
-DBusGProxy *xfdesktop_file_utils_peek_filemanager_proxy(void);
-DBusGProxy *xfdesktop_file_utils_peek_thunar_proxy(void);
 void xfdesktop_file_utils_dbus_cleanup(void);
 
 

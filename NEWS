@@ -1,3 +1,207 @@
+4.14.2
+======
+- Update thumbnail when file changes (Bug #14919)
+- Add DnD support for application/octet-stream (Bug #14919)
+- windowlist: Fix ellipsizing (Bug #15851)
+- Add padding to custom actions without icon (Bug #14628)
+- Fix yet another rubber band DnD issue (Bug #16046)
+- Reintroduce workaround for Bug #11283
+- Show file names in tooltips (Bug #15899)
+- fallback style: Highlight selected icons (Bug #15866)
+- Translation Updates: Albanian, Amharic, Arabic, Armenian (Armenia), Asturian,
+  Basque, Belarusian, Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong),
+  Chinese (Taiwan), Croatian, Czech, Danish, Dutch, English (Australia),
+  English (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic, Indonesian,
+  Interlingue, Italian, Japanese, Kazakh, Korean, Lithuanian, Malay,
+  Norwegian Bokmål, Norwegian Nynorsk, Occitan (post 1500), Persian (Iran),
+  Polish, Portuguese, Portuguese (Brazil), Romanian, Russian, Serbian, Slovak,
+  Slovenian, Spanish, Swedish, Thai, Turkish, Uighur, Ukrainian, Uzbek
+
+4.14.1
+======
+- Ensure the new default wallpaper gets installed
+
+4.14.0
+======
+- Add 4.14 wallpaper and set it as default
+- Do not query file information again (Bug #15460)
+- Replace GtkStock buttons
+- Translation Updates:
+  Galician, Italian, Norwegian Bokmål, Norwegian Nynorsk, Portuguese,
+  Portuguese (Brazil)
+
+4.13.6
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+- Update copyright year
+- Use https where possible
+- Add padding to Window Actions menu entry (Bug #14628)
+- Display correct icon size of minimized apps (Bug #8951)
+- Reorder checkboxes in Settings UI
+- Translation Updates: Finnish, Kazakh, Norwegian Bokmål, Portuguese (Brazil),
+  Ukrainian
+
+4.13.5
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+- Highlight drag target when hovering it (Bug #12695)
+- Fix drag data being received multiple times (Bug #14471)
+- Allow to load non-theme icons (Bug #15294)
+- Add Next Background option (Bug #12261)
+- Do not cycle backdrop twice
+- Ensure that CSD is not applied to desktop window (Bug #15241)
+- Use async dbus proxy initialization (Bug #15418)
+- Open all selected icons on key press (Bug #15420)
+- Improve fallback CSS
+- Fix warning about ignoring return value (Bug #15410)
+- Update README.xfconf (Bug #15457)
+- Translation Updates: Albanian, Armenian (Armenia), Belarusian, Bulgarian,
+  Catalan, Chinese (Taiwan), Croatian, Danish, Dutch, English (Australia),
+  Finnish, French, Galician, German, Hebrew, Hungarian, Interlingue, Italian,
+  Lithuanian, Malay, Persian (Iran), Polish, Portuguese, Russian, Serbian,
+  Spanish, Thai, Turkish
+
+4.13.4
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+- Re-introduce ability to move icons to other displays (Bug #15198)
+- Make 'Move to Trash' icon the same as Thunar (Bug #15234)
+- Match Thunar Drag and Drop behavior (Bug #14919)
+- Stop ongoing drag/selection if middle/right mouse button is
+  pressed (Bug #14180)
+- Fix Desktop icons order resets, by adding link to last used configuration as
+  fallback (Bug #11266)
+- Fix xfdesktop crashes after multiples --reload (Bug #15060)
+- Fix scaling of images with orientation metadata (Bug #14644)
+- Fix stretching/zooming of images with orientation metadata (Bug #15292)
+- Fix has_mime_type implementation (Bug #15295)
+- Use clipboard target "text/uri-list" when copying/cutting (Bug #13379)
+- Set desktop environment for garcon app menu (Bug #14599)
+- Remove faulty line in glade file (Bug #15293)
+- Fix g_type_class_add_private is deprecated
+- Avoid invalid memory access (Bug #15299)
+- Avoid timer leak when docking-undocking monitors (Bug #13887)
+- Use clipboard target "text/uri-list" when copying/cutting (Bug #13379)
+- Set desktop environment for garcon app menu (Bug #14599)
+- Properly center workspace header in windowlist (Bug #15405)
+- Fix memory leak when monitors change (Bug #14844)
+- Replace/remove deprecated functions
+- Translation Updates: Albanian, Arabic, Asturian, Basque, Belarusian,
+  Bulgarian, Chinese (Hong Kong), Chinese (Taiwan), Danish, English (Australia),
+  English (Great Britain), Estonian, Finnish, French, Galician, Greek,
+  Icelandic, Indonesian, Italian, Korean, Norwegian Bokmål, Norwegian Nynorsk,
+  Occitan, Polish, Portuguese (Brazilian), Romanian, Russian, Serbian,
+  Slovenian, Spanish, Uyghur
+
+4.13.3
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+- Minimal GTK version = 3.22
+- Avoid crash: do not clean up data to be used (Bug #14609)
+- Add orientation option to arrange icons (Bug #14979)
+- Fix icon size in Open with submenu (Bug #14774)
+- Add support for RandR's primary monitor (Bug #10688)
+- Sync user's wallpaper selection to AccountsService
+- Restore icons of custom actions
+- Port Settings UI to Glade 3
+- Add padding to some context menu icons (Bug #14628)
+- Translation Updates: Albanian, Amharic, Arabic, Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong), Chinese (Taiwan),
+  Croatian, Czech, Danish, Dutch, English (Australia), English (Canada),
+  English (United Kingdom), Estonian, Finnish, French, Galician, German, Greek,
+  Hebrew, Hungarian, Icelandic, Indonesian, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Nepali, Norwegian Bokmål, Norwegian Nynorsk, Occitan,
+  Persian (Iran), Polish, Portuguese, Portuguese (Brazil), Romanian, Russian,
+  Serbian, Slovak, Slovenian, Spanish, Swedish, Thai, Turkish, Ukrainian,
+  Uyghur, Uzbek
+
+4.13.2
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+- Use the new Thunarx-3 API (Thunar >= 1.7)
+- Use custom CSS for the iconview as a fallback (Bug #13609)
+- Get/set _NET_DESKTOP_MANAGER_S<screen> atom (Bug #13653)
+- Make "another desktop manager is running" messages critical (Bug #13653)
+- Change "Create Launcher..." icon (Bug #14161)
+- Do not popup a single "Applications" menu when right clicking on desktop (Bug #13866)
+- Single-click mode executes desktop items twice (Bug #14021)
+- Fix menu popup issue with desktop icons disabled (Bug #14415)
+- Fix memory leak : Don't try to allocate all the memory (Bug #12805)
+- Fix some autotools warnings and bump dependencies
+- Make a couple of strings translatable (Bug #14374)
+- Translation Updates: Amharic, Arabic, Asturian, Belarusian, Bulgarian, Catalan, Czech,
+  Danish, German, Greek, English (Australia), English (United Kingdom), Spanish, Estonian,
+  Basque, Persian (Iran), Finnish, French, Galician, Hebrew, Croatian, Hungarian, Indonesian,
+  Icelandic, Italian, Japanese, Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Dutch,
+  Norwegian Nynorsk, Occitan (post 1500), Polish, Portuguese, Portuguese (Brazil), Romanian,
+  Russian, Slovak, Slovenian, Serbian, Swedish, Thai, Turkish, Uighur, Ukrainian, Uzbek,
+  Chinese (China), Chinese (Hong Kong), Chinese (Taiwan)
+
+4.13.1
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+* Miscellaneous bug fixes:
+- Fix a memory leak reported in Bug #13555
+- Fix garcon-2 dependancy check (continue to use garcon-1)
+
+* Translation Updates:
+ ca da de es fr he hr id it ja kk ko ms pl
+ pt pt_BR ru th uk zh_CN
+
+4.13.0
+======
+[Please note that this is a development release.]
+
+Development release of xfdesktop targeting for Xfce 4.14.
+Please report all problems at bugzilla.xfce.org.
+
+* Major changes:
+ - Port to  version = 3.22
+ - Fix icon size in Open with submenu (Bug #14774)3.
+  - The iconview has a CSS name of "XfdesktopIconView" and
+    adds the GTK_STYLE_CLASS_VIEW to it's base. It then adds
+    GTK_STYLE_CLASS_LABEL when rendering the icon text with
+    the states: selected, active, or normal. Additionally it
+    uses the GTK_STYLE_CLASS_RUBBERBAND when for the rubberband
+    theming.
+ - Port to GDBus.
+
+* Miscellaneous bug fixes:
+ - Don't redraw the icons on focus change events (Bug #12071)
+ - Don't try to divide by 0 (Bug #12115)
+ - Settings: Fix loading of wallpaper previews (Bug #11892)
+ - Settings: Allow directories to be selected (Bug #12832)
+ - Fix Open dialog's title (Bug #12560)
+ - Prevent a crash in the backdrop loader (Bug #12339)
+ - Use gdk's get static image for animation files
+ - Add translation string for Trash desktop icon
+ - Retain icon relative position when moving a group
+
 4.12.3
 ======
 Stable release of xfdesktop for Xfce 4.12.
@@ -111,7 +315,7 @@ during its development.
    (Bug #11566)
  - Consider shadow extents/offsets when updating icon
    extents
- 
+
 * Translation updates:
   Arabic (ar), Asturian (ast), Bulgarian (bg),
   Czech (cs), Danish (da), German (de),

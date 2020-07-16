@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
-_Name=Desktop 
+_Name=Desktop
 _Comment=Set desktop background and menu and icon behavior
 Exec=xfdesktop-settings
 Icon=preferences-desktop-wallpaper
@@ -12,4 +12,4 @@ StartupNotify=true
 X-XfcePluggable=true
 X-XfceHelpComponent=xfdesktop
 X-XfceHelpPage=start
-X-XfceHelpVersion=4.12
+X-XfceHelpVersion=4.14

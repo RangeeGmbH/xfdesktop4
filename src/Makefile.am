@@ -4,7 +4,13 @@ bin_PROGRAMS = xfdesktop
 
 xfdesktop_built_sources = \
 	xfce-desktop-enum-types.c \
-	xfce-desktop-enum-types.h
+	xfce-desktop-enum-types.h \
+	xfdesktop-file-manager-proxy.c \
+	xfdesktop-file-manager-proxy.h \
+	xfdesktop-thunar-proxy.c \
+	xfdesktop-thunar-proxy.h \
+	xfdesktop-trash-proxy.c \
+	xfdesktop-trash-proxy.h
 
 if HAVE_LIBNOTIFY
 xfdesktop_notify_sources = \
@@ -39,15 +45,7 @@ desktop_icon_sources = \
 	xfdesktop-window-icon.c \
 	xfdesktop-window-icon.h \
 	xfdesktop-window-icon-manager.c \
-	xfdesktop-window-icon-manager.h \
-	gtkcairoblur.c \
-	gtkcairoblurprivate.h
-
-desktop_menu_sources = \
-	xfce-desktop-menu.c \
-	xfce-desktop-menu.h \
-	xfdesktop-app-menu-item.c \
-	xfdesktop-app-menu-item.h
+	xfdesktop-window-icon-manager.h
 
 desktop_file_icon_sources = \
 	xfdesktop-clipboard-manager.c \
@@ -114,13 +112,13 @@ xfdesktop_LDADD += \
 
 if BUILD_DESKTOP_MENU
 
-xfdesktop_SOURCES += $(desktop_menu_sources)
-
 xfdesktop_CFLAGS += \
-	$(GARCON_CFLAGS)
+	$(GARCON_CFLAGS) \
+	$(GARCON_GTK3_CFLAGS)
 
 xfdesktop_LDADD += \
-	$(GARCON_LIBS)
+	$(GARCON_LIBS) \
+	$(GARCON_GTK3_LIBS)
 
 endif
 
@@ -133,13 +131,10 @@ if ENABLE_FILE_ICONS
 xfdesktop_SOURCES += $(desktop_file_icon_sources)
 
 xfdesktop_CFLAGS += \
-	-DDBUS_API_SUBJECT_TO_CHANGE \
-	$(THUNARX_CFLAGS) \
-	$(DBUS_CFLAGS)
+	$(THUNARX_CFLAGS)
 
 xfdesktop_LDADD += \
-	$(THUNARX_LIBS) \
-	$(DBUS_LIBS)
+	$(THUNARX_LIBS)
 
 endif
 endif
@@ -182,42 +177,29 @@ xfce-desktop-enum-types.c: $(enum_headers) Makefile
 	      && rm -f xgen-xdetc
 
 
-if ENABLE_FILE_ICONS
+xfdesktop-file-manager-proxy.c xfdesktop-file-manager-proxy.h : $(srcdir)/xfdesktop-file-manager-dbus.xml Makefile
+	gdbus-codegen \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-file-manager-proxy \
+		$(srcdir)/xfdesktop-file-manager-dbus.xml
 
-xfdesktop_built_sources += \
-	xfdesktop-file-manager-proxy.h \
-	xfdesktop-thunar-proxy.h \
-	xfdesktop-trash-proxy.h
+xfdesktop-thunar-proxy.c xfdesktop-thunar-proxy.h : $(srcdir)/xfdesktop-thunar-dbus.xml Makefile
+	gdbus-codegen \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-thunar-proxy \
+		$(srcdir)/xfdesktop-thunar-dbus.xml
 
-xfdesktop-file-manager-proxy.h: $(srcdir)/xfdesktop-file-manager-dbus.xml Makefile
-	$(AM_V_GEN) ( \
-		dbus-binding-tool --mode=glib-client \
-			$(srcdir)/xfdesktop-file-manager-dbus.xml > xfdesktop-file-manager-proxy.h \
-		&& $(SED) -i -e 's/org_xfce_FileManager/xfdesktop_file_manager_proxy/g' \
-			xfdesktop-file-manager-proxy.h \
-	)
-			
-xfdesktop-thunar-proxy.h: $(srcdir)/xfdesktop-thunar-dbus.xml Makefile
-	$(AM_V_GEN) ( \
-		dbus-binding-tool --mode=glib-client \
-			$(srcdir)/xfdesktop-thunar-dbus.xml > xfdesktop-thunar-proxy.h \
-		&& $(SED) -i -e 's/org_xfce_Thunar/xfdesktop_thunar_proxy/g' \
-			xfdesktop-thunar-proxy.h \
-	)
-
-xfdesktop-trash-proxy.h: $(srcdir)/xfdesktop-trash-dbus.xml Makefile
-	$(AM_V_GEN) ( \
-		dbus-binding-tool --mode=glib-client \
-			$(srcdir)/xfdesktop-trash-dbus.xml > xfdesktop-trash-proxy.h \
-		&& $(SED) -i -e 's/org_xfce_Trash/xfdesktop_trash_proxy/g' \
-			xfdesktop-trash-proxy.h \
-	)
-
-endif
+xfdesktop-trash-proxy.c xfdesktop-trash-proxy.h : $(srcdir)/xfdesktop-trash-dbus.xml Makefile
+	gdbus-codegen \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-trash-proxy \
+		$(srcdir)/xfdesktop-trash-dbus.xml
 
 endif
 
 EXTRA_DIST = \
-	$(desktop_menu_sources) \
 	$(desktop_icon_sources) \
 	$(desktop_file_icon_sources)

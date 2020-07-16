@@ -1,23 +1,110 @@
-xfdesktop4 (4.12.3-4ubuntu2) bionic; urgency=medium
+xfdesktop4 (4.14.2-1) unstable; urgency=medium
 
-  * d/p/0001-Settings-Allow-directories-to-be-selected-Bug-12832.patch:
-    - Refreshed
-  * d/p/xubuntu_set-accountsservice-user-bg.patch:
-    - Updated to support new AccountsService method of setting 
-      background file
+  [ Debian Janitor ]
+  * Bump debhelper from old 11 to 12.
+  * Set upstream metadata fields: Repository.
+  * Fix day-of-week for changelog entry 4.0.0.final-1.
+  * Update standards version to 4.4.1, no changes needed.
 
- -- Sean Davis <smd.seandavis@gmail.com>  Sat, 17 Feb 2018 09:32:46 -0500
+  [ Yves-Alexis Perez ]
+  * d/watch: use uscan special strings where possible
+  * New upstream version 4.14.2
 
-xfdesktop4 (4.12.3-4ubuntu1) devel; urgency=medium
+ -- Yves-Alexis Perez <corsac@debian.org>  Sat, 18 Jan 2020 11:06:22 +0100
 
-  * Merge from Debian unstable. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
+xfdesktop4 (4.14.1-1) unstable; urgency=medium
 
- -- Unit 193 <unit193@ubuntu.com>  Sat, 29 Apr 2017 14:00:17 -0400
+  [ Mateusz Łukasik ]
+  * New upstream version 4.13.5.
+  * d/rules:
+    - Drop dbgsym migration, it is complete.
+    - Drop manual autoreconf.
+  * d/compat, d/control:
+    - Drop d/compat in favor of debhelper-compat, bump to 11.
+
+  [ Yves-Alexis Perez ]
+  * New upstream version 4.14.1
+  * d/control: update standards version to 4.4.0
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Thu, 15 Aug 2019 16:27:13 +0200
+
+xfdesktop4 (4.13.3-1) experimental; urgency=medium
+
+  * New upstream version 4.13.3
+  * d/control: bump gtk3 build-dep to 3.22
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Thu, 21 Mar 2019 08:17:06 +0100
+
+xfdesktop4 (4.13.2-1) experimental; urgency=medium
+
+  [ Yves-Alexis Perez ]
+  * Moved the package to git on salsa.debian.org
+  * Updated the maintainer address to debian-xfce@lists.debian.org
+                                                                closes: #899750
+  * d/gbp.conf added, following DEP-14
+
+  [ Unit 193 ]
+  * New upstream development release.
+  * d/compat, d/control: Bump dh compat to 11.
+  * d/control, d/copyright, d/watch, d/xfdesktop-settings.1:
+    - Use https where possible.
+  * d/control:
+    - Update build-depend: libthunarx-2-dev → libthunarx-3-dev.
+    - Bump libxfce4util-dev requirement to 4.13.0.
+    - Drop versioned build-depend on dpkg-dev.
+    - Drop xfdesktop4's suggests on menu.
+    - Fix Xfce capitalization in description.
+  * d/copyright: Update based on sources.
+  * d/rules: Drop --parallel and --disable-silent-rules, dh defaults now.
+  * Remove trailing whitespace in debian/ files.
+  * Update Standards-Version to 4.1.4.
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Mon, 09 Jul 2018 21:50:31 +0200
+
+xfdesktop4 (4.13.1-1) experimental; urgency=medium
+
+  [ Yves-Alexis Perez ]
+  * New upstream development release.
+  * debian/patches
+    - 0001-Settings-Allow-directories-to-be-selected-Bug-12832 dropped,
+    included upstream.
+  * debian/control:
+    - replace libgtk2.0-dev build-dep by libgtk-3-dev
+    - replace libxfce4ui-1-dev build-dep by libxfce4ui-2-dev
+    - replace libwnck-dev build-dep by libwnck-3-dev
+    - replace libexo-1-dev build-dep by libexo-2-dev
+    - add build-dep on libgarcon-gtk3-1-dev
+    - add build-dep on libcairo2-dev
+    - drop build-dep on libdbus-glib-1-dev
+    - update standards version to 4.0.0
+  * Run wrap-and-sort.
+  * debian/rules:
+    - use dh_missing --fail-missing
+
+  [ Unit 193 ]
+  * d/control: Remove duplicated 'Section' declaration.
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Sat, 01 Jul 2017 10:52:06 +0200
+
+xfdesktop4 (4.12.4-1) unstable; urgency=medium
+
+  [ Mateusz Łukasik ]
+  * New upstream bugfix release:
+    - Drop 0001-Settings-Allow-directories-to-be-selected-Bug-12832.patch
+  * debian/control:
+    - Update standards version to 4.1.1.
+    - Bump dh version to 10.
+  * Drop menu file.
+
+  [ Yves-Alexis Perez ]
+  * debian/rules:
+    - override dh_autoreconf to call xdt-autogen, Since dh compat 10
+    automatically calls autoreconf.
+  * debian/control:
+    - add build-dep on xfce4-dev-tools
+  * Run wrap-and-sort.
+
+ -- Yves-Alexis Perez <corsac@debian.org>  Sun, 15 Oct 2017 15:34:39 +0200
 
 xfdesktop4 (4.12.3-4) unstable; urgency=medium
 
@@ -40,26 +127,6 @@ xfdesktop4 (4.12.3-3) unstable; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Tue, 30 Aug 2016 22:52:48 +0200
 
-xfdesktop4 (4.12.3-2ubuntu2) devel; urgency=medium
-
-  * d/p/01_Allow-directories-to-be-selected.patch: Add upstream patch.
-    - Desktop settings: Allow directories to be selected. This fixes a bug
-      where one could only select images, and not browse directories when
-      selecting the background image.
-
- -- Unit 193 <unit193@ubuntu.com>  Wed, 15 Feb 2017 17:44:58 -0500
-
-xfdesktop4 (4.12.3-2ubuntu1) xenial; urgency=low
-
-  * Merge from Debian unstable. (LP: #1524474) Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Thu, 10 Dec 2015 06:33:09 +1100
-
 xfdesktop4 (4.12.3-2) unstable; urgency=medium
 
   * debian/rules:
@@ -74,40 +141,12 @@ xfdesktop4 (4.12.3-1) unstable; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Sat, 19 Sep 2015 15:45:40 +0200
 
-xfdesktop4 (4.12.3-0ubuntu1) wily; urgency=medium
-
-  * New upstream bugfix release.
-
- -- Unit 193 <unit193@ubuntu.com>  Sat, 05 Sep 2015 07:11:00 -0400
-
-xfdesktop4 (4.12.2-1ubuntu1) wily; urgency=low
-
-  * Merge from Debian unstable.  Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Sean Davis <smd.seandavis@gmail.com>  Mon, 25 May 2015 16:16:56 -0400
-
 xfdesktop4 (4.12.2-1) unstable; urgency=medium
 
   * debian/xfdesktop4.postinst dropped, 4.4.2 migration is long gone.
   * New upstream release.
 
  -- Yves-Alexis Perez <corsac@debian.org>  Sun, 17 May 2015 14:59:25 +0200
-
-xfdesktop4 (4.12.1-2ubuntu1) wily; urgency=low
-
-  * Merge from Debian unstable.  Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Sean Davis <smd.seandavis@gmail.com>  Wed, 13 May 2015 19:47:09 -0400
 
 xfdesktop4 (4.12.1-2) unstable; urgency=medium
 
@@ -121,17 +160,6 @@ xfdesktop4 (4.12.1-1) experimental; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Sun, 22 Mar 2015 15:27:01 +0100
 
-xfdesktop4 (4.12.0-1ubuntu1) vivid; urgency=medium
-
-  * Merge from Debian experimental, remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Unit 193 <unit193@ubuntu.com>  Sun, 15 Mar 2015 22:08:51 -0400
-
 xfdesktop4 (4.12.0-1) experimental; urgency=medium
 
   [ Mateusz Łukasik ]
@@ -139,18 +167,6 @@ xfdesktop4 (4.12.0-1) experimental; urgency=medium
   * Bump standards version to 3.9.6.
 
  -- Yves-Alexis Perez <corsac@debian.org>  Sun, 08 Mar 2015 21:14:01 +0100
-
-xfdesktop4 (4.12.0-0ubuntu2) vivid; urgency=medium
-
-  * No change rebuild for libxfce4util7
-
- -- Sean Davis <smd.seandavis@gmail.com>  Mon, 02 Mar 2015 19:55:34 -0500
-
-xfdesktop4 (4.12.0-0ubuntu1) vivid; urgency=medium
-
-  * New upstream release. LP: #1424887
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Sun, 01 Mar 2015 12:39:58 +1100
 
 xfdesktop4 (4.11.8-1) experimental; urgency=medium
 
@@ -165,89 +181,17 @@ xfdesktop4 (4.11.8-1) experimental; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Mon, 15 Sep 2014 19:04:46 +0200
 
-xfdesktop4 (4.11.8-0ubuntu1) utopic; urgency=medium
-
-  * New upstream development release
-  * Bugs fixed:
-    - Infobar in desktop settings for <2 desktops (LP: #1365382)
-    - Background color resets when starting settings (LP: #1313728)
-    - Wallpaper spans multiple screens on reload (LP #1312577)
-
- -- Sean Davis <smd.seandavis@gmail.com>  Mon, 15 Sep 2014 06:24:44 -0400
-
-xfdesktop4 (4.11.7-0ubuntu1) utopic; urgency=medium
-
-  * New upstream development release
-  * debian/patches/xubuntu_set-accountsservice-user-bg.patch: update
-    patch to only update on first workspace filename change (LP: #1318307)
-
- -- Sean Davis <smd.seandavis@gmail.com>  Mon, 11 Aug 2014 22:25:48 -0400
-
-xfdesktop4 (4.11.6-1ubuntu1) trusty; urgency=medium
-
-  * Merge from Debian experimental. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Wed, 09 Apr 2014 15:55:54 +1000
-
 xfdesktop4 (4.11.6-1) experimental; urgency=medium
 
   * New upstream development release.
 
  -- Yves-Alexis Perez <corsac@debian.org>  Tue, 08 Apr 2014 07:49:31 +0200
 
-xfdesktop4 (4.11.5-1ubuntu1) trusty; urgency=medium
-
-  * Merge from Debian experimental. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Logan Rosen <logan@ubuntu.com>  Mon, 07 Apr 2014 15:39:01 -0400
-
 xfdesktop4 (4.11.5-1) experimental; urgency=medium
 
   * New upstream development release.
 
  -- Yves-Alexis Perez <corsac@debian.org>  Tue, 01 Apr 2014 23:20:47 +0200
-
-xfdesktop4 (4.11.5-0ubuntu1) trusty; urgency=medium
-
-  * New upstream release. LP: #1294209
-  * Drop patches taken from git, fixed upstream.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Wed, 02 Apr 2014 06:58:37 +1100
-
-xfdesktop4 (4.11.4-1ubuntu2) trusty; urgency=medium
-
-  * Add patches from upstream git:
-    - git-desktop-icons-have-background.patch. LP: #1270261
-      Makes desktop icons not have their own background
-    - git-missing-images-in-settings-app.patch. LP: #1282227
-      Fixes some images not appearing in xfdesktop settings 
-    - git-fix-default-icon-size.patch. LP: #1272057
-      Explicitly define the desktop icon size 
-  * Refresh xubuntu_set-accountsservice-user-bg.patch to fix
-    a memory leak. LP: #1295614
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Fri, 28 Mar 2014 07:16:04 +1100
-
-xfdesktop4 (4.11.4-1ubuntu1) trusty; urgency=medium
-
-  * Merge from debian. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Wed, 19 Mar 2014 16:33:54 +1100
 
 xfdesktop4 (4.11.4-1) experimental; urgency=medium
 
@@ -257,17 +201,6 @@ xfdesktop4 (4.11.4-1) experimental; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Tue, 18 Mar 2014 22:01:11 +0100
 
-xfdesktop4 (4.11.3-2ubuntu1) trusty; urgency=medium
-
-  * Merge from debian. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Sat, 01 Mar 2014 16:02:38 +1100
-
 xfdesktop4 (4.11.3-2) experimental; urgency=medium
 
   [ Jackson Doak ]
@@ -275,76 +208,19 @@ xfdesktop4 (4.11.3-2) experimental; urgency=medium
 
  -- Yves-Alexis Perez <corsac@debian.org>  Fri, 28 Feb 2014 21:52:55 +0100
 
-xfdesktop4 (4.11.3-1ubuntu1) trusty; urgency=medium
-
-  * Merge from debian. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Thu, 20 Feb 2014 15:59:49 +1100
-
 xfdesktop4 (4.11.3-1) experimental; urgency=medium
 
   * New upstream development release.
 
  -- Yves-Alexis Perez <corsac@debian.org>  Wed, 19 Feb 2014 20:34:01 +0100
 
-xfdesktop4 (4.11.2-1ubuntu1) trusty; urgency=medium
-
-  * Merge from debian. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-  * Improve existing xubuntu patches
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Wed, 22 Jan 2014 11:02:26 +1100
-
 xfdesktop4 (4.11.2-1) experimental; urgency=low
 
   [ Evgeni Golov ]
   * Correct Vcs-* URLs to point to anonscm.debian.org
 
   [ Jackson Doak ]
-  * debian/control: 
-    - Bump standards-version to 3.9.5
-    - Recommend tumbler for thumbnailing support
-  * debian/rules: Use --disable-silent-rules
-  * debian/copyright: Use debian format 1.0
-  * Update debian/xfdesktop-settings.1
-
-  [ Lionel Le Folgoc ]
-  * New upstream development release.
-
-  [ Yves-Alexis Perez ]
-  * debian/rules:
-    - drop configure option --enable-exo, now useless.
-
- -- Yves-Alexis Perez <corsac@debian.org>  Thu, 16 Jan 2014 22:55:26 +0100
-
-xfdesktop4 (4.11.2-0ubuntu1) trusty; urgency=medium
-
-  * Merged from debian unreleased SVN. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-  * Drop debian/patches/xubuntu_fix-duplicate-volumes.patch, no longer needed
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Tue, 14 Jan 2014 11:47:53 +1100
-
-xfdesktop4 (4.11.2-1) experimental; urgency=low
-
-  [ Evgeni Golov ]
-  * Correct Vcs-* URLs to point to anonscm.debian.org
-
-  [ Jackson Doak ]
-  * debian/control: 
+  * debian/control:
     - Bump standards-version to 3.9.5
     - Recommend tumbler for thumbnailing support
   * debian/rules: Use --disable-silent-rules
@@ -366,7 +242,7 @@ xfdesktop4 (4.10.3-1) UNRELEASED; urgency=low
   * Correct Vcs-* URLs to point to anonscm.debian.org
 
   [ Jackson Doak ]
-  * debian/control: 
+  * debian/control:
     - Bump standards-version to 3.9.4
     - Recommend tumbler for thumbnailing support
 
@@ -375,20 +251,6 @@ xfdesktop4 (4.10.3-1) UNRELEASED; urgency=low
   * Bump standards-version to 3.9.6.
 
  -- Jackson Doak <noskcaj@ubuntu.com>  Mon, 19 Aug 2013 07:29:17 +1000
-
-xfdesktop4 (4.10.2-3ubuntu1) saucy; urgency=low
-
-  * Merged from debian. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_fix-duplicate-volumes.patch: fix duplicate
-      volumes appearing randomly on the desktop.
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-    - debian/control: recommends tumbler for thumbnailing support
-
- -- Jackson Doak <noskcaj@ubuntu.com>  Mon, 12 Aug 2013 08:07:42 +1000
 
 xfdesktop4 (4.10.2-3) unstable; urgency=low
 
@@ -410,25 +272,6 @@ xfdesktop4 (4.10.2-1) experimental; urgency=low
 
  -- Lionel Le Folgoc <mrpouit@gmail.com>  Sun, 07 Apr 2013 15:17:13 +0200
 
-xfdesktop4 (4.10.2-0ubuntu1) raring; urgency=low
-
-  * New upstream bugfix release.
-
- -- Lionel Le Folgoc <mrpouit@ubuntu.com>  Sun, 10 Mar 2013 12:45:38 +0100
-
-xfdesktop4 (4.10.1-1ubuntu1) raring; urgency=low
-
-  * Merge from Debian experimental. Remaining changes:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-    - debian/patches/xubuntu_fix-duplicate-volumes.patch: fix duplicate
-      volumes appearing randomly on the desktop.
-    - debian/patches/xubuntu_set-accountsservice-user-bg.patch: update the
-      user background property of Accountsservice on backdrop change.
-
- -- Logan Rosen <logan@ubuntu.com>  Mon, 04 Mar 2013 15:43:27 -0500
-
 xfdesktop4 (4.10.1-1) experimental; urgency=low
 
   * New upstream release.
@@ -437,43 +280,12 @@ xfdesktop4 (4.10.1-1) experimental; urgency=low
 
  -- Yves-Alexis Perez <corsac@debian.org>  Sun, 03 Mar 2013 15:35:09 +0100
 
-xfdesktop4 (4.10.1-0ubuntu1) raring; urgency=low
-
-  * New upstream release.
-
- -- Lionel Le Folgoc <mrpouit@ubuntu.com>  Sun, 03 Mar 2013 11:58:50 +0100
-
 xfdesktop4 (4.10.0-2) experimental; urgency=low
 
   * debian/control:
     - update exo build-dep to 0.7.                              closes: #673730
 
  -- Yves-Alexis Perez <corsac@debian.org>  Mon, 21 May 2012 07:04:47 +0200
-
-xfdesktop4 (4.10.0-1ubuntu3) raring; urgency=low
-
-  * debian/patches:
-    - xubuntu_set-accountsservice-user-bg.patch: update the user background
-      property of Accountsservice on backdrop change.
-
- -- Lionel Le Folgoc <mrpouit@ubuntu.com>  Sat, 03 Nov 2012 12:57:19 +0100
-
-xfdesktop4 (4.10.0-1ubuntu2) raring; urgency=low
-
-  * debian/patches:
-    - xubuntu_fix-duplicate-volumes.patch: fix duplicate volumes appearing
-      randomly on the desktop. lp: #1072137
-
- -- Lionel Le Folgoc <mrpouit@ubuntu.com>  Mon, 29 Oct 2012 12:00:16 +0100
-
-xfdesktop4 (4.10.0-1ubuntu1) quantal; urgency=low
-
-  * Merge from Debian experimental, remaining Ubuntu change:
-    - debian/patches/xubuntu_improve-nautilus-interactions.patch: added,
-      should prevent nautilus from taking over the desktop if xfdesktop is
-      running (and vice-versa).
-
- -- Lionel Le Folgoc <mrpouit@ubuntu.com>  Fri, 18 May 2012 22:18:02 +0200
 
 xfdesktop4 (4.10.0-1) experimental; urgency=low
 
@@ -514,7 +326,7 @@ xfdesktop4 (4.9.2-1) experimental; urgency=low
     - update build-deps for 4.9.
   * debian/rules:
     - drop chrpath call.
-    - build with --parallel. 
+    - build with --parallel.
 
  -- Lionel Le Folgoc <mrpouit@gmail.com>  Sun, 08 Apr 2012 22:24:45 +0200
 
@@ -565,7 +377,7 @@ xfdesktop4 (4.8.1-2) unstable; urgency=low
   * debian/control:
     - drop gamin recommends.
     - drop Emanuele and Simon from uploaders, thanks to them.
-    - update standards version to 3.9.2. 
+    - update standards version to 3.9.2.
 
   [ Lionel Le Folgoc ]
   * debian/control: explicitly build-depends on libxfce4util-dev (>= 4.8.0).
@@ -595,7 +407,7 @@ xfdesktop4 (4.8.1-1) experimental; urgency=low
     - drop usr/share/desktop-directories from install file.
   * debian/xfdesktop4.install:
     - drop etc/ no menu is installed anymore.
-    - drop usr/ too, no more desktop menu module nor panel plugin. 
+    - drop usr/ too, no more desktop menu module nor panel plugin.
   * debian/copyright updated for new upstream release.
 
   [ Lionel Le Folgoc ]
@@ -663,7 +475,7 @@ xfdesktop4 (4.6.0-1) experimental; urgency=low
     - remove useless conflicts.
     - add build-dep on intltool.
     - add Recommends: on xdg-user-dirs to handle XDG folders.
-  * debian/rules: 
+  * debian/rules:
     - don't install useless lintian override file
     - fail if dh_install misses files.
     - stop messing with config.{guess,sub}.
@@ -675,8 +487,8 @@ xfdesktop4 (4.6.0-1) experimental; urgency=low
     - 01_show-backdrop-by-default dropped due to upstream changes.
     - 03_fix-memory-leak dropped, included upstream.
     - 04_fix-CRITICAL-register-message-startup too.
-    - 05_simplify-free-code as well. 
-    - 07_fix-italian-typos merged too.                          closes: #483709 
+    - 05_simplify-free-code as well.
+    - 07_fix-italian-typos merged too.                          closes: #483709
     - 06_fix-size-warning-amd64 added.
   * debian/xfdesktop-data.install:
     - add /usr/share/desktop-directories files.
@@ -685,7 +497,7 @@ xfdesktop4 (4.6.0-1) experimental; urgency=low
     xfdesktop4 anymore.
   * debian/xfdesktop4.menu-method dropped, xfdesktop now supports XDG menus,
     so we can use debian-menu.menu directly if present.
-  * debian/README.Debian: 
+  * debian/README.Debian:
     - remove deprecated comments about user changes to menu files
     - add a note about new menu systems and conffiles handling.
 
@@ -767,8 +579,8 @@ xfdesktop4 (4.4.2-6) unstable; urgency=low
 
 xfdesktop4 (4.4.2-5) unstable; urgency=low
 
-  * debian/patches: 
-    - 03_fix-memory-leak refreshed, more memory leaks (xfce r26652 and r26635 
+  * debian/patches:
+    - 03_fix-memory-leak refreshed, more memory leaks (xfce r26652 and r26635
       xfce #3812)
     - 04_fix-CRITICAL-register-message-startup added, fixes CRITICAL message
       on startup (xfce r26632, #3863)
@@ -856,20 +668,20 @@ xfdesktop4 (4.4.1-2) unstable; urgency=high
 xfdesktop4 (4.4.1-1) unstable; urgency=low
 
   * New upstream release.
-  * debian/copyright: updated copyright holders. 
+  * debian/copyright: updated copyright holders.
 
  -- Yves-Alexis Perez <corsac@corsac.net>  Sun, 15 Apr 2007 15:28:17 +0100
 
 xfdesktop4 (4.4.0-1) experimental; urgency=low
-  
+
   (Yves-Alexis Perez)
   * New upstream release.
-  * debian/control: 
+  * debian/control:
     - updated build-deps against Xfce 4.4.
     - added recommendation on librsvg2-common so people can use svg backgrounds.
 
   (Emanuele Rocca)
-  * Added versioned build-dependencies on libgtk2.0-dev and libexo-0.3-dev. 
+  * Added versioned build-dependencies on libgtk2.0-dev and libexo-0.3-dev.
 
  -- Yves-Alexis Perez <corsac@corsac.net>  Sun, 04 Feb 2007 14:37:47 +0100
 
@@ -904,7 +716,7 @@ xfdesktop4 (4.3.90.2-1) unstable; urgency=low
   (Yves-Alexis Perez)
   * New upstream release.					Closes: #379650
   * debian/postinst: fixed install on hurd by not using pkill.
-  * debian/control: updated standards version to 3.7.2. 
+  * debian/control: updated standards version to 3.7.2.
   (Simon Huggins)
   * Add rpath fixes.
 
@@ -912,14 +724,14 @@ xfdesktop4 (4.3.90.2-1) unstable; urgency=low
 
 xfdesktop4 (4.3.90.1-3) unstable; urgency=low
 
-  * Use Thunar instead of xffm in menu files.			Closes: #372847 
+  * Use Thunar instead of xffm in menu files.			Closes: #372847
 
  -- Yves-Alexis Perez <corsac@corsac.net>  Mon, 12 Jun 2006 08:17:21 +0200
 
 xfdesktop4 (4.3.90.1-2) unstable; urgency=low
 
   * Use the correct libexec dir.
-  
+
  -- Simon Huggins <huggie@earth.li>  Sat, 13 May 2006 18:47:19 +0100
 
 xfdesktop4 (4.3.90.1-1) unstable; urgency=low
@@ -929,11 +741,11 @@ xfdesktop4 (4.3.90.1-1) unstable; urgency=low
   * Use x-terminal-emulator instead of xfterm4 in menu file
   * Use correct interpreter in xfdesktop4 menu method
   * Correct a syntax error in changelog
-  
+
  -- Yves-Alexis Perez <corsac@corsac.net>  Wed, 03 May 2006 18:35:05 +0100
 
 xfdesktop4 (4.2.3-1) unstable; urgency=low
-  
+
   * Yves-Alexis Perez
    * New Upstream Release
    * Send xfce-mcs-manager a SIGUSR1 so it notices the plugin.
@@ -1083,7 +895,7 @@ xfdesktop4 (4.0.0.final-1) unstable; urgency=low
   * New Co-Maintainer: Norbert Tretkowski.
   * Many cleanups in debian/-subdir
 
- -- Martin Loschwitz <madkiss@debian.org>  Tue, 29 Sep 2003 18:07:00 +0200
+ -- Martin Loschwitz <madkiss@debian.org>  Mon, 29 Sep 2003 18:07:00 +0200
 
 xfdesktop4 (4.0.0+cvs.20030421-1) unstable; urgency=low
 
@@ -1091,7 +903,7 @@ xfdesktop4 (4.0.0+cvs.20030421-1) unstable; urgency=low
   * Added support for the Debian Menu (thanks goes to Ferdinand O. Tempel for
     the initial idea and big thanks goes to Bernhard R. Link for his work on
     this.)
-    
+
  -- Martin Loschwitz <madkiss@debian.org>  Tue, 22 Apr 2003 16:29:00 +0200
 
 xfdesktop4 (4.0.0+cvs.20030301-2) unstable; urgency=low
@@ -1112,7 +924,7 @@ xfdesktop4 (4.0.0+cvs.20030216-1) unstable; urgency=low
 
   * New CVS checkout (Using Xfce CVS, 2003-02-16)
   * Official release (last release was never made public)
- 
+
  -- Martin Loschwitz <madkiss@madkiss.org>  Sun, 16 Feb 2003 13:40:00 +0100
 
 xfdesktop4 (4.0.0+cvs.20030119-1) unstable; urgency=low
@@ -1120,4 +932,3 @@ xfdesktop4 (4.0.0+cvs.20030119-1) unstable; urgency=low
   * Initial Release.
 
  -- Martin Loschwitz <madkiss@madkiss.org>  Sun, 19 Jan 2003 16:29:34 +0100
-

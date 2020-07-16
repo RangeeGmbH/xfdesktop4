@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 
 typedef struct _XfceBackdrop XfceBackdrop;
 typedef struct _XfceBackdropClass XfceBackdropClass;
-typedef struct _XfceBackdropPriv XfceBackdropPriv;
+typedef struct _XfceBackdropPrivate XfceBackdropPrivate;
 
 typedef enum
 {
@@ -63,7 +63,7 @@ typedef enum
 {
     XFCE_BACKDROP_PERIOD_INVALID = -1,
     XFCE_BACKDROP_PERIOD_SECONDS = 0,
-    XFCE_BACKDROP_PERIOD_MINUES,
+    XFCE_BACKDROP_PERIOD_MINUTES,
     XFCE_BACKDROP_PERIOD_HOURS,
     XFCE_BACKDROP_PERIOD_STARTUP,
     XFCE_BACKDROP_PERIOD_HOURLY,
@@ -74,15 +74,15 @@ typedef enum
 struct _XfceBackdrop
 {
     GObject gobject;
-    
+
     /*< private >*/
-    XfceBackdropPriv *priv;
+    XfceBackdropPrivate *priv;
 };
 
 struct _XfceBackdropClass
 {
     GObjectClass parent_class;
-    
+
     /*< signals >*/
     void (*changed)(XfceBackdrop *backdrop);
     void (*cycle)(XfceBackdrop *backdrop);
@@ -107,14 +107,14 @@ XfceBackdropColorStyle xfce_backdrop_get_color_style
                                          (XfceBackdrop *backdrop);
 
 void xfce_backdrop_set_first_color       (XfceBackdrop *backdrop,
-                                          const GdkColor *color);
+                                          const GdkRGBA *color);
 void xfce_backdrop_get_first_color       (XfceBackdrop *backdrop,
-                                          GdkColor *color);
+                                          GdkRGBA *color);
 
 void xfce_backdrop_set_second_color      (XfceBackdrop *backdrop,
-                                          const GdkColor *color);
+                                          const GdkRGBA *color);
 void xfce_backdrop_get_second_color      (XfceBackdrop *backdrop,
-                                          GdkColor *color);
+                                          GdkRGBA *color);
 
 void xfce_backdrop_set_image_style       (XfceBackdrop *backdrop,
                                           XfceBackdropImageStyle style);

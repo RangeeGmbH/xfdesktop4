@@ -37,7 +37,7 @@ G_BEGIN_DECLS
 
 typedef struct _XfceDesktop XfceDesktop;
 typedef struct _XfceDesktopClass XfceDesktopClass;
-typedef struct _XfceDesktopPriv XfceDesktopPriv;
+typedef struct _XfceDesktopPrivate XfceDesktopPrivate;
 
 typedef void (*SessionLogoutFunc)();
 
@@ -51,21 +51,21 @@ typedef enum
 struct _XfceDesktop
 {
     GtkWindow window;
-    
+
     /*< private >*/
-    XfceDesktopPriv *priv;
+    XfceDesktopPrivate *priv;
 };
 
 struct _XfceDesktopClass
 {
     GtkWindowClass parent_class;
-    
+
     /*< signals >*/
-    
+
     /* for the app menu/file context menu */
     void (*populate_root_menu)(XfceDesktop *desktop,
                                GtkMenuShell *menu);
-    
+
     /* for the windowlist menu */
     void (*populate_secondary_root_menu)(XfceDesktop *desktop,
                                          GtkMenuShell *menu);
@@ -79,15 +79,15 @@ GtkWidget *xfce_desktop_new(GdkScreen *gscreen,
 
 gint xfce_desktop_get_n_monitors(XfceDesktop *desktop);
 
-gint xfce_desktop_get_width(XfceDesktop *desktop);
-gint xfce_desktop_get_height(XfceDesktop *desktop);
-
 void xfce_desktop_set_icon_style(XfceDesktop *desktop,
                                  XfceDesktopIconStyle style);
 XfceDesktopIconStyle xfce_desktop_get_icon_style(XfceDesktop *desktop);
 
 void xfce_desktop_set_icon_size(XfceDesktop *desktop,
                                 guint icon_size);
+
+void xfce_desktop_set_primary(XfceDesktop *desktop,
+                              gboolean primary);
 
 void xfce_desktop_set_use_icon_font_size(XfceDesktop *desktop,
                                          gboolean use_system);
@@ -114,6 +114,8 @@ void xfce_desktop_popup_secondary_root_menu(XfceDesktop *desktop,
 void xfce_desktop_refresh(XfceDesktop *desktop, gboolean advance_wallpaper);
 
 void xfce_desktop_arrange_icons(XfceDesktop *desktop);
+
+gboolean xfce_desktop_get_cycle_backdrop(XfceDesktop *desktop);
 
 G_END_DECLS
 
