@@ -418,7 +418,7 @@ setup_special_icon_list(GtkBuilder *gxml,
     } icons[] = {
         { N_("Home"), "user-home", "gnome-fs-desktop",
           DESKTOP_ICONS_SHOW_HOME, TRUE },
-        { N_("Filesystem"), "drive-harddisk", "gnome-dev-harddisk",
+        { N_("File System"), "drive-harddisk", "gnome-dev-harddisk",
           DESKTOP_ICONS_SHOW_FILESYSTEM, TRUE },
         { N_("Trash"), "user-trash", "gnome-fs-trash-empty",
           DESKTOP_ICONS_SHOW_TRASH, TRUE },
@@ -535,11 +535,7 @@ xfdesktop_settings_image_iconview_add(GtkTreeModel *model,
         name_utf8 = g_filename_to_utf8(name, name_length,
                                        NULL, NULL, NULL);
         if(name_utf8) {
-#if GLIB_CHECK_VERSION (2, 30, 0)
             size_string = g_format_size(file_size);
-#else
-            size_string = g_format_size_for_display(file_size);
-#endif
 
             /* Display the file name, file type, and file size in the tooltip. */
             name_markup = g_markup_printf_escaped(_("<b>%s</b>\nType: %s\nSize: %s"),
@@ -1037,8 +1033,9 @@ cb_xfdesktop_chk_cycle_backdrop_toggled(GtkCheckButton *button,
 }
 
 static gboolean
-xfdesktop_spin_icon_size_timer(GtkSpinButton *button)
+xfdesktop_spin_icon_size_timer(gpointer user_data)
 {
+    GtkSpinButton *button = user_data;
     XfconfChannel *channel = g_object_get_data(G_OBJECT(button), "xfconf-chanel");
 
     TRACE("entering");
@@ -1070,9 +1067,7 @@ cb_xfdesktop_spin_icon_size_changed(GtkSpinButton *button,
         timer_id = 0;
     }
 
-    timer_id = g_timeout_add(500,
-                             (GSourceFunc)xfdesktop_spin_icon_size_timer,
-                             button);
+    timer_id = g_timeout_add(500, xfdesktop_spin_icon_size_timer, button);
 
     g_object_set_data(G_OBJECT(button), "timer-id", GUINT_TO_POINTER(timer_id));
 }
@@ -2148,10 +2143,6 @@ main(int argc, char **argv)
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-    g_thread_init(NULL);
-#endif
-
     if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) {
         if(G_LIKELY(error)) {
             g_printerr("%s: %s.\n", G_LOG_DOMAIN, error->message);
@@ -2166,7 +2157,7 @@ main(int argc, char **argv)
 
     if(G_UNLIKELY(opt_version)) {
         g_print("%s %s (Xfce %s)\n\n", G_LOG_DOMAIN, VERSION, xfce_version_string());
-        g_print("%s\n", "Copyright (c) 2004-2019");
+        g_print("%s\n", "Copyright (c) 2004-2020");
         g_print("\t%s\n\n", _("The Xfce development team. All rights reserved."));
         g_print(_("Please report bugs to <%s>."), PACKAGE_BUGREPORT);
         g_print("\n");

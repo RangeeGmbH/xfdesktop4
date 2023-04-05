@@ -144,11 +144,13 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(icons32dir)" "$(DESTDIR)$(icons48dir)" \
-	"$(DESTDIR)$(iconsscdir)" "$(DESTDIR)$(pixmapsdir)" \
-	"$(DESTDIR)$(pixmapsxdir)"
-DATA = $(icons32_DATA) $(icons48_DATA) $(iconssc_DATA) $(pixmaps_DATA) \
-	$(pixmapsx_DATA)
+am__installdirs = "$(DESTDIR)$(icons128dir)" "$(DESTDIR)$(icons16dir)" \
+	"$(DESTDIR)$(icons24dir)" "$(DESTDIR)$(icons32dir)" \
+	"$(DESTDIR)$(icons48dir)" "$(DESTDIR)$(iconsscdir)" \
+	"$(DESTDIR)$(pixmapsdir)" "$(DESTDIR)$(pixmapsxdir)"
+DATA = $(icons128_DATA) $(icons16_DATA) $(icons24_DATA) \
+	$(icons32_DATA) $(icons48_DATA) $(iconssc_DATA) \
+	$(pixmaps_DATA) $(pixmapsx_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -367,6 +369,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -375,20 +378,29 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+icons16dir = $(datadir)/icons/hicolor/16x16/apps
+icons16_DATA = \
+	16x16/org.xfce.xfdesktop.png
+
+icons24dir = $(datadir)/icons/hicolor/24x24/apps
+icons24_DATA = \
+	24x24/org.xfce.xfdesktop.png
+
 icons32dir = $(datadir)/icons/hicolor/32x32/apps
 icons32_DATA = \
-	32x32/xfce4-backdrop.png		\
-	32x32/xfce4-menueditor.png
+	32x32/org.xfce.xfdesktop.png
 
 icons48dir = $(datadir)/icons/hicolor/48x48/apps
 icons48_DATA = \
-	48x48/xfce4-backdrop.png		\
-	48x48/xfce4-menueditor.png
+	48x48/org.xfce.xfdesktop.png
+
+icons128dir = $(datadir)/icons/hicolor/128x128/apps
+icons128_DATA = \
+	128x128/org.xfce.xfdesktop.png
 
 iconsscdir = $(datadir)/icons/hicolor/scalable/apps
 iconssc_DATA = \
-	scalable/xfce4-backdrop.svg		\
-	scalable/xfce4-menueditor.svg
+	scalable/org.xfce.xfdesktop.svg
 
 pixmapsdir = $(datadir)/pixmaps
 pixmaps_DATA = \
@@ -403,8 +415,11 @@ pixmapsx_DATA = \
 	xfdesktop-fallback-icon.png
 
 EXTRA_DIST = \
+	$(icons16_DATA) \
+	$(icons24_DATA) \
 	$(icons32_DATA) \
 	$(icons48_DATA) \
+	$(icons128_DATA) \
 	$(iconssc_DATA) \
 	$(pixmaps_DATA) \
 	$(pixmapsx_DATA)
@@ -422,9 +437,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu pixmaps/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign pixmaps/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu pixmaps/Makefile
+	  $(AUTOMAKE) --foreign pixmaps/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -448,6 +463,69 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-icons128DATA: $(icons128_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(icons128_DATA)'; test -n "$(icons128dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(icons128dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(icons128dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(icons128dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(icons128dir)" || exit $$?; \
+	done
+
+uninstall-icons128DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(icons128_DATA)'; test -n "$(icons128dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(icons128dir)'; $(am__uninstall_files_from_dir)
+install-icons16DATA: $(icons16_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(icons16_DATA)'; test -n "$(icons16dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(icons16dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(icons16dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(icons16dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(icons16dir)" || exit $$?; \
+	done
+
+uninstall-icons16DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(icons16_DATA)'; test -n "$(icons16dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(icons16dir)'; $(am__uninstall_files_from_dir)
+install-icons24DATA: $(icons24_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(icons24_DATA)'; test -n "$(icons24dir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(icons24dir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(icons24dir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(icons24dir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(icons24dir)" || exit $$?; \
+	done
+
+uninstall-icons24DATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(icons24_DATA)'; test -n "$(icons24dir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(icons24dir)'; $(am__uninstall_files_from_dir)
 install-icons32DATA: $(icons32_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(icons32_DATA)'; test -n "$(icons32dir)" || list=; \
@@ -597,7 +675,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(icons32dir)" "$(DESTDIR)$(icons48dir)" "$(DESTDIR)$(iconsscdir)" "$(DESTDIR)$(pixmapsdir)" "$(DESTDIR)$(pixmapsxdir)"; do \
+	for dir in "$(DESTDIR)$(icons128dir)" "$(DESTDIR)$(icons16dir)" "$(DESTDIR)$(icons24dir)" "$(DESTDIR)$(icons32dir)" "$(DESTDIR)$(icons48dir)" "$(DESTDIR)$(iconsscdir)" "$(DESTDIR)$(pixmapsdir)" "$(DESTDIR)$(pixmapsxdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -650,7 +728,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-icons32DATA install-icons48DATA \
+install-data-am: install-icons128DATA install-icons16DATA \
+	install-icons24DATA install-icons32DATA install-icons48DATA \
 	install-iconsscDATA install-pixmapsDATA install-pixmapsxDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
@@ -696,9 +775,10 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-icons32DATA uninstall-icons48DATA \
-	uninstall-iconsscDATA uninstall-pixmapsDATA \
-	uninstall-pixmapsxDATA
+uninstall-am: uninstall-icons128DATA uninstall-icons16DATA \
+	uninstall-icons24DATA uninstall-icons32DATA \
+	uninstall-icons48DATA uninstall-iconsscDATA \
+	uninstall-pixmapsDATA uninstall-pixmapsxDATA
 
 .MAKE: install-am install-data-am install-strip
 
@@ -708,6 +788,7 @@ uninstall-am: uninstall-icons32DATA uninstall-icons48DATA \
 	install install-am install-data install-data-am \
 	install-data-hook install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am \
+	install-icons128DATA install-icons16DATA install-icons24DATA \
 	install-icons32DATA install-icons48DATA install-iconsscDATA \
 	install-info install-info-am install-man install-pdf \
 	install-pdf-am install-pixmapsDATA install-pixmapsxDATA \
@@ -715,9 +796,10 @@ uninstall-am: uninstall-icons32DATA uninstall-icons48DATA \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-icons32DATA uninstall-icons48DATA \
-	uninstall-iconsscDATA uninstall-pixmapsDATA \
-	uninstall-pixmapsxDATA
+	uninstall-am uninstall-icons128DATA uninstall-icons16DATA \
+	uninstall-icons24DATA uninstall-icons32DATA \
+	uninstall-icons48DATA uninstall-iconsscDATA \
+	uninstall-pixmapsDATA uninstall-pixmapsxDATA
 
 .PRECIOUS: Makefile
 

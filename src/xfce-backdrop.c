@@ -66,7 +66,7 @@ static void xfce_backdrop_get_property(GObject *object,
                                        guint property_id,
                                        GValue *value,
                                        GParamSpec *pspec);
-static gboolean xfce_backdrop_timer(XfceBackdrop *backdrop);
+static gboolean xfce_backdrop_timer(gpointer user_data);
 
 static GdkPixbuf *xfce_backdrop_generate_canvas(XfceBackdrop *backdrop);
 
@@ -1253,8 +1253,9 @@ xfce_backdrop_remove_backdrop_timer(XfceBackdrop *backdrop)
 }
 
 static gboolean
-xfce_backdrop_timer(XfceBackdrop *backdrop)
+xfce_backdrop_timer(gpointer user_data)
 {
+    XfceBackdrop *backdrop = user_data;
     GDateTime *local_time = NULL;
     gint hour, minute, second;
     guint cycle_interval = 0;
@@ -1305,7 +1306,7 @@ xfce_backdrop_timer(XfceBackdrop *backdrop)
 
         XF_DEBUG("calling g_timeout_add_seconds, interval is %d", cycle_interval);
         backdrop->priv->cycle_timer_id = g_timeout_add_seconds(cycle_interval,
-                                                               (GSourceFunc)xfce_backdrop_timer,
+                                                               xfce_backdrop_timer,
                                                                backdrop);
 
         if(local_time != NULL)
@@ -1397,7 +1398,7 @@ xfce_backdrop_set_cycle_timer(XfceBackdrop *backdrop, guint cycle_timer)
         if(cycle_interval != 0) {
             XF_DEBUG("calling g_timeout_add_seconds, interval is %d", cycle_interval);
             backdrop->priv->cycle_timer_id = g_timeout_add_seconds(cycle_interval,
-                                                                   (GSourceFunc)xfce_backdrop_timer,
+                                                                   xfce_backdrop_timer,
                                                                    backdrop);
         }
     }
@@ -1564,7 +1565,7 @@ xfce_backdrop_generate_canvas(XfceBackdrop *backdrop)
     if(backdrop->priv->color_style == XFCE_BACKDROP_COLOR_SOLID)
         final_image = create_solid(&backdrop->priv->color1, w, h);
     else if(backdrop->priv->color_style == XFCE_BACKDROP_COLOR_TRANSPARENT) {
-        GdkRGBA c = { 1.0f, 1.0f, 1.0f, 1.0f };
+        GdkRGBA c = { 1.0f, 1.0f, 1.0f, 0.0f };
         final_image = create_solid(&c, w, h);
     } else {
         final_image = create_gradient(&backdrop->priv->color1,
@@ -1599,6 +1600,11 @@ xfce_backdrop_image_data_release(XfceBackdropImageData *image_data)
 
     if(image_data->loader)
         g_object_unref(image_data->loader);
+
+    if(image_data->backdrop) {
+        g_object_unref(image_data->backdrop);
+        image_data->backdrop = NULL;
+    }
 }
 
 /**
@@ -1671,6 +1677,7 @@ xfce_backdrop_generate_async(XfceBackdrop *backdrop)
     backdrop->priv->image_data = image_data;
 
     image_data->backdrop = backdrop;
+    g_object_ref(backdrop);
     image_data->loader = gdk_pixbuf_loader_new();
     image_data->cancellable = g_cancellable_new();
     image_data->image_buffer = g_new0(guchar, XFCE_BACKDROP_BUFFER_SIZE);

@@ -4,7 +4,7 @@ dnl Edit that file instead!
 dnl
 
 dnl
-dnl Copyright (c) 2003-2019
+dnl Copyright (c) 2003-2020
 dnl         The Xfce development team. All rights reserved.
 dnl
 dnl xfdesktop - xfce4's desktop manager
@@ -12,15 +12,15 @@ dnl
 
 dnl version info
 m4_define([xfdesktop_version_major], [4])
-m4_define([xfdesktop_version_minor], [14])
-m4_define([xfdesktop_version_micro], [2])
+m4_define([xfdesktop_version_minor], [16])
+m4_define([xfdesktop_version_micro], [0])
 m4_define([xfdesktop_version_nano], [])
-m4_define([xfdesktop_version_build], [258af55f])
+m4_define([xfdesktop_version_build], [59640b4d])
 m4_define([xfdesktop_version_tag], [])
 m4_define([xfdesktop_version], [xfdesktop_version_major().xfdesktop_version_minor().xfdesktop_version_micro()ifelse(xfdesktop_version_nano(), [], [], [.xfdesktop_version_nano()])ifelse(xfdesktop_version_tag(), [git], [xfdesktop_version_tag()-xfdesktop_version_build()], [xfdesktop_version_tag()])])
 
 dnl minimum required versions
-m4_define([glib_minimum_version], [2.42.0])
+m4_define([glib_minimum_version], [2.50.0])
 m4_define([gtk_minimum_version], [3.22.0])
 m4_define([libxfce4util_minimum_version], [4.13.0])
 m4_define([libxfce4ui_minimum_version], [4.13.0])
@@ -40,11 +40,11 @@ m4_append([xfdesktop_version_short], [xfdesktop_version_minor])
 m4_append([xfdesktop_version_short], ["])
 
 dnl init autoconf
-AC_INIT([xfdesktop], [xfdesktop_version], [https://bugzilla.xfce.org/])
+AC_INIT([xfdesktop], [xfdesktop_version], [https://gitlab.xfce.org/xfce/xfdesktop])
 AC_PREREQ([2.60])
 
 dnl init automake
-AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar no-dist-gzip])
+AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar no-dist-gzip foreign])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
 AM_MAINTAINER_MODE
@@ -72,7 +72,7 @@ AC_CHECK_HEADERS([ctype.h errno.h fcntl.h math.h pwd.h signal.h \
                   sys/types.h time.h \
                   unistd.h])
 dnl Check for i18n support
-XDT_I18N([am ar ast be bg bn ca cs da de el en_AU en_CA en_GB eo es et eu fa_IR fi fr gl he hr hu hy_AM id ie is it ja ka kk ko lt lv ms nb ne nl nn oc pa pl pt_BR pt ro ru si sk sl sq sr sv te th tr ug uk ur_PK ur uz vi zh_CN zh_HK zh_TW ])
+XDT_I18N([bg nb hye ur_PK ca fa_IR ug de ro si gl hr en_GB en_AU hy_AM ast ie nl ur te th ru tr ne sq el et id eo zh_CN oc ar cs uz sr fr pt_BR is be@tarask ko be es ka bn eu zh_HK sk sv da pt uk it vi am he lv pa lt pl zh_TW ms en_CA fi nn kk hu sl ja ])
 
 dnl Check for X11 installed
 XDT_CHECK_LIBX11_REQUIRE

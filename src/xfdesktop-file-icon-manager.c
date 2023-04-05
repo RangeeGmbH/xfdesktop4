@@ -1432,24 +1432,8 @@ xfdesktop_file_icon_manager_populate_context_menu(XfceDesktop *desktop,
             gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
         } else if(info) {
             if(g_file_info_get_file_type(info) == G_FILE_TYPE_DIRECTORY) {
-                img = gtk_image_new_from_icon_name("document-open", GTK_ICON_SIZE_MENU);
-                if(file_icon == fmanager->priv->desktop_icon)
-                    mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Open in New Window"), img);
-                else
-                    mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Open"), img);
-                gtk_widget_show(mi);
-                gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-                g_signal_connect(G_OBJECT(mi), "activate",
-                                 file_icon == fmanager->priv->desktop_icon
-                                 ? G_CALLBACK(xfdesktop_file_icon_menu_open_desktop)
-                                 : G_CALLBACK(xfdesktop_file_icon_menu_open_folder),
-                                 fmanager);
-
-                mi = gtk_separator_menu_item_new();
-                gtk_widget_show(mi);
-                gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-
                 if(file_icon == fmanager->priv->desktop_icon) {
+                    /* Menu on the root desktop window */
                     GIcon *icon;
 
                     /* create launcher item */
@@ -1543,13 +1527,24 @@ xfdesktop_file_icon_manager_populate_context_menu(XfceDesktop *desktop,
                         g_signal_connect(G_OBJECT(mi), "activate",
                                          G_CALLBACK(xfdesktop_file_icon_template_item_activated),
                                          fmanager);
-
-                        mi = gtk_separator_menu_item_new();
-                        gtk_widget_show(mi);
-                        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
                     }
+                } else {
+                    /* Menu on folder icons */
+                    img = gtk_image_new_from_icon_name("document-open", GTK_ICON_SIZE_MENU);
+                    mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Open"), img);
+                    gtk_widget_show(mi);
+                    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+                    g_signal_connect(G_OBJECT(mi), "activate",
+                                     G_CALLBACK(xfdesktop_file_icon_menu_open_folder),
+                                     fmanager);
                 }
+
+                mi = gtk_separator_menu_item_new();
+                gtk_widget_show(mi);
+                gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
             } else {
+                /* Menu on non-folder icons */
+
                 if(xfdesktop_file_utils_file_is_executable(info)) {
                     img = gtk_image_new_from_icon_name("system-run", GTK_ICON_SIZE_MENU);
                     mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Execute"), img);
@@ -1843,6 +1838,14 @@ xfdesktop_file_icon_manager_populate_context_menu(XfceDesktop *desktop,
 
         if(file_icon == fmanager->priv->desktop_icon) {
             /* Menu on the root desktop window */
+            img = gtk_image_new_from_icon_name("document-open", GTK_ICON_SIZE_MENU);
+            mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Open in New Window"), img);
+            gtk_widget_show(mi);
+            gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+            g_signal_connect(G_OBJECT(mi), "activate",
+                             G_CALLBACK(xfdesktop_file_icon_menu_open_desktop),
+                             fmanager);
+
             /* show arrange desktop icons option */
             img = gtk_image_new_from_icon_name("view-sort-ascending", GTK_ICON_SIZE_MENU);
             mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("Arrange Desktop _Icons"), img);
@@ -1870,26 +1873,21 @@ xfdesktop_file_icon_manager_populate_context_menu(XfceDesktop *desktop,
             gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
             g_signal_connect(G_OBJECT(mi), "activate",
                              G_CALLBACK(xfdesktop_settings_launch), fmanager);
-
-            /* Separator */
-            mi = gtk_separator_menu_item_new();
+        } else {
+            /* Properties - applies only to icons on the desktop */
+            img = gtk_image_new_from_icon_name("document-properties", GTK_ICON_SIZE_MENU);
+            mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("P_roperties..."), img);
             gtk_widget_show(mi);
             gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-        }
-
-        /* Properties - applies to desktop window or an icon on the desktop */
-        img = gtk_image_new_from_icon_name("document-properties", GTK_ICON_SIZE_MENU);
-        mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("P_roperties..."), img);
-        gtk_widget_show(mi);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-        if(multi_sel || !info)
-            gtk_widget_set_sensitive(mi, FALSE);
-        else {
-            g_signal_connect(G_OBJECT(mi), "activate",
-                             file_icon == fmanager->priv->desktop_icon
-                             ? G_CALLBACK(xfdesktop_file_icon_manager_desktop_properties)
-                             : G_CALLBACK(xfdesktop_file_icon_menu_properties),
-                             fmanager);
+            if(multi_sel || !info)
+                gtk_widget_set_sensitive(mi, FALSE);
+            else {
+                g_signal_connect(G_OBJECT(mi), "activate",
+                                file_icon == fmanager->priv->desktop_icon
+                                ? G_CALLBACK(xfdesktop_file_icon_manager_desktop_properties)
+                                : G_CALLBACK(xfdesktop_file_icon_menu_properties),
+                                fmanager);
+            }
         }
     }
 
@@ -2637,6 +2635,16 @@ xfdesktop_file_icon_manager_key_press(GtkWidget *widget,
             }
             return TRUE;
 
+        case GDK_KEY_n:
+        case GDK_KEY_N:
+            if(!(evt->state & GDK_CONTROL_MASK && evt->state & GDK_SHIFT_MASK)
+               || (evt->state & (GDK_MOD1_MASK|GDK_MOD4_MASK)))
+            {
+                return FALSE;
+            }
+            xfdesktop_file_icon_menu_create_folder(NULL, fmanager);
+            return TRUE;
+
         case GDK_KEY_r:
         case GDK_KEY_R:
             if(!(evt->state & GDK_CONTROL_MASK)
@@ -2680,13 +2688,11 @@ xfdesktop_file_icon_manager_file_changed(GFileMonitor     *monitor,
     gchar *filename;
 
     switch(event) {
-        case G_FILE_MONITOR_EVENT_MOVED:
+        case G_FILE_MONITOR_EVENT_RENAMED:
+        case G_FILE_MONITOR_EVENT_MOVED_OUT:
             XF_DEBUG("got a moved event");
 
             icon = g_hash_table_lookup(fmanager->priv->icons, file);
-
-            file_info = g_file_query_info(other_file, XFDESKTOP_FILE_INFO_NAMESPACE,
-                                          G_FILE_QUERY_INFO_NONE, NULL, NULL);
 
             if(icon) {
                 /* Get the old position so we can use it for the new icon */
@@ -2699,6 +2705,13 @@ xfdesktop_file_icon_manager_file_changed(GFileMonitor     *monitor,
                 /* Remove the old icon */
                 xfdesktop_file_icon_manager_remove_icon(fmanager, icon);
             }
+
+            /* In case of MOVED_OUT, other_file will be NULL */
+            if(other_file == NULL)
+                return;
+
+            file_info = g_file_query_info(other_file, XFDESKTOP_FILE_INFO_NAMESPACE,
+                                            G_FILE_QUERY_INFO_NONE, NULL, NULL);
 
             /* Check to see if there's already an other_file represented on
              * the desktop and remove it so there aren't duplicated icons
@@ -2761,6 +2774,7 @@ xfdesktop_file_icon_manager_file_changed(GFileMonitor     *monitor,
                 }
             }
             break;
+        case G_FILE_MONITOR_EVENT_MOVED_IN:
         case G_FILE_MONITOR_EVENT_CREATED:
             XF_DEBUG("got created event");
 
@@ -2903,9 +2917,7 @@ xfdesktop_file_icon_manager_metadata_changed(GFileMonitor     *monitor,
 
     /* cool down timer so we don't call this due to multiple file
      * changes at the same time. */
-    timer = g_timeout_add_seconds(5,
-                                  (GSourceFunc)xfdesktop_file_icon_manager_metadata_timer,
-                                  fmanager);
+    timer = g_timeout_add_seconds(5, xfdesktop_file_icon_manager_metadata_timer, fmanager);
 
     fmanager->priv->metadata_timer = timer;
 }
@@ -2948,7 +2960,7 @@ xfdesktop_file_icon_manager_files_ready(GFileEnumerator *enumerator,
         /* initialize the file monitor */
         if(!fmanager->priv->monitor) {
             fmanager->priv->monitor = g_file_monitor(fmanager->priv->folder,
-                                                     G_FILE_MONITOR_SEND_MOVED,
+                                                     G_FILE_MONITOR_WATCH_MOVES,
                                                      NULL, NULL);
             g_signal_connect(fmanager->priv->monitor, "changed",
                              G_CALLBACK(xfdesktop_file_icon_manager_file_changed),
@@ -3653,7 +3665,7 @@ xfdesktop_file_icon_manager_drag_data_received(XfdesktopIconViewManager *manager
 
         g_free(exo_desktop_item_edit);
     } else if(info == TARGET_APPLICATION_OCTET_STREAM) {
-        guchar *filename;
+        gchar *filename;
         gchar *filepath;
         gint length;
         const gchar *content;
@@ -3663,7 +3675,8 @@ xfdesktop_file_icon_manager_drag_data_received(XfdesktopIconViewManager *manager
         if(gdk_property_get(gdk_drag_context_get_source_window(context),
                             gdk_atom_intern("XdndDirectSave0", FALSE),
                             gdk_atom_intern("text/plain", FALSE), 0, 1024,
-                            FALSE, NULL, NULL, &length, &filename) && length > 0) {
+                            FALSE, NULL, NULL, &length,
+                            (guchar **)&filename) && length > 0) {
             filename = g_realloc(filename, length + 1);
             filename[length] = '\0';
         } else {

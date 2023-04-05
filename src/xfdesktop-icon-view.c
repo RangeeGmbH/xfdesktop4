@@ -959,7 +959,6 @@ xfdesktop_icon_view_button_press(GtkWidget *widget,
                 g_signal_emit(G_OBJECT(icon_view), __signals[SIG_ICON_ACTIVATED],
                               0, NULL);
                 xfdesktop_icon_activated(icon);
-
                 xfdesktop_icon_view_unselect_all(icon_view);
             }
         }
@@ -1019,7 +1018,7 @@ xfdesktop_icon_view_button_release(GtkWidget *widget,
             g_signal_emit(G_OBJECT(icon_view), __signals[SIG_ICON_ACTIVATED],
                           0, NULL);
             xfdesktop_icon_activated(icon);
-            xfdesktop_icon_view_unselect_item(icon_view, icon);
+            xfdesktop_icon_view_unselect_all(icon_view);
         }
     }
 
@@ -1072,17 +1071,83 @@ xfdesktop_icon_view_button_release(GtkWidget *widget,
 }
 
 static gboolean
+xfdesktop_icon_view_select_icon_from_list_by_key(XfdesktopIconView *icon_view,
+                                                 GdkEventKey *evt,
+                                                 GList *icon_list)
+{
+    XfdesktopIcon *icon = NULL;
+    const gchar *label;
+    gunichar lchar, kchar;
+    GList *l;
+
+    /* Do it case-insensitive */
+    kchar = g_unichar_tolower(gdk_keyval_to_unicode(evt->keyval));
+    for(l = icon_list; l; l = l->next) {
+        icon = (XfdesktopIcon *)l->data;
+        label = xfdesktop_icon_peek_label(icon);
+        if(label && g_utf8_validate(label, g_utf8_strlen(label, -1), NULL) == TRUE) {
+            lchar = g_unichar_tolower(g_utf8_get_char(label));
+            if(lchar == kchar) {
+                icon_view->priv->cursor = icon;
+                xfdesktop_icon_view_select_item(icon_view, icon);
+                return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}
+
+static void
+xfdesktop_icon_view_type_ahead_find_icon(XfdesktopIconView *icon_view,
+                                         GdkEventKey *evt)
+{
+    GList *icon_list_p_current_cursor;
+    gboolean icon_selected = FALSE;
+
+    xfdesktop_icon_view_unselect_all(icon_view);
+
+    /* If we have a cursor, we try to select the next matching item after the cursor */
+    if(icon_view->priv->cursor != NULL) {
+    icon_list_p_current_cursor = g_list_find(icon_view->priv->icons, icon_view->priv->cursor);
+    icon_selected = xfdesktop_icon_view_select_icon_from_list_by_key(icon_view, evt,
+                                                                     g_list_next(icon_list_p_current_cursor));
+    }
+
+    /* still nothing is selected, select first icon from the beginning of the list */
+    if(icon_selected == FALSE) {
+        xfdesktop_icon_view_select_icon_from_list_by_key(icon_view,
+                                                         evt,
+                                                         icon_view->priv->icons);
+    }
+}
+
+static gboolean
 xfdesktop_icon_view_key_press(GtkWidget *widget,
                               GdkEventKey *evt,
                               gpointer user_data)
 {
     XfdesktopIconView *icon_view = XFDESKTOP_ICON_VIEW(user_data);
+    gboolean ret = FALSE;
 
     DBG("entering");
 
     /* since we're NO_WINDOW, events don't get delivered to us normally,
      * so we have to activate the bindings manually */
-    return gtk_bindings_activate_event(G_OBJECT(icon_view), evt);
+    ret = gtk_bindings_activate_event(G_OBJECT(icon_view), evt);
+    if(ret == FALSE) {
+        GdkModifierType ignore_modifiers = gtk_accelerator_get_default_mod_mask();
+        if((evt->state & ignore_modifiers) == 0) {
+            /* Binding not found and key press is not part of a combo.
+             * Now inspect the pressed character. Let's try to find an
+             * icon starting with this character and make the icon selected. */
+            guint32 unicode = gdk_keyval_to_unicode(evt->keyval);
+            if(unicode && g_unichar_isgraph(unicode) == TRUE)
+                xfdesktop_icon_view_type_ahead_find_icon(icon_view, evt);
+        }
+    }
+
+    return ret;
 }
 
 static gboolean
@@ -2887,6 +2952,10 @@ xfdesktop_icon_view_setup_pango_layout(XfdesktopIconView *icon_view,
                                        XfdesktopIcon *icon,
                                        PangoLayout *playout)
 {
+#if PANGO_VERSION_CHECK (1, 44, 0)
+    PangoAttrList *attr_list;
+    PangoAttribute *attr;
+#endif
     const gchar *label = xfdesktop_icon_peek_label(icon);
 
     g_return_if_fail(XFDESKTOP_IS_ICON_VIEW(icon_view)
@@ -2907,6 +2976,17 @@ xfdesktop_icon_view_setup_pango_layout(XfdesktopIconView *icon_view,
         pango_layout_set_height(playout, TEXT_HEIGHT * PANGO_SCALE);
         pango_layout_set_ellipsize(playout, PANGO_ELLIPSIZE_END);
     }
+
+#if PANGO_VERSION_CHECK (1, 44, 0)
+    /* Do not add hyphens on line breaks */
+    attr_list = pango_attr_list_new ();
+    attr = pango_attr_insert_hyphens_new (FALSE);
+    attr->start_index = 0;
+    attr->end_index = -1;
+    pango_attr_list_insert (attr_list, attr);
+    pango_layout_set_attributes (playout, attr_list);
+    pango_attr_list_unref (attr_list);
+#endif
 }
 
 static gboolean
