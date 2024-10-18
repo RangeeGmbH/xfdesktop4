@@ -2705,6 +2705,8 @@ xfdesktop_file_icon_manager_key_press(GtkWidget *widget,
                                       GdkEventKey *evt,
                                       gpointer user_data)
 {
+    return FALSE;
+
     XfdesktopFileIconManager *fmanager = XFDESKTOP_FILE_ICON_MANAGER(user_data);
     GList *selected;
     gboolean force_delete = FALSE;
