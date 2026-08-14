@@ -1317,6 +1317,10 @@ do_menu_popup(XfdesktopApplication *app,
 
     DBG("entering");
 
+    if (!xfce_desktop_get_enable_context_menu(desktop)) {
+        return;
+    }
+
     if (app->active_root_menu != NULL) {
         gtk_menu_shell_deactivate(GTK_MENU_SHELL(app->active_root_menu));
         app->active_root_menu = NULL;

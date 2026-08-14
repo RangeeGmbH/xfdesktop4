@@ -359,6 +359,7 @@ struct _XfdesktopIconView {
 
     GdkEventButton *drag_timer_event;
     guint drag_timer_id;
+    gboolean context_menu_popup_pending;
 
     XfconfChannel *channel;
 
@@ -1442,6 +1443,30 @@ xfdesktop_icon_view_clear_drag_event(XfdesktopIconView *icon_view) {
     icon_view->definitely_dragging = FALSE;
     xfdesktop_icon_view_unset_highlight(icon_view);
 
+    /* Cancel any still-pending context-menu popup timer/event before a new
+     * button-2/3 press event potentially overwrites drag_timer_id /
+     * drag_timer_event below (this function is called right at the top of
+     * xfdesktop_icon_view_button_press() for those buttons). Without this,
+     * rapid/spammed right-clicks can arrive before the previous ~225ms
+     * timer fired or was removed: the old timer id becomes orphaned (its
+     * GdkEventButton leaked and then overwritten), yet the orphaned GLib
+     * timeout is still alive and will eventually fire on its own, calling
+     * context_menu_drag_timeout() with a stale or already-NULL
+     * drag_timer_event -> NULL pointer dereference / segfault.
+     *
+     * Skip this when called from within context_menu_drag_timeout() itself
+     * (indicated by context_menu_popup_pending): in that case drag_timer_id
+     * refers to the timer currently executing this very callback, and
+     * removing it from inside its own callback is unsafe/unnecessary (it
+     * will be cleaned up by context_menu_drag_timeout()/its destroy-notify
+     * once the callback returns). */
+    if (!icon_view->context_menu_popup_pending && icon_view->drag_timer_id != 0) {
+        g_source_remove(icon_view->drag_timer_id);
+        /* context_menu_drag_timeout_destroy() runs synchronously here and
+         * resets drag_timer_id to 0 and frees/NULLs drag_timer_event if it
+         * hadn't already been consumed. */
+    }
+
     if (icon_view->definitely_rubber_banding) {
         icon_view->definitely_rubber_banding = FALSE;
         gtk_widget_queue_draw_area(GTK_WIDGET(icon_view),
@@ -1457,9 +1482,29 @@ context_menu_drag_timeout(gpointer data) {
     TRACE("entering");
 
     XfdesktopIconView *icon_view = XFDESKTOP_ICON_VIEW(data);
+
+    /* This can be invoked both by the GLib timeout itself and manually (from
+     * xfdesktop_icon_view_button_release()) on early release, before the
+     * timeout has fired.  Popping up the context menu can pump the GTK main
+     * loop (see xfce_gtk_menu_popup_until_mapped()), which means the original
+     * GLib timeout could fire *while we're still inside this function*,
+     * re-entering it with the same icon_view->drag_timer_event pointer that
+     * we're about to take ownership of / free below.  Guard against that
+     * re-entrancy to avoid a use-after-free / double free (and the resulting
+     * segfault when someone spams right-clicks on a desktop icon). */
+    if (icon_view->context_menu_popup_pending) {
+        return FALSE;
+    }
+    icon_view->context_menu_popup_pending = TRUE;
+
     xfdesktop_icon_view_clear_drag_event(icon_view);
 
+    /* Take ownership of the pending event now, so a re-entrant firing of the
+     * timeout (guarded above) or the timeout's GDestroyNotify won't try to
+     * free it out from under us. */
     GdkEventButton *evt = icon_view->drag_timer_event;
+    icon_view->drag_timer_event = NULL;
+
     gint orig_x = evt->x;
     gint orig_y = evt->y;
 
@@ -1482,14 +1527,23 @@ context_menu_drag_timeout(gpointer data) {
         parent = gtk_widget_get_parent(parent);
     }
 
+    gdk_event_free((GdkEvent *)evt);
+    icon_view->context_menu_popup_pending = FALSE;
+
     return FALSE;
 }
 
 static void
 context_menu_drag_timeout_destroy(XfdesktopIconView *icon_view) {
     icon_view->drag_timer_id = 0;
-    gdk_event_free((GdkEvent *)icon_view->drag_timer_event);
-    icon_view->drag_timer_event = NULL;
+
+    /* If context_menu_drag_timeout() already ran (see above), it will have
+     * taken ownership of the event and reset this to NULL; only free it here
+     * if the timer was cancelled/destroyed without ever actually running. */
+    if (icon_view->drag_timer_event != NULL) {
+        gdk_event_free((GdkEvent *)icon_view->drag_timer_event);
+        icon_view->drag_timer_event = NULL;
+    }
 }
 
 static void
@@ -1732,7 +1786,13 @@ xfdesktop_icon_view_button_release(GtkWidget *widget, GdkEventButton *evt) {
     {
         if (evt->button == 3 && icon_view->drag_timer_id != 0) {
             context_menu_drag_timeout(icon_view);
-            g_source_remove(icon_view->drag_timer_id);
+            /* context_menu_drag_timeout() can pump the main loop while
+             * popping up the context menu, which may cause the pending
+             * timer to fire (and be auto-removed/destroyed) re-entrantly
+             * before we get back here; only remove it if it's still around. */
+            if (icon_view->drag_timer_id != 0) {
+                g_source_remove(icon_view->drag_timer_id);
+            }
         }
     }
 

@@ -52,6 +52,8 @@ void xfce_desktop_set_is_active(XfceDesktop *desktop,
                                 gboolean active);
 gboolean xfce_desktop_is_active(XfceDesktop *desktop);
 
+gboolean xfce_desktop_get_enable_context_menu(XfceDesktop *desktop);
+
 void xfce_desktop_refresh(XfceDesktop *desktop);
 
 void xfce_desktop_cycle_backdrop(XfceDesktop *desktop);

@@ -25,6 +25,9 @@ the same monitor is plugged in again those settings apply to it.
     </monitor0>
   </screen0>
 </backdrop>
+<general>
+  <enable-context-menu bool>
+</general>
 <windowlist-menu>
     <show bool>
     <show-icons bool>
