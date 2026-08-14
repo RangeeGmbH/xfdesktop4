@@ -6,28 +6,25 @@ SUBDIRS = \
 	backgrounds \
 	common \
 	doc \
-	po \
 	settings \
 	src \
-	pixmaps
+	po \
+	pixmaps \
+	tests
 
 manpagedir = $(mandir)/man1
 manpage_DATA = xfdesktop.1
 
 EXTRA_DIST = \
 	README.md \
-	TODO \
-	intltool-extract.in \
-	intltool-merge.in \
-	intltool-update.in \
+	meson_options.txt \
+	meson.build \
+	po/meson.build \
+	xfce-revision.h.in \
 	$(conf_DATA) \
 	$(manpage_DATA)
 
-DISTCLEANFILES = \
-	intltool-extract \
-	intltool-merge \
-	intltool-update \
-	po/.intltool-merge-cache.lock
+DISTCLEANFILES =
 
 distuninstallcheck_listfiles = \
 	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
@@ -57,12 +54,16 @@ compile_flags.txt: $(shell find . -name Makefile)
 		-DPACKAGE=\"xfdesktop\" \
 		-DGETTEXT_PACKAGE=\"xfdesktop\" \
 		-DVERSION=\"4.0.0\" \
+		-DVERSION_SHORT=\"4.0\" \
+		-DVERSION_FULL=VERSION \
 		-DENABLE_DESKTOP_ICONS=1 \
+		-DENABLE_X11=1 \
+		-DENABLE_WAYLAND=1 \
 		-DENABLE_FILE_ICONS=1 \
 		-DLOCALEDIR=\"$(localedir)\" \
 		-DEXO_API_SUBJECT_TO_CHANGE \
-		-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
 		-DDEFAULT_BACKDROP=\"\" \
+		-DBACKGROUNDS_DIR=\"\" \
 		-I$(top_srcdir) \
 		-I$(top_srcdir)/common	\
 		-I$(top_builddir)/common \
@@ -75,8 +76,11 @@ compile_flags.txt: $(shell find . -name Makefile)
 		$(LIBX11_CFLAGS) \
 		$(LIBXFCE4UTIL_CFLAGS) \
 		$(LIBXFCE4UI_CFLAGS) \
+		$(LIBXFCE4KBD_PRIVATE_CFLAGS) \
 		$(LIBXFCE4SMCLIENT_PRIVATE_CFLAGS) \
-		$(LIBWNCK_CFLAGS) \
+		$(LIBXFCE4WINDOWING_CFLAGS) \
+		$(LIBXFCE4WINDOWINGUI_CFLAGS) \
+		$(GTK_LAYER_SHELL_CFLAGS) \
 		$(XFCONF_CFLAGS) \
 		$(LIBEXO_CFLAGS) \
 		$(CAIRO_CFLAGS) \

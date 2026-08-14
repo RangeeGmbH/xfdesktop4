@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2006 Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright (c) 2006 Brian Tarricone, <brian@tarricone.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,44 +21,20 @@
 #ifndef __XFDESKTOP_REGULAR_FILE_ICON_H__
 #define __XFDESKTOP_REGULAR_FILE_ICON_H__
 
-#include <glib-object.h>
+#include <gdk/gdk.h>
+#include <xfconf/xfconf.h>
 
 #include "xfdesktop-file-icon.h"
-#include "xfdesktop-file-icon-manager.h"
 
 G_BEGIN_DECLS
 
-#define XFDESKTOP_TYPE_REGULAR_FILE_ICON     (xfdesktop_regular_file_icon_get_type())
-#define XFDESKTOP_REGULAR_FILE_ICON(obj)     (G_TYPE_CHECK_INSTANCE_CAST((obj), XFDESKTOP_TYPE_REGULAR_FILE_ICON, XfdesktopRegularFileIcon))
-#define XFDESKTOP_IS_REGULAR_FILE_ICON(obj)  (G_TYPE_CHECK_INSTANCE_TYPE((obj), XFDESKTOP_TYPE_REGULAR_FILE_ICON))
+G_DECLARE_FINAL_TYPE(XfdesktopRegularFileIcon, xfdesktop_regular_file_icon, XFDESKTOP, REGULAR_FILE_ICON, XfdesktopFileIcon)
+#define XFDESKTOP_TYPE_REGULAR_FILE_ICON (xfdesktop_regular_file_icon_get_type())
 
-typedef struct _XfdesktopRegularFileIcon         XfdesktopRegularFileIcon;
-typedef struct _XfdesktopRegularFileIconClass    XfdesktopRegularFileIconClass;
-typedef struct _XfdesktopRegularFileIconPrivate  XfdesktopRegularFileIconPrivate;
-
-struct _XfdesktopRegularFileIcon
-{
-    XfdesktopFileIcon parent;
-
-    /*< private >*/
-    XfdesktopRegularFileIconPrivate *priv;
-};
-
-struct _XfdesktopRegularFileIconClass
-{
-    XfdesktopFileIconClass parent;
-};
-
-GType xfdesktop_regular_file_icon_get_type(void) G_GNUC_CONST;
-
-XfdesktopRegularFileIcon *xfdesktop_regular_file_icon_new(GFile *file,
-                                                          GFileInfo *file_info,
-                                                          GdkScreen *screen,
-                                                          XfdesktopFileIconManager *fmanager);
-
-void xfdesktop_regular_file_icon_set_pixbuf_opacity(XfdesktopRegularFileIcon *icon,
-                                                    guint opacity);
-
+XfdesktopRegularFileIcon *xfdesktop_regular_file_icon_new(XfconfChannel *channel,
+                                                          GdkScreen *gdkscreen,
+                                                          GFile *file,
+                                                          GFileInfo *file_info);
 
 G_END_DECLS
 

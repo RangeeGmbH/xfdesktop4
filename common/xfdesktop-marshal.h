@@ -6,14 +6,14 @@
 
 G_BEGIN_DECLS
 
-/* BOOLEAN:VOID (xfdesktop-marshal.list:1) */
+/* BOOLEAN:BOXED,INT,INT,BOOLEAN,OBJECT (xfdesktop-marshal.list:1) */
 G_GNUC_INTERNAL
-void xfdesktop_marshal_BOOLEAN__VOID (GClosure     *closure,
-                                      GValue       *return_value,
-                                      guint         n_param_values,
-                                      const GValue *param_values,
-                                      gpointer      invocation_hint,
-                                      gpointer      marshal_data);
+void xfdesktop_marshal_BOOLEAN__BOXED_INT_INT_BOOLEAN_OBJECT (GClosure     *closure,
+                                                              GValue       *return_value,
+                                                              guint         n_param_values,
+                                                              const GValue *param_values,
+                                                              gpointer      invocation_hint,
+                                                              gpointer      marshal_data);
 
 /* BOOLEAN:ENUM,INT (xfdesktop-marshal.list:2) */
 G_GNUC_INTERNAL
@@ -24,16 +24,115 @@ void xfdesktop_marshal_BOOLEAN__ENUM_INT (GClosure     *closure,
                                           gpointer      invocation_hint,
                                           gpointer      marshal_data);
 
-/* VOID:UINT,BOXED (xfdesktop-marshal.list:3) */
+/* BOOLEAN:OBJECT,BOXED,INT,INT,UINT (xfdesktop-marshal.list:3) */
 G_GNUC_INTERNAL
-void xfdesktop_marshal_VOID__UINT_BOXED (GClosure     *closure,
-                                         GValue       *return_value,
-                                         guint         n_param_values,
-                                         const GValue *param_values,
-                                         gpointer      invocation_hint,
-                                         gpointer      marshal_data);
+void xfdesktop_marshal_BOOLEAN__OBJECT_BOXED_INT_INT_UINT (GClosure     *closure,
+                                                           GValue       *return_value,
+                                                           guint         n_param_values,
+                                                           const GValue *param_values,
+                                                           gpointer      invocation_hint,
+                                                           gpointer      marshal_data);
 
-/* VOID:STRING,STRING (xfdesktop-marshal.list:4) */
+/* BOOLEAN:OBJECT,BOXED,POINTER,FLAGS (xfdesktop-marshal.list:4) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_BOOLEAN__OBJECT_BOXED_POINTER_FLAGS (GClosure     *closure,
+                                                            GValue       *return_value,
+                                                            guint         n_param_values,
+                                                            const GValue *param_values,
+                                                            gpointer      invocation_hint,
+                                                            gpointer      marshal_data);
+
+/* OBJECT:OBJECT,POINTER,POINTER (xfdesktop-marshal.list:5) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_OBJECT__OBJECT_POINTER_POINTER (GClosure     *closure,
+                                                       GValue       *return_value,
+                                                       guint         n_param_values,
+                                                       const GValue *param_values,
+                                                       gpointer      invocation_hint,
+                                                       gpointer      marshal_data);
+
+/* BOOLEAN:VOID (xfdesktop-marshal.list:6) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_BOOLEAN__VOID (GClosure     *closure,
+                                      GValue       *return_value,
+                                      guint         n_param_values,
+                                      const GValue *param_values,
+                                      gpointer      invocation_hint,
+                                      gpointer      marshal_data);
+
+/* FLAGS:BOXED (xfdesktop-marshal.list:7) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_FLAGS__BOXED (GClosure     *closure,
+                                     GValue       *return_value,
+                                     guint         n_param_values,
+                                     const GValue *param_values,
+                                     gpointer      invocation_hint,
+                                     gpointer      marshal_data);
+
+/* FLAGS:BOXED,POINTER (xfdesktop-marshal.list:8) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_FLAGS__BOXED_POINTER (GClosure     *closure,
+                                             GValue       *return_value,
+                                             guint         n_param_values,
+                                             const GValue *param_values,
+                                             gpointer      invocation_hint,
+                                             gpointer      marshal_data);
+
+/* FLAGS:OBJECT,BOXED,FLAGS,BOXED,UINT (xfdesktop-marshal.list:9) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_FLAGS__OBJECT_BOXED_FLAGS_BOXED_UINT (GClosure     *closure,
+                                                             GValue       *return_value,
+                                                             guint         n_param_values,
+                                                             const GValue *param_values,
+                                                             gpointer      invocation_hint,
+                                                             gpointer      marshal_data);
+
+/* FLAGS:OBJECT,BOXED,INT,INT,UINT (xfdesktop-marshal.list:10) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_FLAGS__OBJECT_BOXED_INT_INT_UINT (GClosure     *closure,
+                                                         GValue       *return_value,
+                                                         guint         n_param_values,
+                                                         const GValue *param_values,
+                                                         gpointer      invocation_hint,
+                                                         gpointer      marshal_data);
+
+/* VOID:OBJECT,BOXED,INT,INT (xfdesktop-marshal.list:11) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_VOID__OBJECT_BOXED_INT_INT (GClosure     *closure,
+                                                   GValue       *return_value,
+                                                   guint         n_param_values,
+                                                   const GValue *param_values,
+                                                   gpointer      invocation_hint,
+                                                   gpointer      marshal_data);
+
+/* VOID:INT,INT (xfdesktop-marshal.list:12) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_VOID__INT_INT (GClosure     *closure,
+                                      GValue       *return_value,
+                                      guint         n_param_values,
+                                      const GValue *param_values,
+                                      gpointer      invocation_hint,
+                                      gpointer      marshal_data);
+
+/* VOID:OBJECT,BOXED,INT,INT,BOXED,UINT,UINT (xfdesktop-marshal.list:13) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_VOID__OBJECT_BOXED_INT_INT_BOXED_UINT_UINT (GClosure     *closure,
+                                                                   GValue       *return_value,
+                                                                   guint         n_param_values,
+                                                                   const GValue *param_values,
+                                                                   gpointer      invocation_hint,
+                                                                   gpointer      marshal_data);
+
+/* VOID:OBJECT,OBJECT (xfdesktop-marshal.list:14) */
+G_GNUC_INTERNAL
+void xfdesktop_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
+                                            GValue       *return_value,
+                                            guint         n_param_values,
+                                            const GValue *param_values,
+                                            gpointer      invocation_hint,
+                                            gpointer      marshal_data);
+
+/* VOID:STRING,STRING (xfdesktop-marshal.list:15) */
 G_GNUC_INTERNAL
 void xfdesktop_marshal_VOID__STRING_STRING (GClosure     *closure,
                                             GValue       *return_value,

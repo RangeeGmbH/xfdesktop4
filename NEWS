@@ -1,5 +1,472 @@
-4.18.1 (2023-01-21)
+4.20.1 (2025-02-17)
 ======
+- Fix another gcc-analyzer warning
+- Improve performance of gradient rendering
+- Add simple benchmark for rendering gradients
+- Refactor tests a bit
+- Fix or suppress gcc-analyzer warnings
+- meson-build: Use SPDX license expression
+- Don't send URIs to the clipboard when the paster requests UTF8_STRING
+- Ensure single-workspace-number is never set to a negative value
+- Remove debugging log statement
+- Show loop device volumes if "Other Devices" is selected
+- For the "unknown volumes" type, don't require it to be removable
+- Initialize icon label font point size settings to defaults
+- Fix use-after-free when attempting to load invalid background
+- settings: keep a reference to the backdrop preview model
+- Work around GTK issue with setting the file chooser button folder
+- Manually call gtk_init() in main()
+- Don't add the XfceSMClient command-line options if no X11 support
+- meson-build: Update debug/optimization flag management
+- Fix typo in issue template
+- Fix monitor chooser UI resource path
+- Translation Updates:
+  Albanian, Basque, Catalan, Czech, Danish, English (United Kingdom),
+  French, Galician, German, Greek, Italian, Norwegian Bokmål, Occitan
+  (post 1500), Persian (Iran), Portuguese, Portuguese (Brazil),
+  Romanian, Serbian, Slovak, Spanish, Swedish, Ukrainian
+
+4.20.0 (2024-12-15)
+======
+- Fix incorrect format passed to gtk_selection_data_set()
+- Update POTFILES.in
+- Updated backgrounds/README.md for Xfce-4.20
+- Add license and author metadata to new Xfce-4.20 wallpapers
+- New wallpaper for Xfce-4.20
+- New wallpaper for Xfce-4.20
+- New wallpaper for Xfce-4.20
+- New default wallpaper for Xfce-4.20
+- xfdesktop-file-utils: Unset custom window cursor
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Basque,
+  Belarusian, Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong),
+  Chinese (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian,
+  English (Australia), English (Canada), English (United Kingdom),
+  Estonian, Finnish, French, Galician, Georgian, German, Greek, Hebrew,
+  Hungarian, Icelandic, Indonesian, Interlingue, Italian, Japanese,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Persian (Iran), Polish, Portuguese,
+  Portuguese (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian,
+  Spanish, Swedish, Thai, Ukrainian, Uyghur
+
+4.19.7 (2024-11-30)
+======
+- Replace color1 and color2 with rgba1 and rgba2 in README.xfconf
+- Add more instructions to GitLab issue template
+- Add existing workspaces after monitor gets added
+- I18n: Update po/LINGUAS list
+- I18n: Update po/LINGUAS list
+- Stop timer when finalizing backdrop cycler
+- Fix GFileInputStream leaks in file_input_stream_ready_cb
+- Assign correct initial image to backdrop cycler
+- Fix build with just file icons disable or just desktop icons disabled
+- Translation Updates:
+  Czech, Galician, Kazakh, Nepali, Norwegian Bokmål, Occitan (post
+  1500), Polish, Portuguese (Brazil), Russian, Spanish
+
+4.19.6 (2024-11-01)
+======
+- Add a few environment settings to gitlab issue template
+- Fix leak when dragging icons
+- bump copyright
+- Bump libxfce4windowing requirement to 4.19.8
+- Ignore the result of g_volume_can_mount()
+- Add GMount instances to the hash table always
+- Bump xfconf requirement and stop using 
+  xfconf_g_property_bind_gdkrgba()
+- Fix GArray leak in xfdesktop_keyboard_shortcut_settings_init
+- Add issue template
+- Fix string leak in cb_image_selection_changed
+- Fix string leak in update_icon_view_model
+- Fix GFile leak in backdrop cycler
+- Reset backdrop cycler timer if user manually changes the image
+- Add all background dirs to the settings chooser button shortcuts
+- Fix GFileInfo leak in xfdesktop_special_file_icon_new
+- Clean up PARAM_FLAGS in icon view
+- Clean up cell renderer init & management in the icon view
+- Fix leaks in xfdesktop_icon_view_constructed
+- Remove unused version.sh script
+- Translation Updates:
+  Albanian, Bulgarian, Chinese (China), Dutch, English (United
+  Kingdom), Estonian, French, Galician, German, Italian, Japanese,
+  Lithuanian, Occitan (post 1500), Polish, Portuguese, Serbian,
+  Swedish, Ukrainian
+
+4.19.5 (2024-10-16)
+======
+- Rework how icon pointer "hit detection" works
+- Fix g-critical warning when starting a drag *just* outside the icon
+  area
+- Tell GtkTooltip the region the tooltip is for
+- Add option to sort folders before files (Issue #332)
+- Fix leaks in xfdesktop_file_utils_next_new_file_name
+- Fix string leak in xfdesktop_icon_view_show_tooltip
+- Fix GIcon leak in xfdesktop_icon_view_manager_sort_icons
+- Reword a couple settings option names, fix some accelerators
+- Only clear drag/context menu timeout if a drag actually starts
+- settings: define infobar_label in glade file, not in code
+- settings: avoid flashing an empty info bar on startup
+- settings: enumerate image folder fully asynchronously
+- settings: change icon view selection if background changes externally
+- Merge branch xfdesktop:master into master
+- Refactor settings dialog code
+- Fix memory corruption in icon view's tooltip size changed handler
+- Redesign the 'Desktop Icons' tab in the settings dialog
+- Decouple refreshing the desktop with cycling the backdrop
+- Sort all desktops vs. just one based on where the event came from
+- Improve how the "active" desktop is tracked
+- Add a root context menu for the window icon manager
+- Fix invalid read when changing foreground color
+- Fix string leak in save_icons
+- Make icon sorting confirmation dialog optional (Issue #266)
+- Added missing Keywords entry to .desktop file
+- Don't remove icon position from current config
+- Use g_ascii_dtostr() instead of custom decimal-printing hack
+- Update icon view's item_under_pointer on button presses as well
+- Simplify XfdesktopIconView->item_under_pointer tracking code
+- Fix icon DnD between two monitors with the same priority
+- Modernize GObject usage in XfdesktopThumbnailer
+- Modernize GObject usage in XfceDesktop
+- Remove spurious newly added #include
+- Modernize GObject in XfdesktopIconView
+- Avoid printing GTK CSS with commas as the decimal separator
+- Add ability to set custom icon label text and background colors
+- Fix xfdesktop_icon_view_invalidate_item_text()
+- Fix memleak when XfdesktopCellRendererIconLabel freed
+- Better way to fix monitor removal
+- Don't reschedule icon positions save
+- Reduce icon positions save delay to 1 second
+- Fix desktops not being removed when a monitor is disconnected
+- Fix icon view ascending vs. descending sort order
+- I give up.  Icon label backgrounds are transparent again.
+- Add windowlist options for showing all workspaces & urgent windows
+- Use #defines for windowlist prop names everywhere
+- Use windowlist menu widget from libxfce4windowingui
+- Add XF_DEBUG when icon added to file model
+- Actually rearrange the settings panels
+- Use new xfw_window_activate() signature in libwindowing 4.19.6
+- Use a swapped signal connection so session_die() gets the right arg
+- Exclude some menu entries from multi selection
+- Simplify menu code
+- Move Keyboard Shortcuts settings tab to the end
+- Fix timer getting stopped on file deletion
+- Don't repeat backdrop images when cycling randomly
+- Change the backdrop cycler to use GFile throughout
+- Fix backdrop cycler property names
+- Fix GFileInfo leak in check_create_desktop_folder
+- Remove unused last_filename field to fix leak
+- Fix string leak in save_icons
+- Fix string leak in set_accountsservice_user_bg
+- Allow space chars to work for keyboard navigation
+- Remove manual activation of icon view binding set
+- Add configurable keybinding for toggle-cursor for the icon view
+- Remove unneeded debugging statements
+- Don't use meson.project_source_root()
+- Don't use relative source path in tests/meson.build
+- build: Adjust requirements for Xfce 4.20
+- Fix new-folder icon missing on some icon themes
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Basque, Belarusian, Belarusian (Tarask), Bulgarian, Catalan, Chinese
+  (China), Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech,
+  Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
+
+4.19.4 (2024-10-03)
+======
+- Don't use XfceSMClient on Wayland
+- Fix crash when double-clicking file icons
+- Grey out children of removable devices option when disabled
+- Add more compiler flags to the meson build
+- Add editable keyboard shortcuts for the desktop and icon view
+- settings: Fix string leak
+- Remove xfdesktop_icon_view_model_set_monitor()
+- Simplify icon add/remove code in file icon model
+- Fix removable devices not getting removed properly on reload
+- Cancel desktop folder enumeration on reload
+- Add option to show fixed drives and devices
+- Only draw icon focus rectangle for keyboard-driven selections
+- Mirror thunar's behavior for the new file/folder dialogs
+- Ensure drag highlight is cleared when file drag ends
+- Make XdndDirectSave file write asynchronous
+- Remove TODO
+- Update some source file copyright years
+- Build on glib 2.72
+- Fix _NETSCAPE_URL drops
+- Remove unused variable
+- Fix string leak in xfdesktop_application_theme_changed
+- Don't ship generated sources in the dist tarball
+- Include meson build files in autotools dist tarball
+- Add gresource XML files to EXTRA_DIST
+- Back up invalid icon position config files instead of overwriting
+- Simplify deletion/trashing code
+- Use more reliable way to get a toplevel parent for dialogs
+- Fix icon positioning for create launcher/link
+- Check if icon position changed on row-changed and replace if needed
+- Fix new folders and template creation appearing in wrong position
+- Fix memleak when checking if template menu has items
+- Treat icon views independently when handling file icon selection
+- Fix icon drops from external sources showing up on the wrong monitor
+- Rewrite the monitor mirror detection and handling
+- Move all removable volume filtering into the filter model
+- Display icons for mounts that don't have an associated volume
+- Modernize GObject use in XfdesktopIcon & subclasses
+- Fix keyboard focus for icon view when clicked
+- Make file icon manager reload icons when asked
+- Add debugging for desktop reposition on monitor geom change
+- Fix race condition when monitor geometry changes
+- Fix typo in icon view placement code
+- Simplify how the "backdrop workspace" is tracked in XfceDesktop
+- Fix same-filename backdrop toggle causing issues
+- Implement new DnD
+- Simplify icon view widget coords -> slot coords code
+- Handle mirrored monitors
+- Fix copy/paste error
+- Fix context menu popups
+- Let XfdesktopIconView have its own window
+- Cache icon identifier in XfdesktopIcon
+- Fix X11 icon view positioning
+- Attempt to migrate old position config to new
+- Refactor the grid sizing code a little
+- Implement new multi-monitor support for the file icon manager
+- Ensure xfdesktop_icon_get_identifier() never returns NULL
+- Add new YAML icon position saving code
+- Simplify and clean up a bunch of code in the file icon manager
+- Reduce boilerplate when building file icon context menu
+- Move file icon settings filtering to a GtkTreeModelFilter subclass
+- Better way to deal with monitors coming and going
+- Migrate old .png background filenames to .svg
+- Clean up monitor workarea tracking in XfdesktopIconViewHolder
+- Track desktop monitor changes in XfdesktopIconViewHolder
+- Signal model row changed when XfwWindow:monitors changes
+- Redo how monitor changes are handled in the backdrop manager
+- Create/destroy/update XfceDesktop instances on monitors-changed
+- Prevent xfdesktop from quitting if there are no monitors
+- Fix dangling signal connections in XfceDesktop
+- XfceDesktop: clean up x11 compat properties management
+- Use GList for XfdesktopApplication->desktops
+- Allow dragging window icons between monitors
+- Clean up more gcc-analyzer warnings
+- Modernize gobject use in XfdesktopFileIconManager
+- Get rid of unused marshal functions
+- Move file icon loading/management to the model
+- Rewrite window icon manager to display on all monitors
+- Update everything to use XfwMonitor
+- Use a separate XfceDesktop widget/window per monitor
+- Fix --reload option
+- Fix memleak freeing result of xfdesktop_icon_view_get_selected_items()
+- Fix some memory leaks with gdk_atom_name()
+- Updates to meson build
+- Fix use-after-free in the regular file icon tooltip code
+- Revert text shadow change in fallback theme
+- Fix PangoLayout memory leak in XfdesktopCellRendererIconLabel
+- Improve fallback theme
+- Resolve conflicting mnemonics
+- fix HAVE_THUNARX
+- Fix wrong filename in EXTRA_DIST in backgrounds/
+- Add README for backgrounds, with provenance and licensing info
+- SVG wallpapers with licenses
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Basque, Belarusian, Belarusian (Tarask), Bulgarian, Catalan, Chinese
+  (China), Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech,
+  Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
+
+4.19.3 (2024-08-16)
+======
+- Add false positives file for scan-build
+- Silence some scan-build warnings
+- Fix gcc-analyzer warnings
+- meson: use x11 & wayland option names, rather than windowing-systems
+- Fix broken icon sorting direction
+- Fix monitoring of folder icon files in subdirs
+- Rework the icon view grid sizing and placement code a bit
+- Fix long-standing memory leak in XfdesktopIconView
+- Make desktop folder loading cancellable
+- Fix default-backdrop-filename option for meson build
+- build: clang: Fix -Wcast-align
+- build: Fix -Werror=format=
+- Invalidate icon surface cache on icon theme change
+- Revert "Add CI builds for --disable-x11 and --disable-wayland"
+- Add missing menu separators
+- Fix invalid param flags
+- Fix some default settings not being applied on startup
+- Only redraw icon text when focus changes
+- Compute icon invalidation rect more generously
+- Only resize grid on size_allocate if the allocation actually changed
+- Resize icon grid if style changes affect slot/cell size
+- Don't invalidate the icon view pixbuf cache on style update
+- Be more precise in what gets redrawn
+- Clean up xfdesktop_volume_icon_menu_eject()
+- Fix safe removal for unmounted volumes
+- Icon view should not accept focus in order to reduce redraws
+- Fix xfdesktop no longer being saved as part of the session
+- Remove icon view manager's update_workarea vfunc
+- Move GdkScreen::size-changed handler to XfdesktopIconViewManager
+- Resize icon grid on size change even if we don't have our own window
+- Handle monitors-changed in the icon view manager
+- Resize and reposition icon view when workarea changes
+- Remove XfdesktopIconView's show-icons-on-primary property
+- Use 65% for the window icon opacity value
+- Clamp the icon opacity value where it actually needs to be used
+- Restore behavior where unmounted volume icons are drawn 50% opaque
+- Fix icon view not getting motion events
+- Fix build error when full debug enabled
+- Add meson build
+- Fix wrong property name for icons-on-primary
+- Reduce copy-paste duplication in XfdesktopRegularFileIcon
+- Simplify a bunch of code and reduce duplication in 
+XfdesktopApplication
+- Clear out XfdesktopApplication singleton pointer on finalize
+- Reduce duplicated code in app action init
+- Fix crash on startup with WM check, refactor
+- Start isolating X11 code as much as possible
+- Ensure workspaces are fully initialized on construction
+- Don't allow bg_surface to be NULL
+- Don't spuriously print that we're already running when starting up
+- Refactor the GApplication stuff
+- Fix warnings on --quit when xfdesktop isn't running
+- Avoid a critical warning depending on init order
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Basque, Belarusian, Belarusian (Tarask), Bulgarian, Catalan, Chinese
+  (China), Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech,
+  Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
+
+4.19.2 (2024-03-17)
+======
+- Fix critical warning when disabling window icons
+- Update for new libxfce4windowing workspace API
+- Fix issue with XfceDesktop->workspace_manager NULL on realize
+- Don't react to GdkScreen::monitors-changed if no monitors
+- Update for `xfw_window_x11_get_xid()` in `libxfce4windowing-4.19.3`
+- Fix crash when primary monitor is not set
+- Avoid showing non-removable drives/volumes on the desktop
+- Add CI builds for --disable-x11 and --disable-wayland
+- ifdef out unusued code in settings dialog when X11 is disabled
+- Fix build when X11 support disabled
+- Make DEFAULT_BACKDROP configurable at build time
+- Close rc file under sanity check
+- I18n: Update po/LINGUAS list
+- I18n: Update po/LINGUAS list
+- I18n: Update po/LINGUAS list
+- Fix desktop window positioning on multi-monitor Wayland
+- Remove inaccurate comment
+- Pass event button on menu popup when it's a release event as well
+- Fix spacing/layout in new settings tab for consistency
+- Move File/Launcher icons settings to a separate tab
+- Add pref for label underline when in single click mode
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Basque, Belarusian, Belarusian (Tarask), Bulgarian, Catalan, Chinese
+  (China), Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech,
+  Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
+
+4.19.1 (2023-04-14)
+======
+- Fix configure configuration summary
+- Use new XDT_CHECK_OPTIONAL_FEATURE & XDT_CHECK_PACKAGE_BINARY
+- autogen.sh: fix xfce4-dev-tools dependency version
+- Clean up autogenerated source file build rules
+- Generate final settings .desktop file in one pass
+- Drop dependency on xdt-csource and use glib-compile-resources
+- Fix substitution of GETTEXT_PACKAGE for automake
+- build: Drop intltool dependency
+- main: Fix control (always) reach end of non void function
+- Load icons in icon view a symbolic/theme-aware manner
+- Set default debug based on git/not-git
+- Missed a xfdesktop_version -> xdt_version in configure.ac
+- Eliminate need for pre-processed configure.ac.in
+- Remove unused file icon rendering code
+- Draw cut file icons as insensitive
+- Don't make icon translucent when window not focused
+- Allow opening multiple selected folder icons from context menu
+- Restore old behavior of allowing thumbnails to be wider
+- Ditch GtkCellLayout impl for XfdesktopIconView
+- Support for cascading custom actions (#221)
+- Ensure workarea is updated when UI scale factor changes
+- Set background color for icon labels in fallback theme
+- More/better menu/windowlist cleanup on exit
+- Place new files in the location they were dropped
+- Pop up window action menu on windowlist item right click
+- Simplify/improve right-click menu population
+- Move some of icon item state management to model
+- Use GIcon throughout the icon view
+- Make the icon view not know about workarea
+- Underline icon text when prelit in single-click mode
+- Allow pasting window titles via DnD
+- Harmonize constants in code & UI definition
+- Properly thread UI scale factor to file icon loading functions
+- DRY up the icon models with a base class
+- DRY up the cursor movement code a bit
+- Don't use weird pointer values as a tombstone
+- Make tooltip fetching/showing simpler, and cache surfaces
+- Move pixbuf cache to XfdesktopIconView
+- Make XfdesktopIcon::activated not a signal
+- Remove unneeded XfdesktopIcon functionality
+- Remove XfdesktopWindowIcon
+- Refactor icon view widget
+- Fix/augment heuristic for determining settings window on Wayland
+- Translation Updates:
+  Albanian, Amharic, Arabic, Armenian (Armenia), Asturian, Azerbaijani,
+  Basque, Belarusian, Belarusian (Tarask), Bulgarian, Catalan, Chinese
+  (China), Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech,
+  Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
+
+4.19.0 (2023-01-10)
+======
+- Fix warnings
+- xfdesktop: dither backdrop gradients to reduce color banding
+- Add preliminary Wayland support using libxfce4windowing
+- Fix minor coding style issues
+- Avoid drawing gradient to temporary surface
+- backdrop: render gamma-correct gradients
+- Fix a couple dangling mnemonic-widget properties
+- Set all icon appearance settings insensitive when disabled
+- Modernize GObject usage in XfdesktopThumbnailer
+- Fix crash when request timer active after finalize
+- Update my email address everywhere
+- Move file icons settings to its own section
+- Remove deprecated widgets from settings UI
+- Update glade files to latest version
+- Free cached GarconMenu in menu_cleanup()
+- Remove unused show_delete_option var in menu.c
+- Disconnect xfconf signal in menu_cleanup()
+- Free cached GarconMenu when apps menu is disabled
 - Load removable volume information asynchronously
 - Fix apps menu not popping up when menu icons disabled
 - Translation Updates:
@@ -9,11 +476,11 @@
   Danish, Dutch, Eastern Armenian, English (Australia), English
   (Canada), English (United Kingdom), Estonian, Finnish, French,
   Galician, Georgian, German, Greek, Hebrew, Hungarian, Icelandic,
-  Indonesian, Interlingue, Italian, Kazakh, Korean, Lithuanian, Malay,
-  Norwegian Bokmål, Norwegian Nynorsk, Occitan (post 1500), Persian
-  (Iran), Polish, Portuguese, Portuguese (Brazil), Romanian, Russian,
-  Serbian, Slovak, Slovenian, Spanish, Swedish, Thai, Ukrainian,
-  Uyghur, Uzbek
+  Indonesian, Interlingue, Italian, Japanese, Kazakh, Korean,
+  Lithuanian, Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan
+  (post 1500), Persian (Iran), Polish, Portuguese, Portuguese (Brazil),
+  Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish,
+  Thai, Ukrainian, Uyghur, Uzbek
 
 4.18.0
 ======

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
-_Name=Desktop
-_Comment=Set desktop background and menu and icon behavior
+Name=Desktop
+Comment=Set desktop background and menu and icon behavior
 Exec=xfdesktop-settings
 Icon=org.xfce.xfdesktop
 Terminal=false
@@ -12,4 +12,5 @@ StartupNotify=true
 X-XfcePluggable=true
 X-XfceHelpComponent=xfdesktop
 X-XfceHelpPage=start
-X-XfceHelpVersion=4.18
+X-XfceHelpVersion=@VERSION_SHORT@
+Keywords=desktop;background;wallpaper;settings;xfce;

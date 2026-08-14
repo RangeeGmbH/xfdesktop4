@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2004-2009 Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright (c) 2004-2009 Brian Tarricone, <brian@tarricone.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,14 @@
 #include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4windowing/libxfce4windowing.h>
 
 #include "xfdesktop-application.h"
+
+#ifdef ENABLE_FILE_ICONS
+#include "xfdesktop-monitor-chooser-ui.h"
+#endif
 
 int
 main(int argc, char **argv)
@@ -49,9 +55,20 @@ main(int argc, char **argv)
     /* bind gettext textdomain */
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    app = xfdesktop_application_get();
+    gtk_init(&argc, &argv);
 
-    ret = xfdesktop_application_run(app, argc, argv);
+#ifdef ENABLE_FILE_ICONS
+    xfdesktop_monitor_chooser_ui_register_resource();
+#endif
+
+    app = xfdesktop_application_get();
+#ifdef ENABLE_X11
+    if (xfw_windowing_get() == XFW_WINDOWING_X11) {
+        g_application_add_option_group(G_APPLICATION(app), xfce_sm_client_get_option_group(argc, argv));
+    }
+#endif
+
+    ret = g_application_run(G_APPLICATION(app), argc, argv);
 
     g_object_unref(app);
 

@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2004-2008 Brian J. Tarricone <bjt23@cornell.edu>
+ *  Copyright (c) 2004-2008 Brian J. Tarricone <brian@tarricone.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,20 +44,17 @@
 #endif
 
 #ifdef ENABLE_DESKTOP_MENU
-static gboolean show_delete_option = TRUE;
+static gboolean inited = FALSE;
 static gboolean show_desktop_menu = TRUE;
 static gboolean show_desktop_menu_icons = TRUE;
 static GarconMenu *garcon_menu = NULL;
 #endif
 
-GtkMenuShell *
-menu_populate(GtkMenuShell *menu, gint scale_factor)
+GtkMenu *
+menu_populate(GtkMenu *menu, gint scale_factor)
 {
 #ifdef ENABLE_DESKTOP_MENU
-    GtkWidget *mi, *img = NULL;
-    GtkIconTheme *itheme = gtk_icon_theme_get_default();
     GtkWidget *desktop_menu = NULL;
-    GList *menu_children;
 
     TRACE("ENTERING");
 
@@ -76,31 +73,33 @@ menu_populate(GtkMenuShell *menu, gint scale_factor)
                                 NULL);
     XF_DEBUG("show desktop menu icons %s", show_desktop_menu_icons ? "TRUE" : "FALSE");
 
-    /* check to see if the menu is empty.  if not, add the desktop menu
-    * to a submenu */
-    menu_children = gtk_container_get_children(GTK_CONTAINER(menu));
-    if(menu_children) {
-        g_list_free(menu_children);
+    // If we were provided a menu to populate, add the apps menu to a submenu
+    if (menu != NULL) {
+        GtkIconTheme *itheme = gtk_icon_theme_get_default();
+        GtkWidget *mi;
+
         mi = gtk_separator_menu_item_new();
         gtk_widget_show(mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 
-        if(gtk_icon_theme_has_icon(itheme, "applications-other")) {
-            img = gtk_image_new_from_icon_name("applications-other",
-                                            GTK_ICON_SIZE_MENU);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+        mi = gtk_image_menu_item_new_with_mnemonic(_("_Applications"));
+G_GNUC_END_IGNORE_DEPRECATIONS
+        if (gtk_icon_theme_has_icon(itheme, "applications-other")) {
+            GtkWidget *img = gtk_image_new_from_icon_name("applications-other",
+                                                          GTK_ICON_SIZE_MENU);
             gtk_widget_show(img);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+            gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+G_GNUC_END_IGNORE_DEPRECATIONS
         }
-
-        mi = xfdesktop_menu_create_menu_item_with_mnemonic(_("_Applications"), img);
-        gtk_widget_show(mi);
-
         gtk_menu_item_set_submenu (GTK_MENU_ITEM(mi), desktop_menu);
-
-        gtk_menu_shell_append(menu, mi);
+        gtk_widget_show(mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
 
         return menu;
     } else {
-        return GTK_MENU_SHELL(desktop_menu);
+        return GTK_MENU(desktop_menu);
     }
 #else  /* !ENABLE_DESKTOP_MENU */
     return menu;
@@ -114,11 +113,14 @@ menu_settings_changed(XfconfChannel *channel,
                       const GValue *value,
                       gpointer user_data)
 {
-    if(!strcmp(property, "/desktop-menu/show")) {
+    if(!strcmp(property, DESKTOP_MENU_SHOW_PROP)) {
         show_desktop_menu = G_VALUE_TYPE(value)
                             ? g_value_get_boolean(value)
                             : TRUE;
-    } else if(!strcmp(property, "/desktop-menu/show-icons")) {
+        if (!show_desktop_menu) {
+            g_clear_object(&garcon_menu);
+        }
+    } else if(!strcmp(property, DESKTOP_MENU_SHOW_ICONS_PROP)) {
         show_desktop_menu_icons = G_VALUE_TYPE(value)
                                   ? g_value_get_boolean(value)
                                   : TRUE;
@@ -130,16 +132,13 @@ void
 menu_init(XfconfChannel *channel)
 {
 #ifdef ENABLE_DESKTOP_MENU
-    if(channel) {
-        show_delete_option = xfconf_channel_get_bool(channel, DESKTOP_MENU_DELETE, TRUE);
-    }
+    g_return_if_fail(!inited);
 
-    if(!channel || xfconf_channel_get_bool(channel, "/desktop-menu/show", TRUE))
-    {
+    if(!channel || xfconf_channel_get_bool(channel, DESKTOP_MENU_SHOW_PROP, TRUE)) {
         show_desktop_menu = TRUE;
         if(channel) {
             show_desktop_menu_icons = xfconf_channel_get_bool(channel,
-                                                              "/desktop-menu/show-icons",
+                                                              DESKTOP_MENU_SHOW_ICONS_PROP,
                                                               TRUE);
         }
     } else {
@@ -150,10 +149,23 @@ menu_init(XfconfChannel *channel)
         g_signal_connect(G_OBJECT(channel), "property-changed",
                          G_CALLBACK(menu_settings_changed), NULL);
     }
+
+    inited = TRUE;
 #endif
 }
 
 void
-menu_cleanup(void)
+menu_cleanup(XfconfChannel *channel)
 {
+#ifdef ENABLE_DESKTOP_MENU
+    if (inited) {
+        g_signal_handlers_disconnect_by_func(channel,
+                                             G_CALLBACK(menu_settings_changed),
+                                             NULL);
+
+        g_clear_object(&garcon_menu);
+
+        inited = FALSE;
+    }
+#endif
 }

@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2004 Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright (c) 2004 Brian Tarricone, <brian@tarricone.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,15 +25,14 @@
 #ifndef _XFDESKTOP__MENU_H_
 #define _XFDESKTOP__MENU_H_
 
-#include "xfce-desktop.h"
-
 #include <xfconf/xfconf.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 void menu_init(XfconfChannel *channel);
-GtkMenuShell *menu_populate(GtkMenuShell *menu, gint scale_factor);
-void menu_cleanup(void);
+GtkMenu *menu_populate(GtkMenu *menu, gint scale_factor);
+void menu_cleanup(XfconfChannel *channel);
 
 G_END_DECLS
 

@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2006      Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright (c) 2006      Brian Tarricone, <brian@tarricone.org>
  *  Copyright (c) 2010-2011 Jannis Pohlmann, <jannis@xfce.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,14 +30,19 @@
 #include "xfdesktop-file-utils.h"
 #include "xfdesktop-file-icon.h"
 
-struct _XfdesktopFileIconPrivate
+#define GET_PRIVATE(icon) ((XfdesktopFileIconPrivate *)xfdesktop_file_icon_get_instance_private(XFDESKTOP_FILE_ICON(icon)))
+
+typedef struct _XfdesktopFileIconPrivate
 {
     GIcon *gicon;
-};
+    gchar *sort_key;
+} XfdesktopFileIconPrivate;
 
 static void xfdesktop_file_icon_finalize(GObject *obj);
 
-static gboolean xfdesktop_file_icon_activated(XfdesktopIcon *icon);
+static gchar *xfdesktop_file_icon_get_identifier(XfdesktopIcon *icon);
+static gboolean xfdesktop_file_icon_activate(XfdesktopIcon *icon,
+                                             GtkWindow *window);
 
 static void xfdesktop_file_icon_set_property(GObject *object,
                                              guint property_id,
@@ -67,28 +72,30 @@ xfdesktop_file_icon_class_init(XfdesktopFileIconClass *klass)
     gobject_class->set_property = xfdesktop_file_icon_set_property;
     gobject_class->get_property = xfdesktop_file_icon_get_property;
 
-    icon_class->activated = xfdesktop_file_icon_activated;
+    icon_class->get_identifier = xfdesktop_file_icon_get_identifier;
+    icon_class->activate = xfdesktop_file_icon_activate;
 
     g_object_class_install_property(gobject_class,
                                     PROP_GICON,
-                                    g_param_spec_pointer("gicon",
-                                                         "gicon",
-                                                         "gicon",
-                                                         G_PARAM_READWRITE));
+                                    g_param_spec_object("gicon",
+                                                        "gicon",
+                                                        "gicon",
+                                                        G_TYPE_ICON,
+                                                        G_PARAM_READWRITE));
 }
 
 static void
-xfdesktop_file_icon_init(XfdesktopFileIcon *icon)
-{
-    icon->priv = xfdesktop_file_icon_get_instance_private(icon);
-}
+xfdesktop_file_icon_init(XfdesktopFileIcon *icon) {}
 
 static void
 xfdesktop_file_icon_finalize(GObject *obj)
 {
-    XfdesktopFileIcon *icon = XFDESKTOP_FILE_ICON(obj);
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(obj);
 
-    xfdesktop_file_icon_invalidate_icon(icon);
+    if (priv->gicon != NULL) {
+        g_object_unref(priv->gicon);
+    }
+    g_free(priv->sort_key);
 
     G_OBJECT_CLASS(xfdesktop_file_icon_parent_class)->finalize(obj);
 }
@@ -100,11 +107,12 @@ xfdesktop_file_icon_set_property(GObject *object,
                                  GParamSpec *pspec)
 {
     XfdesktopFileIcon *file_icon = XFDESKTOP_FILE_ICON(object);
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(object);
 
     switch(property_id) {
         case PROP_GICON:
             xfdesktop_file_icon_invalidate_icon(file_icon);
-            file_icon->priv->gicon = g_value_get_pointer(value);
+            priv->gicon = g_value_dup_object(value);
             break;
 
         default:
@@ -119,11 +127,11 @@ xfdesktop_file_icon_get_property(GObject *object,
                                  GValue *value,
                                  GParamSpec *pspec)
 {
-    XfdesktopFileIcon *file_icon = XFDESKTOP_FILE_ICON(object);
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(object);
 
     switch(property_id) {
         case PROP_GICON:
-            g_value_set_pointer(value, file_icon->priv->gicon);
+            g_value_set_object(value, priv->gicon);
             break;
 
         default:
@@ -132,13 +140,28 @@ xfdesktop_file_icon_get_property(GObject *object,
     }
 }
 
+static gchar *
+xfdesktop_file_icon_get_identifier(XfdesktopIcon *icon) {
+    XfdesktopFileIcon *file_icon = XFDESKTOP_FILE_ICON(icon);
+
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
+
+    GFile *file = xfdesktop_file_icon_peek_file(file_icon);
+    gchar *identifier = g_file_get_path(file);
+    if (identifier == NULL) {
+        identifier = g_file_get_uri(file);
+    }
+
+    return identifier;
+}
+
 static gboolean
-xfdesktop_file_icon_activated(XfdesktopIcon *icon)
+xfdesktop_file_icon_activate(XfdesktopIcon *icon,
+                             GtkWindow *window)
 {
     XfdesktopFileIcon *file_icon = XFDESKTOP_FILE_ICON(icon);
     GFileInfo *info = xfdesktop_file_icon_peek_file_info(file_icon);
     GFile *file = xfdesktop_file_icon_peek_file(file_icon);
-    GtkWidget *icon_view, *toplevel;
     GdkScreen *gscreen;
 
     TRACE("entering");
@@ -146,16 +169,20 @@ xfdesktop_file_icon_activated(XfdesktopIcon *icon)
     if(!info)
         return FALSE;
 
-    icon_view = xfdesktop_icon_peek_icon_view(icon);
-    toplevel = gtk_widget_get_toplevel(icon_view);
-    gscreen = gtk_widget_get_screen(icon_view);
+    gscreen = gtk_widget_get_screen(GTK_WIDGET(window));
 
-    if(g_file_info_get_file_type(info) == G_FILE_TYPE_DIRECTORY)
-        xfdesktop_file_utils_open_folder(file, gscreen, GTK_WINDOW(toplevel));
-    else if(xfdesktop_file_utils_file_is_executable(info))
-        xfdesktop_file_utils_execute(NULL, file, NULL, gscreen, GTK_WINDOW(toplevel));
-    else
-        xfdesktop_file_utils_launch(file, gscreen, GTK_WINDOW(toplevel));
+    if(g_file_info_get_file_type(info) == G_FILE_TYPE_DIRECTORY) {
+        GList link = {
+            .data = file,
+            .prev = NULL,
+            .next = NULL,
+        };
+        xfdesktop_file_utils_open_folders(&link, gscreen, window);
+    } else if(xfdesktop_file_utils_file_is_executable(info)) {
+        xfdesktop_file_utils_execute(NULL, file, NULL, gscreen, window);
+    } else {
+        xfdesktop_file_utils_launch(file, gscreen, window);
+    }
 
     return TRUE;
 }
@@ -250,8 +277,21 @@ xfdesktop_file_icon_can_delete_file(XfdesktopFileIcon *icon)
         return FALSE;
 }
 
+gboolean
+xfdesktop_file_icon_is_hidden_file(XfdesktopFileIcon *icon) {
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), FALSE);
+
+    XfdesktopFileIconClass *klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
+    if (klass->is_hidden_file != NULL) {
+        return klass->is_hidden_file(icon);
+    } else {
+        return FALSE;
+    }
+}
+
 GIcon *
-xfdesktop_file_icon_add_emblems(XfdesktopFileIcon *icon)
+xfdesktop_file_icon_add_emblems(XfdesktopFileIcon *icon,
+                                GIcon *gicon)
 {
     GIcon *emblemed_icon = NULL;
     gchar **emblem_names;
@@ -259,16 +299,16 @@ xfdesktop_file_icon_add_emblems(XfdesktopFileIcon *icon)
     TRACE("entering");
 
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
+    g_return_val_if_fail(G_IS_ICON(gicon), NULL);
 
-    if(G_IS_EMBLEMED_ICON(icon->priv->gicon))
-        emblemed_icon = icon->priv->gicon;
-    else if(G_IS_ICON(icon->priv->gicon))
-        emblemed_icon = g_emblemed_icon_new(icon->priv->gicon, NULL);
-    else
-        return NULL;
+    if (G_IS_EMBLEMED_ICON(gicon)) {
+        emblemed_icon = g_object_ref(gicon);
+    } else {
+        emblemed_icon = g_emblemed_icon_new(gicon, NULL);
+    }
 
     if(!G_IS_FILE_INFO(xfdesktop_file_icon_peek_file_info(icon)))
-        return icon->priv->gicon = emblemed_icon;
+        return emblemed_icon;
 
     /* Get the list of emblems */
     emblem_names = g_file_info_get_attribute_stringv(xfdesktop_file_icon_peek_file_info(icon),
@@ -288,9 +328,7 @@ xfdesktop_file_icon_add_emblems(XfdesktopFileIcon *icon)
         }
     }
 
-    /* Clear out the old icon and set the new one */
-    xfdesktop_file_icon_invalidate_icon(icon);
-    return icon->priv->gicon = emblemed_icon;
+    return emblemed_icon;
 }
 
 void
@@ -298,16 +336,108 @@ xfdesktop_file_icon_invalidate_icon(XfdesktopFileIcon *icon)
 {
     g_return_if_fail(XFDESKTOP_IS_FILE_ICON(icon));
 
-    if(G_IS_ICON(icon->priv->gicon)) {
-        g_object_unref(icon->priv->gicon);
-        icon->priv->gicon = NULL;
-    }
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(icon);
+    g_clear_object(&priv->gicon);
 }
 
 gboolean
 xfdesktop_file_icon_has_gicon(XfdesktopFileIcon *icon)
 {
     g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), FALSE);
+    return G_IS_ICON(GET_PRIVATE(icon)->gicon);
+}
 
-    return G_IS_ICON(icon->priv->gicon);
+GIcon *
+xfdesktop_file_icon_get_gicon(XfdesktopFileIcon *icon)
+{
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
+
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(icon);
+    if (priv->gicon == NULL) {
+        XfdesktopFileIconClass *klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
+        g_return_val_if_fail(klass->get_gicon != NULL, NULL);
+        priv->gicon = klass->get_gicon(icon);
+    }
+
+    return priv->gicon != NULL ? g_object_ref(priv->gicon) : NULL;
+}
+
+gdouble
+xfdesktop_file_icon_get_opacity(XfdesktopFileIcon *icon) {
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), 1.0);
+
+    XfdesktopFileIconClass *klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
+    if (klass->get_icon_opacity != NULL) {
+        return klass->get_icon_opacity(icon);
+    } else {
+        return 1.0;
+    }
+}
+
+gchar *
+xfdesktop_file_icon_sort_key_for_file(GFile *file)
+{
+    g_return_val_if_fail(G_IS_FILE(file), NULL);
+    return g_file_get_uri(file);
+}
+
+const gchar *
+xfdesktop_file_icon_peek_sort_key(XfdesktopFileIcon *icon)
+{
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON(icon), NULL);
+
+    XfdesktopFileIconPrivate *priv = GET_PRIVATE(icon);
+    if (priv->sort_key != NULL) {
+        return priv->sort_key;
+    } else {
+        XfdesktopFileIconClass *klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
+        gchar *sk = NULL;
+
+        if (klass->get_sort_key != NULL) {
+             sk = klass->get_sort_key(icon);
+        } else {
+            GFile *file = xfdesktop_file_icon_peek_file(icon);
+            if (G_LIKELY(file != NULL)) {
+                sk = xfdesktop_file_icon_sort_key_for_file(file);
+            }
+        }
+
+        if (G_LIKELY(sk != NULL)) {
+            priv->sort_key = sk;
+        }
+        return sk;
+    }
+}
+
+guint
+xfdesktop_file_icon_hash(gconstpointer data)
+{
+    XfdesktopFileIconClass *klass;
+
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON((gpointer)data), 0);
+    XfdesktopFileIcon *icon = XFDESKTOP_FILE_ICON((gpointer)data);
+
+    klass = XFDESKTOP_FILE_ICON_GET_CLASS(icon);
+    if (klass->hash != NULL) {
+        return klass->hash(XFDESKTOP_FILE_ICON(icon));
+    } else {
+        GFile *file = xfdesktop_file_icon_peek_file(XFDESKTOP_FILE_ICON(icon));
+        if (G_LIKELY(file != NULL)) {
+            return g_file_hash(file);
+        } else {
+            g_warning("Attempt to get hash of file icon of type %s, but couldn't", g_type_name_from_instance((GTypeInstance *)icon));
+            return 0;
+        }
+    }
+}
+
+gint
+xfdesktop_file_icon_equal(gconstpointer a,
+                          gconstpointer b)
+{
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON((gpointer)a), 0);
+    g_return_val_if_fail(XFDESKTOP_IS_FILE_ICON((gpointer)b), 0);
+
+    return g_str_equal(xfdesktop_file_icon_peek_sort_key(XFDESKTOP_FILE_ICON((gpointer)a)),
+                       xfdesktop_file_icon_peek_sort_key(XFDESKTOP_FILE_ICON((gpointer)b)));
 }

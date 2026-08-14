@@ -12,8 +12,19 @@
 /* Define if we should build the desktop menu module */
 #undef ENABLE_DESKTOP_MENU
 
-/* Define if file icons should be enabled */
+/* Define if m4_default(Whether to compile in support for desktop file icons
+   (default=enabled), file-icons) is enabled */
 #undef ENABLE_FILE_ICONS
+
+/* Define to 1 if translation of program messages to the user's native
+   language is requested. */
+#undef ENABLE_NLS
+
+/* Define if m4_default(the Wayland windowing system, wayland) is enabled */
+#undef ENABLE_WAYLAND
+
+/* Define if m4_default(the X11 windowing system, x11) is enabled */
+#undef ENABLE_X11
 
 /* Set to the file manager to use as a fallback */
 #undef FILE_MANAGER_FALLBACK
@@ -24,8 +35,20 @@
 /* Use GLib structured logging */
 #undef G_LOG_USE_STRUCTURED
 
+/* Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+#undef HAVE_CFLOCALECOPYCURRENT
+
+/* Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+#undef HAVE_CFPREFERENCESCOPYAPPVALUE
+
 /* Define to 1 if you have the <ctype.h> header file. */
 #undef HAVE_CTYPE_H
+
+/* Define if the GNU dcgettext() function is already present or preinstalled.
+   */
+#undef HAVE_DCGETTEXT
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -36,14 +59,36 @@
 /* Define to 1 if you have the <fcntl.h> header file. */
 #undef HAVE_FCNTL_H
 
+/* Define if gdk-wayland-3.0 >= gtk_minimum_version present */
+#undef HAVE_GDK_WAYLAND
+
+/* Define if gdk-x11-3.0 >= gtk_minimum_version present */
+#undef HAVE_GDK_X11
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+#undef HAVE_GETTEXT
+
+/* Define if gtk-layer-shell-0 >= gtk_layer_shell_minimum_version present */
+#undef HAVE_GTK_LAYER_SHELL
+
+/* Define if you have the iconv() function and it works. */
+#undef HAVE_ICONV
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
 /* Define if libnotify >= 0.4.0 present */
 #undef HAVE_LIBNOTIFY
 
-/* Define if libX11 is available */
+/* Define if x11 >= libx11_minimum_version present */
 #undef HAVE_LIBX11
+
+/* Define if libxfce4windowing-x11-0 >= libxfce4windowing_minimum_version
+   present */
+#undef HAVE_LIBXFCE4WINDOWING_X11
+
+/* Define if yaml-0.1 >= libyaml_minimum_version present */
+#undef HAVE_LIBYAML
 
 /* Define to 1 if you have the <math.h> header file. */
 #undef HAVE_MATH_H
@@ -213,8 +258,8 @@
 /* Version number of package */
 #undef VERSION
 
-/* Short version string of xfdesktop */
-#undef XFDESKTOP_VERSION_SHORT
+/* Full version string of xfdesktop */
+#undef VERSION_FULL
 
-/* Define to 1 if the X Window System is missing or not being used. */
-#undef X_DISPLAY_MISSING
+/* Short version string of xfdesktop */
+#undef VERSION_SHORT

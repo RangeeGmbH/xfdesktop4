@@ -17,6 +17,52 @@
 #  include <gio/gunixfdlist.h>
 #endif
 
+#ifdef G_ENABLE_DEBUG
+#define g_marshal_value_peek_boolean(v)  g_value_get_boolean (v)
+#define g_marshal_value_peek_char(v)     g_value_get_schar (v)
+#define g_marshal_value_peek_uchar(v)    g_value_get_uchar (v)
+#define g_marshal_value_peek_int(v)      g_value_get_int (v)
+#define g_marshal_value_peek_uint(v)     g_value_get_uint (v)
+#define g_marshal_value_peek_long(v)     g_value_get_long (v)
+#define g_marshal_value_peek_ulong(v)    g_value_get_ulong (v)
+#define g_marshal_value_peek_int64(v)    g_value_get_int64 (v)
+#define g_marshal_value_peek_uint64(v)   g_value_get_uint64 (v)
+#define g_marshal_value_peek_enum(v)     g_value_get_enum (v)
+#define g_marshal_value_peek_flags(v)    g_value_get_flags (v)
+#define g_marshal_value_peek_float(v)    g_value_get_float (v)
+#define g_marshal_value_peek_double(v)   g_value_get_double (v)
+#define g_marshal_value_peek_string(v)   (char*) g_value_get_string (v)
+#define g_marshal_value_peek_param(v)    g_value_get_param (v)
+#define g_marshal_value_peek_boxed(v)    g_value_get_boxed (v)
+#define g_marshal_value_peek_pointer(v)  g_value_get_pointer (v)
+#define g_marshal_value_peek_object(v)   g_value_get_object (v)
+#define g_marshal_value_peek_variant(v)  g_value_get_variant (v)
+#else /* !G_ENABLE_DEBUG */
+/* WARNING: This code accesses GValues directly, which is UNSUPPORTED API.
+ *          Do not access GValues directly in your code. Instead, use the
+ *          g_value_get_*() functions
+ */
+#define g_marshal_value_peek_boolean(v)  (v)->data[0].v_int
+#define g_marshal_value_peek_char(v)     (v)->data[0].v_int
+#define g_marshal_value_peek_uchar(v)    (v)->data[0].v_uint
+#define g_marshal_value_peek_int(v)      (v)->data[0].v_int
+#define g_marshal_value_peek_uint(v)     (v)->data[0].v_uint
+#define g_marshal_value_peek_long(v)     (v)->data[0].v_long
+#define g_marshal_value_peek_ulong(v)    (v)->data[0].v_ulong
+#define g_marshal_value_peek_int64(v)    (v)->data[0].v_int64
+#define g_marshal_value_peek_uint64(v)   (v)->data[0].v_uint64
+#define g_marshal_value_peek_enum(v)     (v)->data[0].v_long
+#define g_marshal_value_peek_flags(v)    (v)->data[0].v_ulong
+#define g_marshal_value_peek_float(v)    (v)->data[0].v_float
+#define g_marshal_value_peek_double(v)   (v)->data[0].v_double
+#define g_marshal_value_peek_string(v)   (v)->data[0].v_pointer
+#define g_marshal_value_peek_param(v)    (v)->data[0].v_pointer
+#define g_marshal_value_peek_boxed(v)    (v)->data[0].v_pointer
+#define g_marshal_value_peek_pointer(v)  (v)->data[0].v_pointer
+#define g_marshal_value_peek_object(v)   (v)->data[0].v_pointer
+#define g_marshal_value_peek_variant(v)  (v)->data[0].v_pointer
+#endif /* !G_ENABLE_DEBUG */
+
 typedef struct
 {
   GDBusArgInfo parent_struct;
@@ -151,6 +197,231 @@ _g_value_equal (const GValue *a, const GValue *b)
   return ret;
 }
 
+static void
+_g_dbus_codegen_marshal_VOID__UINT_BOXED (
+    GClosure     *closure,
+    GValue       *return_value G_GNUC_UNUSED,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef void (*_GDbusCodegenMarshalVoid_UintBoxedFunc)
+       (void *data1,
+        guint arg_handle,
+        const gchar *const *arg_uris,
+        void *data2);
+  _GDbusCodegenMarshalVoid_UintBoxedFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+
+  g_return_if_fail (n_param_values == 3);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalVoid_UintBoxedFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            g_marshal_value_peek_uint (param_values + 1),
+            g_marshal_value_peek_boxed (param_values + 2),
+            data2);
+}
+
+static void
+_g_dbus_codegen_marshal_VOID__UINT_BOXED_INT_STRING (
+    GClosure     *closure,
+    GValue       *return_value G_GNUC_UNUSED,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef void (*_GDbusCodegenMarshalVoid_UintBoxedIntStringFunc)
+       (void *data1,
+        guint arg_handle,
+        const gchar *const *arg_failed_uris,
+        gint arg_error_code,
+        const gchar *arg_message,
+        void *data2);
+  _GDbusCodegenMarshalVoid_UintBoxedIntStringFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+
+  g_return_if_fail (n_param_values == 5);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalVoid_UintBoxedIntStringFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            g_marshal_value_peek_uint (param_values + 1),
+            g_marshal_value_peek_boxed (param_values + 2),
+            g_marshal_value_peek_int (param_values + 3),
+            g_marshal_value_peek_string (param_values + 4),
+            data2);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT_BOXED_BOXED_STRING_STRING_UINT (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectBoxedBoxedStringStringUintFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        const gchar *const *arg_uris,
+        const gchar *const *arg_mime_types,
+        const gchar *arg_flavor,
+        const gchar *arg_scheduler,
+        guint arg_handle_to_unqueue,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectBoxedBoxedStringStringUintFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 7);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectBoxedBoxedStringStringUintFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              g_marshal_value_peek_boxed (param_values + 2),
+              g_marshal_value_peek_boxed (param_values + 3),
+              g_marshal_value_peek_string (param_values + 4),
+              g_marshal_value_peek_string (param_values + 5),
+              g_marshal_value_peek_uint (param_values + 6),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT_UINT (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectUintFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        guint arg_handle,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectUintFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 3);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectUintFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              g_marshal_value_peek_uint (param_values + 2),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
+static void
+_g_dbus_codegen_marshal_BOOLEAN__OBJECT (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint G_GNUC_UNUSED,
+    void         *marshal_data)
+{
+  typedef gboolean (*_GDbusCodegenMarshalBoolean_ObjectFunc)
+       (void *data1,
+        GDBusMethodInvocation *arg_method_invocation,
+        void *data2);
+  _GDbusCodegenMarshalBoolean_ObjectFunc callback;
+  GCClosure *cc = (GCClosure*) closure;
+  void *data1, *data2;
+  gboolean v_return;
+
+  g_return_if_fail (return_value != NULL);
+  g_return_if_fail (n_param_values == 2);
+
+  if (G_CCLOSURE_SWAP_DATA (closure))
+    {
+      data1 = closure->data;
+      data2 = g_value_peek_pointer (param_values + 0);
+    }
+  else
+    {
+      data1 = g_value_peek_pointer (param_values + 0);
+      data2 = closure->data;
+    }
+
+  callback = (_GDbusCodegenMarshalBoolean_ObjectFunc)
+    (marshal_data ? marshal_data : cc->callback);
+
+  v_return =
+    callback (data1,
+              g_marshal_value_peek_object (param_values + 1),
+              data2);
+
+  g_value_set_boolean (return_value, v_return);
+}
+
 /* ------------------------------------------------------------------------
  * Code for interface org.freedesktop.thumbnails.Thumbnailer1
  * ------------------------------------------------------------------------
@@ -163,6 +434,16 @@ _g_value_equal (const GValue *a, const GValue *b)
  *
  * This section contains code for working with the <link linkend="gdbus-interface-org-freedesktop-thumbnails-Thumbnailer1.top_of_page">org.freedesktop.thumbnails.Thumbnailer1</link> D-Bus interface in C.
  */
+
+enum
+{
+  TUMBLER__THUMBNAILER1_STARTED,
+  TUMBLER__THUMBNAILER1_FINISHED,
+  TUMBLER__THUMBNAILER1_READY,
+  TUMBLER__THUMBNAILER1_ERROR,
+};
+
+static unsigned TUMBLER__THUMBNAILER1_SIGNALS[4] = { 0 };
 
 /* ---- Introspection data for org.freedesktop.thumbnails.Thumbnailer1 ---- */
 
@@ -686,6 +967,123 @@ tumbler_thumbnailer1_override_properties (GObjectClass *klass G_GNUC_UNUSED, gui
 }
 
 
+inline static void
+tumbler_thumbnailer1_signal_marshal_started (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  g_cclosure_marshal_VOID__UINT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_signal_marshal_finished (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  g_cclosure_marshal_VOID__UINT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_signal_marshal_ready (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_VOID__UINT_BOXED (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_signal_marshal_error (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_VOID__UINT_BOXED_INT_STRING (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_method_marshal_queue (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_BOXED_BOXED_STRING_STRING_UINT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_method_marshal_dequeue (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT_UINT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_method_marshal_get_supported (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_method_marshal_get_schedulers (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
+inline static void
+tumbler_thumbnailer1_method_marshal_get_flavors (
+    GClosure     *closure,
+    GValue       *return_value,
+    unsigned int  n_param_values,
+    const GValue *param_values,
+    void         *invocation_hint,
+    void         *marshal_data)
+{
+  _g_dbus_codegen_marshal_BOOLEAN__OBJECT (closure,
+    return_value, n_param_values, param_values, invocation_hint, marshal_data);
+}
+
 
 /**
  * TumblerThumbnailer1:
@@ -738,7 +1136,7 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
     G_STRUCT_OFFSET (TumblerThumbnailer1Iface, handle_queue),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      tumbler_thumbnailer1_method_marshal_queue,
     G_TYPE_BOOLEAN,
     6,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_STRV, G_TYPE_STRV, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_UINT);
@@ -761,7 +1159,7 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
     G_STRUCT_OFFSET (TumblerThumbnailer1Iface, handle_dequeue),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      tumbler_thumbnailer1_method_marshal_dequeue,
     G_TYPE_BOOLEAN,
     2,
     G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_UINT);
@@ -783,7 +1181,7 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
     G_STRUCT_OFFSET (TumblerThumbnailer1Iface, handle_get_supported),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      tumbler_thumbnailer1_method_marshal_get_supported,
     G_TYPE_BOOLEAN,
     1,
     G_TYPE_DBUS_METHOD_INVOCATION);
@@ -805,7 +1203,7 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
     G_STRUCT_OFFSET (TumblerThumbnailer1Iface, handle_get_schedulers),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      tumbler_thumbnailer1_method_marshal_get_schedulers,
     G_TYPE_BOOLEAN,
     1,
     G_TYPE_DBUS_METHOD_INVOCATION);
@@ -827,7 +1225,7 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
     G_STRUCT_OFFSET (TumblerThumbnailer1Iface, handle_get_flavors),
     g_signal_accumulator_true_handled,
     NULL,
-    g_cclosure_marshal_generic,
+      tumbler_thumbnailer1_method_marshal_get_flavors,
     G_TYPE_BOOLEAN,
     1,
     G_TYPE_DBUS_METHOD_INVOCATION);
@@ -842,15 +1240,16 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("started",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (TumblerThumbnailer1Iface, started),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    1, G_TYPE_UINT);
+  TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_STARTED] =
+    g_signal_new ("started",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (TumblerThumbnailer1Iface, started),
+      NULL,
+      NULL,
+      tumbler_thumbnailer1_signal_marshal_started,
+      G_TYPE_NONE,
+      1, G_TYPE_UINT);
 
   /**
    * TumblerThumbnailer1::finished:
@@ -861,15 +1260,16 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("finished",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (TumblerThumbnailer1Iface, finished),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    1, G_TYPE_UINT);
+  TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_FINISHED] =
+    g_signal_new ("finished",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (TumblerThumbnailer1Iface, finished),
+      NULL,
+      NULL,
+      tumbler_thumbnailer1_signal_marshal_finished,
+      G_TYPE_NONE,
+      1, G_TYPE_UINT);
 
   /**
    * TumblerThumbnailer1::ready:
@@ -881,15 +1281,16 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("ready",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (TumblerThumbnailer1Iface, ready),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    2, G_TYPE_UINT, G_TYPE_STRV);
+  TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_READY] =
+    g_signal_new ("ready",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (TumblerThumbnailer1Iface, ready),
+      NULL,
+      NULL,
+      tumbler_thumbnailer1_signal_marshal_ready,
+      G_TYPE_NONE,
+      2, G_TYPE_UINT, G_TYPE_STRV);
 
   /**
    * TumblerThumbnailer1::error:
@@ -903,15 +1304,16 @@ tumbler_thumbnailer1_default_init (TumblerThumbnailer1Iface *iface)
    *
    * On the service-side, this signal can be used with e.g. g_signal_emit_by_name() to make the object emit the D-Bus signal.
    */
-  g_signal_new ("error",
-    G_TYPE_FROM_INTERFACE (iface),
-    G_SIGNAL_RUN_LAST,
-    G_STRUCT_OFFSET (TumblerThumbnailer1Iface, error),
-    NULL,
-    NULL,
-    g_cclosure_marshal_generic,
-    G_TYPE_NONE,
-    4, G_TYPE_UINT, G_TYPE_STRV, G_TYPE_INT, G_TYPE_STRING);
+  TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_ERROR] =
+    g_signal_new ("error",
+      G_TYPE_FROM_INTERFACE (iface),
+      G_SIGNAL_RUN_LAST,
+      G_STRUCT_OFFSET (TumblerThumbnailer1Iface, error),
+      NULL,
+      NULL,
+      tumbler_thumbnailer1_signal_marshal_error,
+      G_TYPE_NONE,
+      4, G_TYPE_UINT, G_TYPE_STRV, G_TYPE_INT, G_TYPE_STRING);
 
 }
 
@@ -927,7 +1329,7 @@ tumbler_thumbnailer1_emit_started (
     TumblerThumbnailer1 *object,
     guint arg_handle)
 {
-  g_signal_emit_by_name (object, "started", arg_handle);
+  g_signal_emit (object, TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_STARTED], 0, arg_handle);
 }
 
 /**
@@ -942,7 +1344,7 @@ tumbler_thumbnailer1_emit_finished (
     TumblerThumbnailer1 *object,
     guint arg_handle)
 {
-  g_signal_emit_by_name (object, "finished", arg_handle);
+  g_signal_emit (object, TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_FINISHED], 0, arg_handle);
 }
 
 /**
@@ -959,7 +1361,7 @@ tumbler_thumbnailer1_emit_ready (
     guint arg_handle,
     const gchar *const *arg_uris)
 {
-  g_signal_emit_by_name (object, "ready", arg_handle, arg_uris);
+  g_signal_emit (object, TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_READY], 0, arg_handle, arg_uris);
 }
 
 /**
@@ -980,7 +1382,7 @@ tumbler_thumbnailer1_emit_error (
     gint arg_error_code,
     const gchar *arg_message)
 {
-  g_signal_emit_by_name (object, "error", arg_handle, arg_failed_uris, arg_error_code, arg_message);
+  g_signal_emit (object, TUMBLER__THUMBNAILER1_SIGNALS[TUMBLER__THUMBNAILER1_ERROR], 0, arg_handle, arg_failed_uris, arg_error_code, arg_message);
 }
 
 /**

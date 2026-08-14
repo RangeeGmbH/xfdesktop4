@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright(c) 2006      Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright(c) 2006      Brian Tarricone, <brian@tarricone.org>
  *  Copyright(c) 2010-2011 Jannis Pohlmann, <jannis@xfce.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,8 @@
 
 #include "xfdesktop-file-icon.h"
 
+typedef void (*CreateDesktopFileCallback)(GFile *file, GError *error, gpointer user_data);
+
 gboolean xfdesktop_file_utils_is_desktop_file(GFileInfo *info);
 gboolean xfdesktop_file_utils_file_is_executable(GFileInfo *info);
 gchar *xfdesktop_file_utils_format_time_for_display(guint64 file_time);
@@ -38,21 +40,19 @@ GKeyFile *xfdesktop_file_utils_query_key_file(GFile *file,
                                               GError **error);
 gchar *xfdesktop_file_utils_get_display_name(GFile *file,
                                              GFileInfo *info);
-gchar* xfdesktop_file_utils_next_new_file_name(const gchar *filename,
-                                               const gchar *folder);
+GFile *xfdesktop_file_utils_next_new_file_name(GFile *file);
 
 GList *xfdesktop_file_utils_file_icon_list_to_file_list(GList *icon_list);
 GList *xfdesktop_file_utils_file_list_from_string(const gchar *string);
-gchar *xfdesktop_file_utils_file_list_to_string(GList *file_list);
+gchar *xfdesktop_file_utils_file_list_to_string(GList *list,
+                                                const gchar *prefix,
+                                                gboolean format_for_text,
+                                                gsize *len);
 gchar **xfdesktop_file_utils_file_list_to_uri_array(GList *file_list);
 void xfdesktop_file_utils_file_list_free(GList *file_list);
 
-GdkPixbuf *xfdesktop_file_utils_get_fallback_icon(gint size);
-
-GdkPixbuf *xfdesktop_file_utils_get_icon(GIcon *icon,
-                                         gint width,
-                                         gint height,
-                                         guint opacity);
+GdkPixbuf *xfdesktop_file_utils_get_fallback_icon(gint size,
+                                                  gint scale);
 
 void xfdesktop_file_utils_set_window_cursor(GtkWindow *window,
                                             GdkCursorType cursor_type);
@@ -63,9 +63,9 @@ gboolean xfdesktop_file_utils_app_info_launch(GAppInfo *app_info,
                                               GAppLaunchContext *context,
                                               GError **error);
 
-void xfdesktop_file_utils_open_folder(GFile *file,
-                                      GdkScreen *screen,
-                                      GtkWindow *parent);
+void xfdesktop_file_utils_open_folders(GList *files,
+                                       GdkScreen *screen,
+                                       GtkWindow *parent);
 void xfdesktop_file_utils_rename_file(GFile *file,
                                       GdkScreen *screen,
                                       GtkWindow *parent);
@@ -81,14 +81,18 @@ void xfdesktop_file_utils_empty_trash(GdkScreen *screen,
 void xfdesktop_file_utils_unlink_files(GList *files,
                                        GdkScreen *screen,
                                        GtkWindow *parent);
-void xfdesktop_file_utils_create_file(GFile *parent_folder,
-                                      const gchar *content_type,
-                                      GdkScreen *screen,
-                                      GtkWindow *parent);
-void xfdesktop_file_utils_create_file_from_template(GFile *parent_folder,
-                                                    GFile *template_file,
-                                                    GdkScreen *screen,
+GFile *xfdesktop_file_utils_prompt_for_template_file_name(GFile *parent_folder,
+                                                          GFile *template_file,
+                                                          GtkWindow *parent);
+GFile *xfdesktop_file_utils_prompt_for_new_folder_name(GFile *parent_folder,
+                                                       GtkWindow *parent);
+
+void xfdesktop_file_utils_create_file_from_template(GFile *template_file,
+                                                    GFile *dest_file,
                                                     GtkWindow *parent);
+void xfdesktop_file_utils_create_folder(GFile *folder,
+                                        GtkWindow *parent);
+
 /* element-type GFile */
 void xfdesktop_file_utils_show_properties_dialog(GList *files,
                                                  GdkScreen *screen,
@@ -116,6 +120,14 @@ void xfdesktop_file_utils_transfer_files(GdkDragAction action,
                                          GList *target_files,
                                          GdkScreen *screen);
 
+void xfdesktop_file_utils_create_desktop_file(GdkScreen *screen,
+                                              GFile *folder,
+                                              const gchar *launcher_type,
+                                              const gchar *suggested_name,
+                                              const gchar *suggested_command_or_url,
+                                              GCancellable *cancellable,
+                                              CreateDesktopFileCallback callback,
+                                              gpointer callback_data);
 
 gboolean xfdesktop_file_utils_dbus_init(void);
 void xfdesktop_file_utils_dbus_cleanup(void);

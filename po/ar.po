@@ -1,1157 +1,1327 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) YEAR Xfce
+# This file is distributed under the same license as the xfdesktop.master package.
 # 
 # Translators:
-# Xfce Bot <transifex@xfce.org>, 2022
-# 
-#, fuzzy
+# Anas El Husseini <linux.anas@gmail.com>, 2007
+# Anas El Husseini <linux.anas@gmail.com>, 2007
+# كريم أولاد الشلحة <herr.linux88@gmail.com>, 2013
+# Khaled Hosny, 2007
+# Anas El Husseini <linux.anas@gmail.com>, 2007
+# Mohamed Sakhri, 2013
+# mohammad alhargan <malham1@hotmail.com>, 2012
+# mohammad alhargan <malham1@hotmail.com>, 2012
+# محمد الحرقان <malham1@gmail.com>, 2012
+# Oukiki Saleh <salehoukiki@gmail.com>, 2017
+# Saleh Alhathal <hathalsal@hotmail.com>, 2004
+# sulaiman saeed <sulaiman3352@gmail.com>, 2021
+# محمد الحرقان <malham1@gmail.com>, 2012-2013
+# وجدي أبو سلطان, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: xfdesktop\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-22 12:24+0100\n"
-"PO-Revision-Date: 2022-12-22 11:24+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>, 2022\n"
-"Language-Team: Arabic (https://www.transifex.com/xfce/teams/16840/ar/)\n"
+"Project-Id-Version: Xfdesktop\n"
+"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
+"POT-Creation-Date: 2024-12-12 00:52+0100\n"
+"PO-Revision-Date: 2013-07-02 20:50+0000\n"
+"Last-Translator: sulaiman saeed <sulaiman3352@gmail.com>, 2021\n"
+"Language-Team: Arabic (http://app.transifex.com/xfce/xfdesktop/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ../settings/main.c:430 ../src/xfdesktop-special-file-icon.c:290
-#: ../src/xfdesktop-special-file-icon.c:456
-msgid "Home"
-msgstr "المنزل"
+#: common/xfdesktop-keyboard-shortcuts.c:75
+msgid "_Reload"
+msgstr "_إعادة تحميل"
 
-#: ../settings/main.c:432 ../src/xfdesktop-special-file-icon.c:292
-#: ../src/xfdesktop-special-file-icon.c:454
-msgid "File System"
-msgstr "ملفات النظام"
+#: common/xfdesktop-keyboard-shortcuts.c:78
+msgid "Activate _Primary Menu"
+msgstr ""
 
-#: ../settings/main.c:434 ../src/xfdesktop-special-file-icon.c:294
-msgid "Trash"
-msgstr "المهملات"
+#: common/xfdesktop-keyboard-shortcuts.c:80
+msgid "Activate _Secondary Menu"
+msgstr ""
 
-#: ../settings/main.c:436
-msgid "Removable Devices"
-msgstr "أجهزة قابلة للإزالة"
+#: common/xfdesktop-keyboard-shortcuts.c:82
+msgid "Cycle Next Background"
+msgstr ""
 
-#: ../settings/main.c:438
-msgid "Network Shares"
-msgstr "مشاركة الشبكة"
+#: common/xfdesktop-keyboard-shortcuts.c:88
+msgid "_Activate Icon"
+msgstr ""
 
-#: ../settings/main.c:440
-msgid "Disks and Drives"
-msgstr "الأقراص"
+#: common/xfdesktop-keyboard-shortcuts.c:93
+msgid "_Toggle Cursor Icon"
+msgstr ""
 
-#: ../settings/main.c:442
-msgid "Other Devices"
-msgstr "أجهزة أخرى"
+#: common/xfdesktop-keyboard-shortcuts.c:95
+msgid "Select _All"
+msgstr ""
 
-#. Display the file name, file type, and file size in the tooltip.
-#: ../settings/main.c:546
+#: common/xfdesktop-keyboard-shortcuts.c:96
+msgid "U_nselect All"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:97
+msgid "A_rrange Icons"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:101
+msgid "Un_minimize Window"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:102
+msgid "_Close Window"
+msgstr "_أغلق النّافذة"
+
+#: common/xfdesktop-keyboard-shortcuts.c:107
+msgid "Create _Folder"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:108
+#: src/xfdesktop-file-icon-manager.c:1789
+msgid "Create _Document"
+msgstr "أنشئ _مستند"
+
+#: common/xfdesktop-keyboard-shortcuts.c:109
+#: src/xfdesktop-file-icon-manager.c:1848
+#: src/xfdesktop-special-file-icon.c:339 src/xfdesktop-volume-icon.c:756
+msgid "_Open"
+msgstr "_افتح"
+
+#: common/xfdesktop-keyboard-shortcuts.c:110
+msgid "Ope_n With Other Application"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:111
+msgid "Open _Filesystem"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:112
+msgid "Open _Home"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:113
+msgid "Open _Trash"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:114
+msgid "_Rename"
+msgstr "_إعادة التسمية"
+
+#: common/xfdesktop-keyboard-shortcuts.c:115
+#: src/xfdesktop-file-icon-manager.c:1994
+msgid "Cu_t"
+msgstr "ق_ص"
+
+#: common/xfdesktop-keyboard-shortcuts.c:117
+#: src/xfdesktop-file-icon-manager.c:2002
+msgid "_Copy"
+msgstr "_نسخ"
+
+#: common/xfdesktop-keyboard-shortcuts.c:119
+#: src/xfdesktop-file-icon-manager.c:1981
+msgid "_Paste"
+msgstr "_لصق"
+
+#: common/xfdesktop-keyboard-shortcuts.c:121
+msgid "Paste _Into Folder"
+msgstr ""
+
+#: common/xfdesktop-keyboard-shortcuts.c:122
+#: src/xfdesktop-file-icon-manager.c:2025
+msgid "Mo_ve to Trash"
+msgstr "نقل إلى المهملات"
+
+#: common/xfdesktop-keyboard-shortcuts.c:125
+#: src/xfdesktop-special-file-icon.c:355
+msgid "_Empty Trash"
+msgstr "_أفرغ سلة المهملات"
+
+#: common/xfdesktop-keyboard-shortcuts.c:126
+#: src/xfdesktop-file-icon-manager.c:2034
+msgid "_Delete"
+msgstr "_حذف"
+
+#: common/xfdesktop-keyboard-shortcuts.c:129
+msgid "Show _Hidden Files"
+msgstr "أظهر الملفات الم_خبئة"
+
+#: common/xfdesktop-keyboard-shortcuts.c:130
+msgid "_Properties"
+msgstr "_خصائص"
+
+#: settings/main.c:99
+msgid "Settings manager socket"
+msgstr "مقبس مدير الإعدادات"
+
+#: settings/main.c:99
+msgid "SOCKET ID"
+msgstr "مُعرف المقبس"
+
+#: settings/main.c:101
+msgid "Version information"
+msgstr "معلومات الإصدار"
+
+#: settings/main.c:102 src/xfdesktop-application.c:286
+msgid "Enable debug messages"
+msgstr "تفعيل رسائل التصحيح "
+
+#: settings/main.c:120
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "اكتب '%s --help' للمساعدة على الاستخدام."
+
+#: settings/main.c:132
+msgid "The Xfce development team. All rights reserved."
+msgstr "فريق تطوير إكسفس. جميع الحقوق محفوظة."
+
+#: settings/main.c:133
+#, c-format
+msgid "Please report bugs to <%s>."
+msgstr "الرجاء الإبلاغ عن علة في <%s>."
+
+#: settings/main.c:139
+msgid "Desktop Settings"
+msgstr "إعدادات سطح المكتب"
+
+#: settings/main.c:141
+msgid "Unable to contact settings server"
+msgstr "فشل الوصول إلى إعدادات الخادم"
+
+#: settings/main.c:143
+msgid "Quit"
+msgstr "خروج"
+
+#: settings/xfce-backdrop-settings.desktop.in:4
+#: settings/xfdesktop-keyboard-shortcuts-settings.c:42
+#: settings/xfdesktop-settings-ui.glade:162 src/xfce-desktop.c:562
+msgid "Desktop"
+msgstr "سطح المكتب"
+
+#: settings/xfce-backdrop-settings.desktop.in:5
+msgid "Set desktop background and menu and icon behavior"
+msgstr "حدد خلفية سطح المكتب و سلوك القائمة والأيقونات"
+
+#: settings/xfce-backdrop-settings.desktop.in:17
+msgid "desktop;background;wallpaper;settings;xfce;"
+msgstr ""
+
+#: settings/xfdesktop-background-settings.c:416
 #, c-format
 msgid ""
 "<b>%s</b>\n"
 "Type: %s\n"
 "Size: %s"
-msgstr ""
-"<b>%s</b>\n"
-"نوع: %s\n"
-"حجم: %s"
+msgstr "<b>%s</b>\nنوع: %s\nحجم: %s"
 
-#: ../settings/main.c:744
+#: settings/xfdesktop-background-settings.c:500
+#: settings/xfdesktop-background-settings.c:573
+#, c-format
+msgid "Unable to load images from folder \"%s\""
+msgstr ""
+
+#: settings/xfdesktop-background-settings.c:666
 #, c-format
 msgid "Wallpaper for Monitor %d (%s)"
 msgstr "صورة الخلفية للشاشة %d (%s)"
 
-#: ../settings/main.c:747
+#: settings/xfdesktop-background-settings.c:670
 #, c-format
 msgid "Wallpaper for Monitor %d"
 msgstr "صورة الخلفية للمراقب %d"
 
-#: ../settings/main.c:753
+#: settings/xfdesktop-background-settings.c:676
 msgid "Move this dialog to the display you want to edit the settings for."
 msgstr "انقل هذا الحوار إلى العرض الذي تريد تعديل إعداداته"
 
-#: ../settings/main.c:760
+#: settings/xfdesktop-background-settings.c:681
 #, c-format
 msgid "Wallpaper for %s on Monitor %d (%s)"
 msgstr "الخلفية ل %s في المراقب %d (%s)"
 
-#: ../settings/main.c:764
+#: settings/xfdesktop-background-settings.c:686
 #, c-format
 msgid "Wallpaper for %s on Monitor %d"
 msgstr "الخلفية ل %s في المراقب %d"
 
-#: ../settings/main.c:771
+#: settings/xfdesktop-background-settings.c:694
 msgid ""
 "Move this dialog to the display and workspace you want to edit the settings "
 "for."
 msgstr "انقل هذا الحوال إلى عرض ومساحة العمل التي تريد تحرير إعداداتها"
 
 #. Single monitor and single workspace
-#: ../settings/main.c:779
-#, c-format
+#: settings/xfdesktop-background-settings.c:703
 msgid "Wallpaper for my desktop"
 msgstr "صورة الخلفية لسطح المكتب"
 
 #. Single monitor and per workspace wallpaper
-#: ../settings/main.c:785
+#: settings/xfdesktop-background-settings.c:709
 #, c-format
 msgid "Wallpaper for %s"
 msgstr "خلفية لـ %s"
 
-#: ../settings/main.c:790
+#: settings/xfdesktop-background-settings.c:714
 msgid "Move this dialog to the workspace you want to edit the settings for."
 msgstr "انقل هذه النافذة إلى مساحة العمل التي تريد تغيير إعداداتها."
 
-#: ../settings/main.c:1243
+#: settings/xfdesktop-background-settings.c:1038
 msgid "Image selection is unavailable while the image style is set to None."
 msgstr "الصورة المحددة غير متوفرة عندما يتم تحديد بدون لنمط الصور."
 
-#: ../settings/main.c:1603
+#: settings/xfdesktop-background-settings.c:1478
 msgid "Spanning screens"
 msgstr "تمديد الشاشة"
 
-#. TRANSLATORS: Please split the message in half with '\n' so the dialog will
-#. not be too wide.
-#: ../settings/main.c:1784
-msgid ""
-"Would you like to arrange all existing\n"
-"icons according to the selected orientation?"
-msgstr ""
-"هل تريد ترتيب جميع الأيقونات\n"
-"الموجودة طبقا للاتجاه المحدد؟"
-
-#: ../settings/main.c:1790
-msgid "Arrange icons"
-msgstr "ترتيب الأيقونات"
-
-#. printf is to be translator-friendly
-#: ../settings/main.c:1798 ../src/xfdesktop-file-icon-manager.c:817
-#: ../src/xfdesktop-file-icon-manager.c:1410
-#, c-format
-msgid "Unable to launch \"%s\":"
-msgstr "فشل في إطلاق \"%s\":"
-
-#: ../settings/main.c:1799 ../src/xfdesktop-file-icon-manager.c:819
-#: ../src/xfdesktop-file-icon-manager.c:1159
-#: ../src/xfdesktop-file-icon-manager.c:1411 ../src/xfdesktop-file-utils.c:744
-#: ../src/xfdesktop-file-utils.c:1313 ../src/xfdesktop-file-utils.c:1338
-#: ../src/xfdesktop-file-utils.c:1445 ../src/xfdesktop-file-utils.c:1509
-msgid "Launch Error"
-msgstr "خطأ في الإقلاع"
-
-#: ../settings/main.c:1801 ../settings/xfdesktop-settings-ui.glade.h:20
-#: ../src/xfdesktop-file-icon-manager.c:585
-#: ../src/xfdesktop-file-icon-manager.c:604
-#: ../src/xfdesktop-file-icon-manager.c:689
-#: ../src/xfdesktop-file-icon-manager.c:821
-#: ../src/xfdesktop-file-icon-manager.c:1163
-#: ../src/xfdesktop-file-icon-manager.c:1413
-#: ../src/xfdesktop-file-icon-manager.c:3077 ../src/xfdesktop-file-utils.c:747
-#: ../src/xfdesktop-file-utils.c:767 ../src/xfdesktop-file-utils.c:822
-#: ../src/xfdesktop-file-utils.c:886 ../src/xfdesktop-file-utils.c:947
-#: ../src/xfdesktop-file-utils.c:1008 ../src/xfdesktop-file-utils.c:1056
-#: ../src/xfdesktop-file-utils.c:1111 ../src/xfdesktop-file-utils.c:1169
-#: ../src/xfdesktop-file-utils.c:1256 ../src/xfdesktop-file-utils.c:1317
-#: ../src/xfdesktop-file-utils.c:1340 ../src/xfdesktop-file-utils.c:1449
-#: ../src/xfdesktop-file-utils.c:1513 ../src/xfdesktop-file-utils.c:1584
-#: ../src/xfdesktop-file-utils.c:1654 ../src/xfdesktop-volume-icon.c:508
-#: ../src/xfdesktop-volume-icon.c:554 ../src/xfdesktop-volume-icon.c:638
-msgid "_Close"
-msgstr "_إغلاق"
-
-#: ../settings/main.c:1961
+#: settings/xfdesktop-background-settings.c:1856
 msgid "Image files"
 msgstr "ملفات صور"
 
 #. Change the title of the file chooser dialog
-#: ../settings/main.c:1969
+#: settings/xfdesktop-background-settings.c:1864
 msgid "Select a Directory"
 msgstr "اختر المجلد"
 
-#: ../settings/main.c:2178
-msgid "Settings manager socket"
-msgstr "مقبس مدير الإعدادات"
+#: settings/xfdesktop-file-icon-settings.c:94
+#: src/xfdesktop-special-file-icon.c:236 src/xfdesktop-special-file-icon.c:274
+msgid "Home"
+msgstr "المنزل"
 
-#: ../settings/main.c:2178
-msgid "SOCKET ID"
-msgstr "مُعرف المقبس"
+#: settings/xfdesktop-file-icon-settings.c:96
+#: src/xfdesktop-special-file-icon.c:238 src/xfdesktop-special-file-icon.c:272
+msgid "File System"
+msgstr "ملفات النظام"
 
-#: ../settings/main.c:2179
-msgid "Version information"
-msgstr "معلومات الإصدار"
+#: settings/xfdesktop-file-icon-settings.c:98
+#: src/xfdesktop-special-file-icon.c:240
+msgid "Trash"
+msgstr "المهملات"
 
-#: ../settings/main.c:2180 ../src/xfdesktop-application.c:848
-msgid "Enable debug messages"
-msgstr "تفعيل رسائل التصحيح "
+#: settings/xfdesktop-file-icon-settings.c:100
+msgid "Devices"
+msgstr "أجهزة"
 
-#: ../settings/main.c:2204
+#: settings/xfdesktop-file-icon-settings.c:102
+msgid "Network Shares"
+msgstr "مشاركة الشبكة"
+
+#: settings/xfdesktop-file-icon-settings.c:104
+msgid "Removable Disks and Drives"
+msgstr ""
+
+#: settings/xfdesktop-file-icon-settings.c:106
+msgid "Fixed Disks and Drives"
+msgstr ""
+
+#: settings/xfdesktop-file-icon-settings.c:108
+msgid "Other Devices"
+msgstr "أجهزة أخرى"
+
+#. TRANSLATORS: Please split the message in half with '\n' so the dialog will
+#. not be too wide.
+#: settings/xfdesktop-icon-settings.c:90
+msgid ""
+"Would you like to arrange all existing\n"
+"icons according to the selected orientation?"
+msgstr "هل تريد ترتيب جميع الأيقونات\nالموجودة طبقا للاتجاه المحدد؟"
+
+#: settings/xfdesktop-icon-settings.c:94
+msgid "Arrange icons"
+msgstr "ترتيب الأيقونات"
+
+#. printf is to be translator-friendly
+#: settings/xfdesktop-icon-settings.c:98 src/xfdesktop-file-icon-manager.c:783
+#: src/xfdesktop-file-icon-manager.c:1348
 #, c-format
-msgid "Type '%s --help' for usage."
-msgstr "اكتب '%s --help' للمساعدة على الاستخدام."
+msgid "Unable to launch \"%s\":"
+msgstr "فشل في إطلاق \"%s\":"
 
-#: ../settings/main.c:2216
-msgid "The Xfce development team. All rights reserved."
-msgstr "فريق تطوير إكسفس. جميع الحقوق محفوظة."
+#: settings/xfdesktop-icon-settings.c:99 src/xfdesktop-file-icon-manager.c:785
+#: src/xfdesktop-file-icon-manager.c:1029
+#: src/xfdesktop-file-icon-manager.c:1077
+#: src/xfdesktop-file-icon-manager.c:1350 src/xfdesktop-file-utils.c:581
+#: src/xfdesktop-file-utils.c:1465 src/xfdesktop-file-utils.c:1490
+#: src/xfdesktop-file-utils.c:1597 src/xfdesktop-file-utils.c:1661
+msgid "Launch Error"
+msgstr "خطأ في الإقلاع"
 
-#: ../settings/main.c:2217
-#, c-format
-msgid "Please report bugs to <%s>."
-msgstr "الرجاء الإبلاغ عن علة في <%s>."
+#: settings/xfdesktop-icon-settings.c:101
+#: settings/xfdesktop-settings-ui.glade:198
+#: src/xfdesktop-file-icon-manager.c:721 src/xfdesktop-file-icon-manager.c:787
+#: src/xfdesktop-file-icon-manager.c:1033
+#: src/xfdesktop-file-icon-manager.c:1081
+#: src/xfdesktop-file-icon-manager.c:1352
+#: src/xfdesktop-file-icon-manager.c:3674 src/xfdesktop-file-utils.c:584
+#: src/xfdesktop-file-utils.c:702 src/xfdesktop-file-utils.c:757
+#: src/xfdesktop-file-utils.c:821 src/xfdesktop-file-utils.c:882
+#: src/xfdesktop-file-utils.c:943 src/xfdesktop-file-utils.c:991
+#: src/xfdesktop-file-utils.c:1010 src/xfdesktop-file-utils.c:1124
+#: src/xfdesktop-file-utils.c:1220 src/xfdesktop-file-utils.c:1408
+#: src/xfdesktop-file-utils.c:1469 src/xfdesktop-file-utils.c:1492
+#: src/xfdesktop-file-utils.c:1601 src/xfdesktop-file-utils.c:1665
+#: src/xfdesktop-file-utils.c:1736 src/xfdesktop-file-utils.c:1806
+#: src/xfdesktop-volume-icon.c:395 src/xfdesktop-volume-icon.c:443
+#: src/xfdesktop-volume-icon.c:525
+msgid "_Close"
+msgstr "_إغلاق"
 
-#: ../settings/main.c:2224
-msgid "Desktop Settings"
-msgstr "إعدادات سطح المكتب"
+#: settings/xfdesktop-keyboard-shortcuts-settings.c:52
+msgid "Icons"
+msgstr "أيقونات"
 
-#: ../settings/main.c:2226
-msgid "Unable to contact settings server"
-msgstr "فشل الوصول إلى إعدادات الخادم"
+#: settings/xfdesktop-keyboard-shortcuts-settings.c:61
+msgid "Window Icons"
+msgstr ""
 
-#: ../settings/main.c:2228
-msgid "Quit"
-msgstr "خروج"
+#: settings/xfdesktop-keyboard-shortcuts-settings.c:71
+msgid "File Icons"
+msgstr ""
 
-#: ../settings/xfce-backdrop-settings.desktop.in.in.h:1
-#: ../settings/xfdesktop-settings-ui.glade.h:18 ../src/xfce-desktop.c:1158
-msgid "Desktop"
-msgstr "سطح المكتب"
-
-#: ../settings/xfce-backdrop-settings.desktop.in.in.h:2
-msgid "Set desktop background and menu and icon behavior"
-msgstr "حدد خلفية سطح المكتب و سلوك القائمة والأيقونات"
-
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:1
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:19
 msgid "Solid color"
 msgstr "لون صلب"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:2
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:22
 msgid "Horizontal gradient"
 msgstr "تدرج أفقي"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:3
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:25
 msgid "Vertical gradient"
 msgstr "تدرج عمودي"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:4
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:28
 msgid "Transparent"
 msgstr "شفافية"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:5
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:137
 msgid "Choose the folder to select wallpapers from."
 msgstr "اختر مجلداً لتحديد الخلفية منه"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:6
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:148
 msgid "Apply"
 msgstr "تطبيق"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:7
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:163
 msgid "St_yle:"
 msgstr "أسل_وب:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:8
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:178
 msgid "Specify how the image will be resized to fit the screen."
 msgstr "حدد كيف سيتم تغيير حجم الصورة لتناسب الشاشة"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:9
-#: ../settings/xfdesktop-settings-ui.glade.h:4
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:180
+#: settings/xfdesktop-settings-ui.glade:60
+#: settings/xfdesktop-settings-ui.glade:97
+#: settings/xfdesktop-settings-ui.glade:117
 msgid "None"
 msgstr "لاشئ"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:10
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:181
 msgid "Centered"
 msgstr "توسيط"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:11
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:182
 msgid "Tiled"
 msgstr "متكرر"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:12
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:183
 msgid "Stretched"
 msgstr "تمدد"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:13
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:184
 msgid "Scaled"
 msgstr "محجّم"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:14
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:185
 msgid "Zoomed"
 msgstr "مكبر"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:15
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:186
 msgid "Spanning Screens"
 msgstr "تمديد الشاشة"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:16
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:199
 msgid "Specify the style of the color drawn behind the backdrop image."
 msgstr "حدد نمط من لون رسمها خلف صورة الخلفية"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:17
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:221
 msgid "Specifies the solid color, or the \"left\" or \"top\" color of the gradient."
 msgstr "تعيين لون خالص، \"يسار\" أو \"أعلى\" لون التدرج."
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:18
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:222
 msgid "Select First Color"
 msgstr "حدد اللون الأول"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:19
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:235
 msgid "Specifies the \"right\" or \"bottom\" color of the gradient."
 msgstr "تعيين  لون خالص، \"يمين\" أو \"أسفل\" لون التدرج."
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:20
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:236
 msgid "Select Second Color"
 msgstr "حدد اللون التاني"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:21
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:245
 msgid "Apply to all _workspaces"
 msgstr "تطبيق على كل_مساحات العمل"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:22
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:263
 msgid "_Folder:"
 msgstr "_مجلد:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:23
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:278
 msgid "C_olor:"
 msgstr "_لون:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:24
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:333
 msgid "Change the _background "
 msgstr "تغيير ال_خلفية"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:25
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:338
 msgid ""
 "Automatically select a different background from the current directory."
 msgstr "اختيار خلفية مختلفة تلقائيا من المجلد الحالي."
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:26
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:354
 msgid "Specify how often the background will change."
 msgstr "حدد كيف سيتم تغيير الخلفية"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:27
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:356
 msgid "in seconds:"
 msgstr "بالثواني:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:28
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:357
 msgid "in minutes:"
 msgstr "بالدقائق:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:29
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:358
 msgid "in hours:"
 msgstr "بالساعات:"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:30
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:359
 msgid "at start up"
 msgstr "عند بدء التشغيل"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:31
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:360
 msgid "every hour"
 msgstr "كل ساعة"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:32
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:361
 msgid "every day"
 msgstr "كل يوم"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:33
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:362
 msgid "chronologically"
 msgstr "زمنيا"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:34
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:377
 msgid "Amount of time before a different background is selected."
 msgstr "المدة الزمنية قبل أن يتم اختيار خلفية أخرى."
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:35
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:388
 msgid "_Random Order"
 msgstr "_ترتيب عشوائي"
 
-#: ../settings/xfdesktop-settings-appearance-frame-ui.glade.h:36
+#: settings/xfdesktop-settings-appearance-frame-ui.glade:394
 msgid ""
 "Randomly selects another image from the same directory when the wallpaper is"
 " to cycle."
-msgstr ""
-"تحديد صورة اخرى عشوائيا من نفس الدليل عندما تكون الخلفيات على شكل حلقة."
+msgstr "تحديد صورة اخرى عشوائيا من نفس الدليل عندما تكون الخلفيات على شكل حلقة."
 
-#: ../settings/xfdesktop-settings-ui.glade.h:1
+#: settings/xfdesktop-settings-ui.glade:43
+#: settings/xfdesktop-settings-ui.glade:80
 msgid "Left"
 msgstr "يسار"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:2
+#: settings/xfdesktop-settings-ui.glade:46
+#: settings/xfdesktop-settings-ui.glade:83
 msgid "Middle"
 msgstr "وسط"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:3
+#: settings/xfdesktop-settings-ui.glade:49
+#: settings/xfdesktop-settings-ui.glade:86
 msgid "Right"
 msgstr "يمين"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:5
+#: settings/xfdesktop-settings-ui.glade:63
+#: settings/xfdesktop-settings-ui.glade:100
 msgid "Shift"
 msgstr "مفتاح Shift"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:6
+#: settings/xfdesktop-settings-ui.glade:66
+#: settings/xfdesktop-settings-ui.glade:103
 msgid "Alt"
 msgstr "مفتاح Alt"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:7
+#: settings/xfdesktop-settings-ui.glade:69
+#: settings/xfdesktop-settings-ui.glade:106
 msgid "Control"
 msgstr "تحكم"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:8
+#: settings/xfdesktop-settings-ui.glade:120
 msgid "Minimized application icons"
 msgstr "تصغير أيقونة التطبيق"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:9
+#: settings/xfdesktop-settings-ui.glade:123
 msgid "File/launcher icons"
 msgstr "ملف/مٌطلق أيقونات"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:10
+#: settings/xfdesktop-settings-ui.glade:134
 msgid "Top Left Vertical"
 msgstr "في الأعلى على اليسار عموديا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:11
+#: settings/xfdesktop-settings-ui.glade:137
 msgid "Top Left Horizontal"
 msgstr "في الأعلى على اليسار أفقيا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:12
+#: settings/xfdesktop-settings-ui.glade:140
 msgid "Top Right Vertical"
 msgstr "في الأعلى على اليمين عموديا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:13
+#: settings/xfdesktop-settings-ui.glade:143
 msgid "Top Right Horizontal"
 msgstr "في الأعلى على اليمين أفقيا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:14
+#: settings/xfdesktop-settings-ui.glade:146
 msgid "Bottom Left Vertical"
 msgstr "في الأسفل على اليسار عموديا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:15
+#: settings/xfdesktop-settings-ui.glade:149
 msgid "Bottom Left Horizontal"
 msgstr "في الأسفل على اليسار أفقيا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:16
+#: settings/xfdesktop-settings-ui.glade:152
 msgid "Bottom Right Vertical"
 msgstr "في الأسفل على اليمين عموديا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:17
+#: settings/xfdesktop-settings-ui.glade:155
 msgid "Bottom Right Horizontal"
 msgstr "في الأسفل على اليمين أفقيا"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:19
+#: settings/xfdesktop-settings-ui.glade:182
 msgid "_Help"
 msgstr "_مساعدة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:21
+#: settings/xfdesktop-settings-ui.glade:238
 msgid "_Background"
 msgstr "_خلفية"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:22
-msgid "Enable \"Delete\" option in file context menu"
-msgstr ""
-
-#: ../settings/xfdesktop-settings-ui.glade.h:23
+#: settings/xfdesktop-settings-ui.glade:271
 msgid "Include applications menu on _desktop right click"
 msgstr "تضمين قائمة التطبيقات على النقرة اليمنى في _سطح المكتب"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:24
+#: settings/xfdesktop-settings-ui.glade:304
 msgid "_Button:"
 msgstr "_زر:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:25
+#: settings/xfdesktop-settings-ui.glade:338
 msgid "Mo_difier:"
 msgstr "تغي_ير:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:26
+#: settings/xfdesktop-settings-ui.glade:376
 msgid "Show _application icons in menu"
 msgstr "أظهر أيقونات التطبيقات في القائمة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:27
+#: settings/xfdesktop-settings-ui.glade:398
 msgid "_Edit desktop menu"
 msgstr "_حرر قائمة سطح المكتب"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:28
+#: settings/xfdesktop-settings-ui.glade:432
 msgid "<b>Desktop Menu</b>"
 msgstr "<b>قائمة سطح المكتب</b>"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:29
+#: settings/xfdesktop-settings-ui.glade:461
 msgid "Show _window list menu on desktop middle click"
 msgstr "عرض قائمة بمساحات العمل عنذ الضغظ على الزر الأوسط للفأرة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:30
+#: settings/xfdesktop-settings-ui.glade:494
 msgid "B_utton:"
 msgstr "زر:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:31
+#: settings/xfdesktop-settings-ui.glade:528
 msgid "Modi_fier:"
 msgstr "ت_غيير:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:32
+#: settings/xfdesktop-settings-ui.glade:566
 msgid "Sh_ow application icons in menu"
 msgstr "أظهر أي_قونات التطبيقات في القائمة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:33
+#: settings/xfdesktop-settings-ui.glade:583
+msgid "List windows on a_ll workspaces"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:600
 msgid "Show workspace _names in list"
 msgstr "عرض أسماء مساحات العمل في قائمة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:34
+#: settings/xfdesktop-settings-ui.glade:623
 msgid "Use _submenus for the windows in each workspace"
 msgstr "استعمال قوائم فرعية للنوافذ في كل مساحات العمل"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:35
+#: settings/xfdesktop-settings-ui.glade:646
 msgid "Show s_ticky windows only in active workspace"
 msgstr "عرض النوافذ المثبتة فقط في مساحة العمل الحالية"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:36
+#: settings/xfdesktop-settings-ui.glade:662
+msgid "Show a section listing all _urgent windows on other workspaces"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:678
 msgid "Show a_dd and remove workspace options in list"
 msgstr "اعرض إضافة وحذف خيارات مساحات العمل في القائمة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:37
+#: settings/xfdesktop-settings-ui.glade:707
 msgid "<b>Window List Menu</b>"
 msgstr "<b>قائمة النوافذ</b>"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:38
+#: settings/xfdesktop-settings-ui.glade:728
 msgid "_Menus"
 msgstr "_قوائم"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:39
+#: settings/xfdesktop-settings-ui.glade:753
 msgid "Icon _type:"
 msgstr "نو_ع الأيقونة:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:40
+#: settings/xfdesktop-settings-ui.glade:813
 msgid "Icon _size:"
 msgstr "ح_جم الأيقونة:"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:41
+#: settings/xfdesktop-settings-ui.glade:829
 msgid "48"
 msgstr "48"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:42
-msgid "Icons _orientation:"
-msgstr "اتجاه_الأيقونات"
+#: settings/xfdesktop-settings-ui.glade:840
+msgid "Fo_nt size:"
+msgstr ""
 
-#: ../settings/xfdesktop-settings-ui.glade.h:43
-msgid "Show icons on primary display"
-msgstr "عرض ايقونات على الشاشة الأساسية"
-
-#: ../settings/xfdesktop-settings-ui.glade.h:44
-msgid "Use custom _font size:"
-msgstr "إستعما_ل حجم خط مخصص:"
-
-#: ../settings/xfdesktop-settings-ui.glade.h:45
+#: settings/xfdesktop-settings-ui.glade:860
 msgid "12"
 msgstr "12"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:46
-msgid "Show icon tooltips. Size:"
-msgstr "أظهر حجم أيقونة التلميح:"
+#: settings/xfdesktop-settings-ui.glade:871
+msgid "Show icon toolt_ips. Size:"
+msgstr ""
 
-#: ../settings/xfdesktop-settings-ui.glade.h:47
+#: settings/xfdesktop-settings-ui.glade:890
 msgid "Size of the tooltip preview image."
 msgstr "حجم صورة عرض التلميحة"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:48
+#: settings/xfdesktop-settings-ui.glade:892
 msgid "64"
 msgstr "64"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:49
-msgid "Show t_humbnails"
-msgstr "عرض ال_مصغرات"
-
-#: ../settings/xfdesktop-settings-ui.glade.h:50
-msgid ""
-"Select this option to display preview-able files on the desktop as "
-"automatically generated thumbnail icons."
+#: settings/xfdesktop-settings-ui.glade:903
+msgid "Font co_lor:"
 msgstr ""
-"حدد هذا الخيار لعرض ملفات معاينة على سطح المكتب كرموز مصغرة يتم إنشاؤه "
-"تلقائياً."
 
-#: ../settings/xfdesktop-settings-ui.glade.h:51
-msgid "Show hidden files on the desktop"
-msgstr "اعرض الملفات المخفية على سطح المكتب"
+#: settings/xfdesktop-settings-ui.glade:941
+msgid "Label bac_kground color:"
+msgstr ""
 
-#: ../settings/xfdesktop-settings-ui.glade.h:52
-msgid "Single _click to activate items"
-msgstr "نقرة _واحدة لتفعيل العناصر"
-
-#: ../settings/xfdesktop-settings-ui.glade.h:53
+#: settings/xfdesktop-settings-ui.glade:984
 msgid "<b>Appearance</b>"
 msgstr "<b>مظهر</b>"
 
-#: ../settings/xfdesktop-settings-ui.glade.h:54
-msgid "<b>Default Icons</b>"
-msgstr "<b>أيقونات الإفتراضية</b>"
+#: settings/xfdesktop-settings-ui.glade:1019
+msgid "Placement _direction:"
+msgstr ""
 
-#: ../settings/xfdesktop-settings-ui.glade.h:55
-msgid "_Icons"
-msgstr "_أيقونات"
+#: settings/xfdesktop-settings-ui.glade:1059
+msgid "Show icons only on _primary display"
+msgstr ""
 
-#: ../src/menu.c:94
+#: settings/xfdesktop-settings-ui.glade:1074
+msgid "Single click to _activate items"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1090
+msgid "_Underline text on hover"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1106
+msgid "Show confirmation dialog before arran_ging icons"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1127
+msgid "Behavior"
+msgstr "السلوك"
+
+#: settings/xfdesktop-settings-ui.glade:1150
+msgid "Desktop _Icons"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1204
+msgid ""
+"File/Launcher icons are not enabled. You can enable them from the \"Desktop "
+"Icons\" tab."
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1250
+msgid "Show hidden files on the desktop"
+msgstr "اعرض الملفات المخفية على سطح المكتب"
+
+#: settings/xfdesktop-settings-ui.glade:1266
+msgid "Show t_humbnails"
+msgstr "عرض ال_مصغرات"
+
+#: settings/xfdesktop-settings-ui.glade:1271
+msgid ""
+"Select this option to display preview-able files on the desktop as "
+"automatically generated thumbnail icons."
+msgstr "حدد هذا الخيار لعرض ملفات معاينة على سطح المكتب كرموز مصغرة يتم إنشاؤه تلقائياً."
+
+#: settings/xfdesktop-settings-ui.glade:1283
+msgid "Show \"Delete\" option in file context menu"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1300
+msgid "_Arrange folders before files"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1321
+msgid "General"
+msgstr "عام"
+
+#: settings/xfdesktop-settings-ui.glade:1365
+msgid "Default Icons"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1395
+msgid "_File/Launcher Icons"
+msgstr ""
+
+#: settings/xfdesktop-settings-ui.glade:1421
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#: src/menu.c:86
 msgid "_Applications"
 msgstr "_تطبيقات"
 
-#: ../src/windowlist.c:75
-#, c-format
-msgid "Remove Workspace %d"
-msgstr "حذف مساحة العمل %d"
-
-#: ../src/windowlist.c:76
-#, c-format
-msgid ""
-"Do you really want to remove workspace %d?\n"
-"Note: You are currently on workspace %d."
-msgstr ""
-"هل تريد فعلا حذف مساحة العمل %d؟\n"
-"تنبيه: أنت حاليا في مساحة العمل %d."
-
-#: ../src/windowlist.c:80
-#, c-format
-msgid "Remove Workspace '%s'"
-msgstr "حذف مساحة العمل '%s'"
-
-#: ../src/windowlist.c:81
-#, c-format
-msgid ""
-"Do you really want to remove workspace '%s'?\n"
-"Note: You are currently on workspace '%s'."
-msgstr ""
-"هل تريد فعلا حذف مساحة العمل '%s'؟\n"
-"تنبيه: أنت حاليا في مساحة العمل '%s'."
-
-#. Popup a dialog box confirming that the user wants to remove a
-#. * workspace
-#: ../src/windowlist.c:88
-msgid "Remove"
-msgstr "حذف"
-
-#: ../src/windowlist.c:283
+#: src/windowlist.c:83
 msgid "Window List"
 msgstr "قائمة النوافذ"
 
-#: ../src/windowlist.c:311
-#, c-format
-msgid "<b>Workspace %d</b>"
-msgstr "<b>ساحة العمل %d</b>"
-
-#: ../src/windowlist.c:407 ../src/windowlist.c:409
-msgid "_Add Workspace"
-msgstr "_أضف مساحة عمل"
-
-#: ../src/windowlist.c:417
-#, c-format
-msgid "_Remove Workspace %d"
-msgstr "_حذف مساحة العمل %d"
-
-#: ../src/windowlist.c:420
-#, c-format
-msgid "_Remove Workspace '%s'"
-msgstr "_حذف ساحة العمل '%s'"
-
-#: ../src/xfdesktop-application.c:840
+#: src/xfdesktop-application.c:278
 msgid "Display version information"
 msgstr "أظهر معلومات النسخة"
 
-#: ../src/xfdesktop-application.c:841
+#: src/xfdesktop-application.c:279
 msgid "Reload all settings"
 msgstr "أعد تحميل كل الإعدادات"
 
-#: ../src/xfdesktop-application.c:842
+#: src/xfdesktop-application.c:280
 msgid "Advance to the next wallpaper on the current workspace"
 msgstr "التقدم لخلفية الشاشة التالية في مساحة العمل الحالية"
 
-#: ../src/xfdesktop-application.c:843
+#: src/xfdesktop-application.c:281
 msgid "Pop up the menu (at the current mouse position)"
 msgstr "طفو القائمة على السطح (عند الموضع الحالي للفأرة)"
 
-#: ../src/xfdesktop-application.c:844
+#: src/xfdesktop-application.c:282
 msgid "Pop up the window list (at the current mouse position)"
 msgstr "طفو قائمة نوافذ (عند الموضع الحالي للفأرة)"
 
-#: ../src/xfdesktop-application.c:846
+#: src/xfdesktop-application.c:284
 msgid "Automatically arrange all the icons on the desktop"
 msgstr "ترتيب تلقائي لكل أيقونات سطح المكتب"
 
-#: ../src/xfdesktop-application.c:849
+#: src/xfdesktop-application.c:287
 msgid "Disable debug messages"
 msgstr "عطل رسائل التصحيح"
 
-#: ../src/xfdesktop-application.c:850
+#: src/xfdesktop-application.c:289
 msgid "Do not wait for a window manager on startup"
 msgstr "عدم إنتظار مدير النوافذ عند بدء التشغيل"
 
-#: ../src/xfdesktop-application.c:851
+#: src/xfdesktop-application.c:291
 msgid "Cause xfdesktop to quit"
 msgstr "سبب إنهاء xfdesktop"
 
-#: ../src/xfdesktop-application.c:866
-#, c-format
-msgid "Failed to parse arguments: %s\n"
-msgstr "فشل تحليل الحجج: %s\n"
-
-#: ../src/xfdesktop-application.c:877
+#: src/xfdesktop-application.c:1195
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "هذا %s إصدار %s, يعمل على إكسفس %s.\n"
 
-#: ../src/xfdesktop-application.c:879
+#: src/xfdesktop-application.c:1197
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "تم بناءه باستخدام GTK+ %d.%d.%d, الموصل مع GTK+ %d.%d.%d."
 
-#: ../src/xfdesktop-application.c:883
-#, c-format
+#: src/xfdesktop-application.c:1201
 msgid "Build options:\n"
 msgstr "تفضيلات البناء:\n"
 
-#: ../src/xfdesktop-application.c:884
+#: src/xfdesktop-application.c:1202
 #, c-format
 msgid "    Desktop Menu:        %s\n"
 msgstr "قائمة سطح المكتب: %s\n"
 
-#: ../src/xfdesktop-application.c:886 ../src/xfdesktop-application.c:893
-#: ../src/xfdesktop-application.c:900
+#: src/xfdesktop-application.c:1204 src/xfdesktop-application.c:1211
+#: src/xfdesktop-application.c:1218
 msgid "enabled"
 msgstr "مفعل"
 
-#: ../src/xfdesktop-application.c:888 ../src/xfdesktop-application.c:895
-#: ../src/xfdesktop-application.c:902
+#: src/xfdesktop-application.c:1206 src/xfdesktop-application.c:1213
+#: src/xfdesktop-application.c:1220
 msgid "disabled"
 msgstr "غير مفعل"
 
-#: ../src/xfdesktop-application.c:891
+#: src/xfdesktop-application.c:1209
 #, c-format
 msgid "    Desktop Icons:       %s\n"
 msgstr "أيقونات سطح المكتب: %s\n"
 
-#: ../src/xfdesktop-application.c:898
+#: src/xfdesktop-application.c:1216
 #, c-format
 msgid "    Desktop File Icons:  %s\n"
 msgstr "أيقونات ملف سطح المكتب: %s\n"
 
-#: ../src/xfdesktop-file-icon-manager.c:577
-#: ../src/xfdesktop-file-icon-manager.c:595
-#, c-format
-msgid "Could not create the desktop folder \"%s\""
-msgstr "لا يمكن إنشاء مجلد سطح المكتب \"%s\""
-
-#: ../src/xfdesktop-file-icon-manager.c:582
-#: ../src/xfdesktop-file-icon-manager.c:600
-msgid "Desktop Folder Error"
-msgstr "خطأ في مجلد سطح المكتب"
-
-#: ../src/xfdesktop-file-icon-manager.c:602
-msgid ""
-"A normal file with the same name already exists. Please delete or rename it."
-msgstr "ملف عادي موجود أصلا بنفس الاسم. الرجاء حذفه أو إعادة تسميته."
-
-#: ../src/xfdesktop-file-icon-manager.c:686 ../src/xfdesktop-file-utils.c:818
-#: ../src/xfdesktop-file-utils.c:882
+#: src/xfdesktop-file-icon-manager.c:718 src/xfdesktop-file-utils.c:753
+#: src/xfdesktop-file-utils.c:817
 msgid "Rename Error"
 msgstr "خطأ أثناء إعادة التسمية"
 
-#: ../src/xfdesktop-file-icon-manager.c:687 ../src/xfdesktop-file-utils.c:883
+#: src/xfdesktop-file-icon-manager.c:719 src/xfdesktop-file-utils.c:818
 msgid "The files could not be renamed"
 msgstr "لا يمكن إعادة تسمية الملفات"
 
-#: ../src/xfdesktop-file-icon-manager.c:688
+#: src/xfdesktop-file-icon-manager.c:720
 msgid "None of the icons selected support being renamed."
 msgstr "لا تدعم أي من الرموز المحددة إعادة تسميته."
 
-#: ../src/xfdesktop-file-icon-manager.c:1013
-msgid ""
-"This will reorder all desktop items and place them on different screen positions.\n"
-"Are you sure?"
-msgstr ""
-
-#: ../src/xfdesktop-file-icon-manager.c:1017
-msgid "_OK"
-msgstr "_موافق"
-
-#: ../src/xfdesktop-file-icon-manager.c:1085
+#: src/xfdesktop-file-icon-manager.c:978
 #, c-format
 msgid "_Open With \"%s\""
 msgstr "_افتح باستخدام\"%s\""
 
-#: ../src/xfdesktop-file-icon-manager.c:1088
+#: src/xfdesktop-file-icon-manager.c:981
 #, c-format
 msgid "Open With \"%s\""
 msgstr "افتح باستخدام\"%s\""
 
-#: ../src/xfdesktop-file-icon-manager.c:1161
+#: src/xfdesktop-file-icon-manager.c:1031
+#: src/xfdesktop-file-icon-manager.c:1079
 msgid ""
 "Unable to launch \"exo-desktop-item-edit\", which is required to create and "
 "edit launchers and links on the desktop."
-msgstr ""
-"فشل في تنفيذ \"exo-desktop-item-edit\", الضروري لإنشاء و تحرير المطلق و "
-"روابط على سطح المكتب."
+msgstr "فشل في تنفيذ \"exo-desktop-item-edit\", الضروري لإنشاء و تحرير المطلق و روابط على سطح المكتب."
 
-#: ../src/xfdesktop-file-icon-manager.c:1526
+#: src/xfdesktop-file-icon-manager.c:1453
+#, c-format
+msgid ""
+"Would you like to assign an existing desktop icon layout to monitor "
+"<b>%s</b>?"
+msgstr ""
+
+#: src/xfdesktop-file-icon-manager.c:1461
+msgid "Monitors"
+msgstr ""
+
+#: src/xfdesktop-file-icon-manager.c:1747
 msgid "_Open all"
 msgstr "_افتح الكل"
 
-#: ../src/xfdesktop-file-icon-manager.c:1546
+#: src/xfdesktop-file-icon-manager.c:1759
 msgid "Create _Launcher..."
 msgstr "أنشئ م_طلقة..."
 
-#: ../src/xfdesktop-file-icon-manager.c:1560
+#: src/xfdesktop-file-icon-manager.c:1769
 msgid "Create _URL Link..."
 msgstr "أنشئ و_صلة..."
 
-#: ../src/xfdesktop-file-icon-manager.c:1574
+#: src/xfdesktop-file-icon-manager.c:1779
 msgid "Create _Folder..."
 msgstr "أنشئ مجلد..."
 
-#: ../src/xfdesktop-file-icon-manager.c:1586
-msgid "Create _Document"
-msgstr "أنشئ _مستند"
-
-#: ../src/xfdesktop-file-icon-manager.c:1611
+#: src/xfdesktop-file-icon-manager.c:1820
 msgid "No templates installed"
 msgstr "لا قوالب مثبتة"
 
-#: ../src/xfdesktop-file-icon-manager.c:1627
+#: src/xfdesktop-file-icon-manager.c:1838
 msgid "_Empty File"
 msgstr "_ملف فارغ"
 
-#: ../src/xfdesktop-file-icon-manager.c:1637
-#: ../src/xfdesktop-special-file-icon.c:523 ../src/xfdesktop-volume-icon.c:868
-msgid "_Open"
-msgstr "_افتح"
+#: src/xfdesktop-file-icon-manager.c:1848
+msgid "_Open All"
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:1654
+#: src/xfdesktop-file-icon-manager.c:1861
 msgid "_Execute"
 msgstr "_تنفيذ"
 
-#: ../src/xfdesktop-file-icon-manager.c:1672
-msgid "_Edit Launcher"
-msgstr "_تحرير مطلق"
+#: src/xfdesktop-file-icon-manager.c:1874
+msgid "Edit _Launcher"
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:1731
-msgid "Open With"
-msgstr "إفتح بـ"
+#: src/xfdesktop-file-icon-manager.c:1922
+msgid "Ope_n With"
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:1758
-#: ../src/xfdesktop-file-icon-manager.c:1783
-msgid "Open With Other _Application..."
-msgstr "أفتح بتطبيق أخر..."
+#: src/xfdesktop-file-icon-manager.c:1950
+#: src/xfdesktop-file-icon-manager.c:1967
+msgid "Ope_n With Other Application..."
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:1769
-msgid "Set _Default Application..."
-msgstr "تعيين التطبيق الافتراضي_"
+#: src/xfdesktop-file-icon-manager.c:1958
+msgid "Set Defa_ult Application..."
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:1801
-msgid "_Paste"
-msgstr "_لصق"
-
-#: ../src/xfdesktop-file-icon-manager.c:1819
-msgid "Cu_t"
-msgstr "ق_ص"
-
-#: ../src/xfdesktop-file-icon-manager.c:1831
-msgid "_Copy"
-msgstr "_نسخ"
-
-#: ../src/xfdesktop-file-icon-manager.c:1843
+#: src/xfdesktop-file-icon-manager.c:2014
 msgid "Paste Into Folder"
 msgstr "لصق في المجلد"
 
-#: ../src/xfdesktop-file-icon-manager.c:1862
-msgid "Mo_ve to Trash"
-msgstr "نقل إلى المهملات"
-
-#: ../src/xfdesktop-file-icon-manager.c:1875
-msgid "_Delete"
-msgstr "_حذف"
-
-#: ../src/xfdesktop-file-icon-manager.c:1893
+#: src/xfdesktop-file-icon-manager.c:2045
 msgid "_Rename..."
 msgstr "_أعد تسمية..."
 
-#: ../src/xfdesktop-file-icon-manager.c:1958
+#: src/xfdesktop-file-icon-manager.c:2096
 msgid "_Open in New Window"
 msgstr "_افتح في نافذة جديدة"
 
-#: ../src/xfdesktop-file-icon-manager.c:1967
+#: src/xfdesktop-file-icon-manager.c:2103
+#: src/xfdesktop-window-icon-manager.c:308
 msgid "Arrange Desktop _Icons"
 msgstr "ترتيب _أيقونات سطح المكتب"
 
-#: ../src/xfdesktop-file-icon-manager.c:1977
+#: src/xfdesktop-file-icon-manager.c:2118
+#: src/xfdesktop-window-icon-manager.c:322
 msgid "_Next Background"
 msgstr "_الخلفية التالية "
 
-#: ../src/xfdesktop-file-icon-manager.c:1987
+#: src/xfdesktop-file-icon-manager.c:2128
+#: src/xfdesktop-window-icon-manager.c:335
 msgid "Desktop _Settings..."
 msgstr "إعدادات _سطح المكتب..."
 
-#: ../src/xfdesktop-file-icon-manager.c:1995
-#: ../src/xfdesktop-volume-icon.c:935
-msgid "P_roperties..."
-msgstr "خصائص..."
+#: src/xfdesktop-file-icon-manager.c:2135 src/xfdesktop-volume-icon.c:818
+msgid "_Properties..."
+msgstr "_خصائص..."
 
-#: ../src/xfdesktop-file-icon-manager.c:3074
-msgid "Load Error"
-msgstr "خطأ أثناء التحميل"
+#: src/xfdesktop-file-icon-manager.c:3116
+#, c-format
+msgid "Failed to save dropped file to '%s'"
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:3076
-msgid "Failed to load the desktop folder"
-msgstr "فشل تحميل مجلد سطح المكتب"
+#: src/xfdesktop-file-icon-manager.c:3118
+msgid "Drop Failure"
+msgstr ""
 
-#: ../src/xfdesktop-file-icon-manager.c:3622
+#: src/xfdesktop-file-icon-manager.c:3122
+#: src/xfdesktop-icon-view-manager.c:492
+msgid "_OK"
+msgstr "_موافق"
+
+#: src/xfdesktop-file-icon-manager.c:3527
 msgid "Copy _Here"
 msgstr "أنسخ _هنا"
 
-#: ../src/xfdesktop-file-icon-manager.c:3622
+#: src/xfdesktop-file-icon-manager.c:3528
 msgid "_Move Here"
 msgstr "_أنقل هنا"
 
-#: ../src/xfdesktop-file-icon-manager.c:3622
+#: src/xfdesktop-file-icon-manager.c:3529
 msgid "_Link Here"
 msgstr "_وصلة هنا"
 
-#: ../src/xfdesktop-file-icon-manager.c:3657
+#: src/xfdesktop-file-icon-manager.c:3554 src/xfdesktop-file-utils.c:1152
+#: src/xfdesktop-icon-view-manager.c:491
 msgid "_Cancel"
 msgstr "_إلغاء"
 
-#: ../src/xfdesktop-file-icon-manager.c:3786
-msgid "Untitled document"
-msgstr "وثيقة بدون عنوان"
+#: src/xfdesktop-file-icon-manager.c:3647
+#, c-format
+msgid "Could not create the desktop folder \"%s\""
+msgstr "لا يمكن إنشاء مجلد سطح المكتب \"%s\""
+
+#: src/xfdesktop-file-icon-manager.c:3655
+msgid "Failed to load the desktop folder"
+msgstr "فشل تحميل مجلد سطح المكتب"
+
+#: src/xfdesktop-file-icon-manager.c:3664
+msgid "A desktop file icon error occurred"
+msgstr ""
+
+#: src/xfdesktop-file-icon-manager.c:3668
+msgid "Desktop Folder Error"
+msgstr "خطأ في مجلد سطح المكتب"
+
+#: src/xfdesktop-file-icon-model.c:552
+msgid ""
+"A normal file with the same name already exists. Please delete or rename it."
+msgstr "ملف عادي موجود أصلا بنفس الاسم. الرجاء حذفه أو إعادة تسميته."
 
 #. TRANSLATORS: file was modified less than one day ago
-#: ../src/xfdesktop-file-utils.c:170
+#: src/xfdesktop-file-utils.c:184
 #, c-format
 msgid "Today at %X"
 msgstr "اليوم في %X"
 
 #. TRANSLATORS: file was modified less than two days ago
-#: ../src/xfdesktop-file-utils.c:174
+#: src/xfdesktop-file-utils.c:188
 #, c-format
 msgid "Yesterday at %X"
 msgstr "الأمس في %X"
 
 #. Days from last week
-#: ../src/xfdesktop-file-utils.c:179
+#: src/xfdesktop-file-utils.c:193
 #, c-format
 msgid "%A at %X"
 msgstr "%A في %X"
 
 #. Any other date
-#: ../src/xfdesktop-file-utils.c:182
+#: src/xfdesktop-file-utils.c:196
 #, c-format
 msgid "%x at %X"
 msgstr "%x في %X"
 
 #. the file_time is invalid
-#: ../src/xfdesktop-file-utils.c:192 ../src/xfdesktop-file-utils.c:1579
+#: src/xfdesktop-file-utils.c:206 src/xfdesktop-file-utils.c:1731
 msgid "Unknown"
 msgstr "مجهول"
 
-#: ../src/xfdesktop-file-utils.c:320
+#: src/xfdesktop-file-utils.c:335
 #, c-format
-msgid "%.*s (copy %u)%s"
+msgid "%.*s %u%s"
 msgstr ""
 
-#: ../src/xfdesktop-file-utils.c:745
+#: src/xfdesktop-file-utils.c:582
 msgid "The folder could not be opened"
 msgstr "لايمكن فتح المجلد"
 
-#: ../src/xfdesktop-file-utils.c:764
+#: src/xfdesktop-file-utils.c:699
 msgid "Error"
 msgstr "خطأ"
 
-#: ../src/xfdesktop-file-utils.c:765
+#: src/xfdesktop-file-utils.c:700
 msgid "The requested operation could not be completed"
 msgstr "العملية الملتمسة لا يمكن أن تكتمل"
 
-#: ../src/xfdesktop-file-utils.c:819
+#: src/xfdesktop-file-utils.c:754
 msgid "The file could not be renamed"
 msgstr "لا يمكن إعادة تسمية الملف"
 
-#: ../src/xfdesktop-file-utils.c:820 ../src/xfdesktop-file-utils.c:884
-#: ../src/xfdesktop-file-utils.c:945 ../src/xfdesktop-file-utils.c:1109
-#: ../src/xfdesktop-file-utils.c:1167 ../src/xfdesktop-file-utils.c:1254
-#: ../src/xfdesktop-file-utils.c:1315 ../src/xfdesktop-file-utils.c:1447
-#: ../src/xfdesktop-file-utils.c:1511 ../src/xfdesktop-file-utils.c:1652
+#: src/xfdesktop-file-utils.c:755 src/xfdesktop-file-utils.c:819
+#: src/xfdesktop-file-utils.c:880 src/xfdesktop-file-utils.c:1406
+#: src/xfdesktop-file-utils.c:1467 src/xfdesktop-file-utils.c:1599
+#: src/xfdesktop-file-utils.c:1663 src/xfdesktop-file-utils.c:1804
 msgid ""
 "This feature requires a file manager service to be present (such as the one "
 "supplied by Thunar)."
 msgstr "هذه الميزة بحاجة إلى خدمة مدير الملفات(مثل تلك التي يوفرها تونار)."
 
-#: ../src/xfdesktop-file-utils.c:943
+#: src/xfdesktop-file-utils.c:878
 msgid "Delete Error"
 msgstr "حذف الأخطاء"
 
-#: ../src/xfdesktop-file-utils.c:944
+#: src/xfdesktop-file-utils.c:879
 msgid "The selected files could not be deleted"
 msgstr "لا يمكن حذف الملفات المحددة"
 
-#: ../src/xfdesktop-file-utils.c:1004 ../src/xfdesktop-file-utils.c:1052
+#: src/xfdesktop-file-utils.c:939 src/xfdesktop-file-utils.c:987
 msgid "Trash Error"
 msgstr "خطأ في سلة المهملات"
 
-#: ../src/xfdesktop-file-utils.c:1005
+#: src/xfdesktop-file-utils.c:940
 msgid "The selected files could not be moved to the trash"
 msgstr "لا يمكن نقل الملفات المحددة إلى سلة المهملات"
 
-#: ../src/xfdesktop-file-utils.c:1006 ../src/xfdesktop-file-utils.c:1054
+#: src/xfdesktop-file-utils.c:941 src/xfdesktop-file-utils.c:989
 msgid ""
 "This feature requires a trash service to be present (such as the one "
 "supplied by Thunar)."
 msgstr "هذه الميزة تحتاج إلى خدمة مهملات(مثل التي يقدمها تونار)."
 
-#: ../src/xfdesktop-file-utils.c:1053
+#: src/xfdesktop-file-utils.c:988
 msgid "Could not empty the trash"
 msgstr "لا يمكن إفراغ المهملات"
 
-#: ../src/xfdesktop-file-utils.c:1107
+#: src/xfdesktop-file-utils.c:998
+#, c-format
+msgid "Unable to create new file \"%1$s\" from template file \"%2$s\": %3$s"
+msgstr ""
+
+#: src/xfdesktop-file-utils.c:1004 src/xfdesktop-file-utils.c:1118
+#: src/xfdesktop-file-utils.c:1214
 msgid "Create File Error"
 msgstr "خطأ أثناء إنشاء الملف"
 
-#: ../src/xfdesktop-file-utils.c:1108
+#: src/xfdesktop-file-utils.c:1006 src/xfdesktop-file-utils.c:1280
 msgid "Could not create a new file"
 msgstr "لا يمكن إنشاء ملف جديد"
 
-#: ../src/xfdesktop-file-utils.c:1165
-msgid "Create Document Error"
-msgstr "خطأ أثناء إنشاء الوثيقة"
+#: src/xfdesktop-file-utils.c:1019
+msgid "New Empty File"
+msgstr "ملف جديد فارغ"
 
-#: ../src/xfdesktop-file-utils.c:1166
-msgid "Could not create a new document from the template"
-msgstr "لا يمكن إنشاء الوثيقة من القالب"
+#: src/xfdesktop-file-utils.c:1114
+#, c-format
+msgid "Unable to create new folder \"%1$s\": %2$s"
+msgstr ""
 
-#: ../src/xfdesktop-file-utils.c:1252
+#: src/xfdesktop-file-utils.c:1120 src/xfdesktop-file-utils.c:1313
+msgid "Could not create a new folder"
+msgstr ""
+
+#: src/xfdesktop-file-utils.c:1154
+msgid "C_reate"
+msgstr "أ_نشئ"
+
+#: src/xfdesktop-file-utils.c:1212
+#, c-format
+msgid "Cannot convert filename \"%s\" to the local encoding"
+msgstr "فشل في تحويل إسم الملف \"%s\" إلى الترميز المحلي"
+
+#: src/xfdesktop-file-utils.c:1274
+#, c-format
+msgid "Create Document from template \"%s\""
+msgstr "أنشئ مستند من النموذج \"%s\""
+
+#: src/xfdesktop-file-utils.c:1277 src/xfdesktop-file-utils.c:1310
+msgid "Enter the name:"
+msgstr "أدخل اﻻسم:"
+
+#: src/xfdesktop-file-utils.c:1302
+msgid "New Folder"
+msgstr "مجلد جديد"
+
+#: src/xfdesktop-file-utils.c:1308
+msgid "Create New Folder"
+msgstr "أنشئ مجلد جديد"
+
+#: src/xfdesktop-file-utils.c:1404
 msgid "File Properties Error"
 msgstr "خطأ في ملف الخصائص"
 
-#: ../src/xfdesktop-file-utils.c:1253
+#: src/xfdesktop-file-utils.c:1405
 msgid "The file properties dialog could not be opened"
 msgstr "لا يمكن فتح حوار ملف الخصائص"
 
-#: ../src/xfdesktop-file-utils.c:1314
+#: src/xfdesktop-file-utils.c:1466
 msgid "The file could not be opened"
 msgstr "لا يمكن فتح الملف"
 
-#: ../src/xfdesktop-file-utils.c:1335 ../src/xfdesktop-file-utils.c:1442
+#: src/xfdesktop-file-utils.c:1487 src/xfdesktop-file-utils.c:1594
 #, c-format
 msgid "Failed to run \"%s\""
 msgstr "فشل تنفيذ \"%s\""
 
-#: ../src/xfdesktop-file-utils.c:1510
+#: src/xfdesktop-file-utils.c:1662
 msgid "The application chooser could not be opened"
 msgstr "لايمكن فتح التطبيق المحدد"
 
-#: ../src/xfdesktop-file-utils.c:1581 ../src/xfdesktop-file-utils.c:1650
+#: src/xfdesktop-file-utils.c:1733 src/xfdesktop-file-utils.c:1802
 msgid "Transfer Error"
 msgstr "خطأ أثناء النقل"
 
-#: ../src/xfdesktop-file-utils.c:1582 ../src/xfdesktop-file-utils.c:1651
+#: src/xfdesktop-file-utils.c:1734 src/xfdesktop-file-utils.c:1803
 msgid "The file transfer could not be performed"
 msgstr "لا يمكن تنفيذ نقل الملف"
 
+#: src/xfdesktop-icon-view-manager.c:488
+msgid "Arrange Icons"
+msgstr ""
+
+#: src/xfdesktop-icon-view-manager.c:509
+msgid ""
+"This will reorder all desktop items and place them on different screen positions.\n"
+"Are you sure?"
+msgstr ""
+
+#: src/xfdesktop-icon-view-manager.c:513
+msgid "Do _not ask me again"
+msgstr "ﻻ تسألني المرة الأخرة"
+
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:127
+#: src/xfdesktop-notify.c:152
 msgid "Unmounting device"
 msgstr "إلغاء وصل الجهاز"
 
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:130
+#: src/xfdesktop-notify.c:155
 #, c-format
 msgid ""
 "The device \"%s\" is being unmounted by the system. Please do not remove the"
 " media or disconnect the drive"
-msgstr ""
-"يتم إلغاء وصل الجهاز \"%s\" من طرف النظام. الرجاء عدم إزالة الجهاز أو قطع "
-"إتصاله"
+msgstr "يتم إلغاء وصل الجهاز \"%s\" من طرف النظام. الرجاء عدم إزالة الجهاز أو قطع إتصاله"
 
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:137 ../src/xfdesktop-notify.c:322
+#: src/xfdesktop-notify.c:162 src/xfdesktop-notify.c:241
 msgid "Writing data to device"
 msgstr "كتابة البيانات إلى الجهاز"
 
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:140 ../src/xfdesktop-notify.c:325
+#: src/xfdesktop-notify.c:165 src/xfdesktop-notify.c:244
 #, c-format
 msgid ""
 "There is data that needs to be written to the device \"%s\" before it can be"
 " removed. Please do not remove the media or disconnect the drive"
-msgstr ""
-"هنالك بيانات يجب كتابتها إلى الحهاز \"%s\" قبل إزالته. الرجاء عدم إزالة "
-"الجهاز أو قطع إتصاله"
+msgstr "هنالك بيانات يجب كتابتها إلى الحهاز \"%s\" قبل إزالته. الرجاء عدم إزالة الجهاز أو قطع إتصاله"
 
-#: ../src/xfdesktop-notify.c:221
+#: src/xfdesktop-notify.c:211
 msgid "Unmount Finished"
 msgstr "تم إنهاء فصل القرص"
 
-#: ../src/xfdesktop-notify.c:223 ../src/xfdesktop-notify.c:408
+#: src/xfdesktop-notify.c:212 src/xfdesktop-notify.c:355
 #, c-format
 msgid "The device \"%s\" has been safely removed from the system. "
 msgstr "تمت إزالة الجهاز \"%s\" بنجاح من النظام. "
 
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:313
+#: src/xfdesktop-notify.c:234
 msgid "Ejecting device"
 msgstr "إخراج الجهاز"
 
 #. TRANSLATORS: Please use the same translation here as in Thunar
-#: ../src/xfdesktop-notify.c:316
+#: src/xfdesktop-notify.c:237
 #, c-format
 msgid "The device \"%s\" is being ejected. This may take some time"
 msgstr "الجهاز \"%s\" يتم إخراجه. هذا يمكن أن يستغرق وقتا"
 
-#: ../src/xfdesktop-notify.c:406
+#: src/xfdesktop-notify.c:354
 msgid "Eject Finished"
 msgstr "إنهاء الإخراج"
 
-#: ../src/xfdesktop-regular-file-icon.c:795
+#: src/xfdesktop-regular-file-icon.c:729
 #, c-format
 msgid ""
 "Name: %s\n"
 "Type: %s\n"
 "Size: %s\n"
 "Last modified: %s"
-msgstr ""
-"الاسم: %s\n"
-"النوع: %s\n"
-"الحجم: %s\n"
-"آخر تعديل: %s"
+msgstr "الاسم: %s\nالنوع: %s\nالحجم: %s\nآخر تعديل: %s"
 
-#: ../src/xfdesktop-special-file-icon.c:439
+#: src/xfdesktop-special-file-icon.c:258
 msgid "Trash is empty"
 msgstr "المهملات فارغة"
 
-#: ../src/xfdesktop-special-file-icon.c:442
+#: src/xfdesktop-special-file-icon.c:261
 msgid "Trash contains one item"
 msgstr "تحتوي المهملات على عنصر واحد"
 
-#: ../src/xfdesktop-special-file-icon.c:443
+#: src/xfdesktop-special-file-icon.c:262
 #, c-format
 msgid "Trash contains %d items"
 msgstr "تحتوي المهملات على %d عناصر"
 
-#: ../src/xfdesktop-special-file-icon.c:472
+#: src/xfdesktop-special-file-icon.c:290
 #, c-format
 msgid ""
 "%s\n"
 "Size: %s\n"
 "Last modified: %s"
-msgstr ""
-"%s\n"
-"حجم: %s\n"
-"أخر تعديل: %s"
+msgstr "%s\nحجم: %s\nأخر تعديل: %s"
 
-#: ../src/xfdesktop-special-file-icon.c:539
-msgid "_Empty Trash"
-msgstr "_أفرغ سلة المهملات"
-
-#: ../src/xfdesktop-volume-icon.c:458
+#: src/xfdesktop-volume-icon.c:334
 msgid "(not mounted)"
 msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:459 ../src/xfdesktop-volume-icon.c:460
+#: src/xfdesktop-volume-icon.c:335 src/xfdesktop-volume-icon.c:336
 msgid "(unknown)"
 msgstr "(مجهول)"
 
-#: ../src/xfdesktop-volume-icon.c:464
+#: src/xfdesktop-volume-icon.c:340
 #, c-format
 msgid ""
 "Name: %s\n"
@@ -1161,56 +1331,56 @@ msgid ""
 "Free Space: %s"
 msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:466
+#: src/xfdesktop-volume-icon.c:342
 msgid "Removable Volume"
 msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:501 ../src/xfdesktop-volume-icon.c:547
+#: src/xfdesktop-volume-icon.c:389 src/xfdesktop-volume-icon.c:436
 #, c-format
 msgid "Failed to eject \"%s\""
 msgstr "فشل إخراج \"%s\""
 
-#: ../src/xfdesktop-volume-icon.c:506 ../src/xfdesktop-volume-icon.c:552
+#: src/xfdesktop-volume-icon.c:393 src/xfdesktop-volume-icon.c:441
 msgid "Eject Failed"
 msgstr "فشل في الإخراج"
 
-#: ../src/xfdesktop-volume-icon.c:633
+#: src/xfdesktop-volume-icon.c:520
 #, c-format
 msgid "Failed to mount \"%s\""
 msgstr "فشل وصل \"%s\""
 
-#: ../src/xfdesktop-volume-icon.c:636
+#: src/xfdesktop-volume-icon.c:523
 msgid "Mount Failed"
 msgstr "فشل الوصل"
 
-#: ../src/xfdesktop-volume-icon.c:894
-msgid "_Safely Remove Volume"
-msgstr "_إزالة وحدة التخزين بأمان"
+#: src/xfdesktop-volume-icon.c:780
+msgid "Safely _Remove Volume"
+msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:897
+#: src/xfdesktop-volume-icon.c:783
 msgid "_Disconnect Volume"
 msgstr "_فصل وحدة التخزين"
 
-#: ../src/xfdesktop-volume-icon.c:900
-msgid "_Stop the Multi-Disk Drive"
+#: src/xfdesktop-volume-icon.c:786
+msgid "Stop the _Multi-Disk Drive"
 msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:903
+#: src/xfdesktop-volume-icon.c:789
 msgid "_Lock Volume"
 msgstr "_قفل وحدة التخزين"
 
-#: ../src/xfdesktop-volume-icon.c:906
-msgid "E_ject Volume"
-msgstr "أخ_رج الجزء"
+#: src/xfdesktop-volume-icon.c:792
+msgid "_Eject Volume"
+msgstr ""
 
-#: ../src/xfdesktop-volume-icon.c:915
+#: src/xfdesktop-volume-icon.c:801
 msgid "_Unmount Volume"
 msgstr "_إلغاء ضم الجزء"
 
-#: ../src/xfdesktop-volume-icon.c:922
+#: src/xfdesktop-volume-icon.c:808
 msgid "_Mount Volume"
 msgstr "_وصل الجزء"
 
-#: ../src/xfdesktop-window-icon.c:193
-msgid "_Window Actions"
-msgstr "_أحداث النوافذ"
+#: src/xfdesktop-window-icon-manager.c:296
+msgid "_Run Program..."
+msgstr ""

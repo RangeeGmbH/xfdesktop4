@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright(c) 2006 Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright(c) 2006 Brian Tarricone, <brian@tarricone.org>
  *  Copyright(c) 2006 Benedikt Meurer, <benny@xfce.org>
  *  Copyright(c) 2010-2011 Jannis Pohlmann, <jannis@xfce.org>
  *
@@ -28,24 +28,34 @@
  *  https://specifications.freedesktop.org/thumbnail-spec/thumbnail-spec-latest.html
  */
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 
 #include <string.h>
 
+#include <gio/gio.h>
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <gio/gio.h>
-
 #include <libxfce4util/libxfce4util.h>
-#include "xfdesktop-thumbnailer.h"
-#include "xfdesktop-marshal.h"
-#include "xfdesktop-common.h"
-#include "tumbler.h"
 
-static void xfdesktop_thumbnailer_init(GTypeInstance *instance,
-                                       gpointer g_class);
-static void xfdesktop_thumbnailer_class_init(gpointer g_class,
-                                             gpointer class_data);
+#include "tumbler.h"
+#include "xfdesktop-common.h"
+#include "xfdesktop-marshal.h"
+#include "xfdesktop-thumbnailer.h"
+
+struct _XfdesktopThumbnailer {
+    GObject parent_instance;
+
+    TumblerThumbnailer1 *proxy;
+
+    GSList *queue;
+    gchar **supported_mimetypes;
+    gboolean big_thumbnails;
+    guint handle;
+
+    guint request_timer_id;
+};
 
 static void xfdesktop_thumbnailer_dispose(GObject *object);
 static void xfdesktop_thumbnailer_finalize(GObject *object);
@@ -61,7 +71,6 @@ static void xfdesktop_thumbnailer_thumbnail_ready_dbus(TumblerThumbnailer1 *prox
 
 static gboolean xfdesktop_thumbnailer_queue_request_timer(gpointer user_data);
 
-static GObjectClass *parent_class = NULL;
 static XfdesktopThumbnailer *thumbnailer_object = NULL;
 
 enum
@@ -72,90 +81,65 @@ enum
 
 static guint thumbnailer_signals[LAST_SIGNAL] = { 0, };
 
-GType
-xfdesktop_thumbnailer_get_type(void)
-{
-    static GType xfdesktop_thumbnailer_type = 0;
 
-    if(!xfdesktop_thumbnailer_type) {
-        static const GTypeInfo xfdesktop_thumbnailer_info =
-        {
-            sizeof (XfdesktopThumbnailerClass),
-            NULL,
-            NULL,
-            xfdesktop_thumbnailer_class_init,
-            NULL,
-            NULL,
-            sizeof (XfdesktopThumbnailer),
-            0,
-            xfdesktop_thumbnailer_init,
-            NULL
-        };
+G_DEFINE_TYPE(XfdesktopThumbnailer, xfdesktop_thumbnailer, G_TYPE_OBJECT);
 
-        xfdesktop_thumbnailer_type = g_type_register_static(
-                                                    G_TYPE_OBJECT,
-                                                    "XfdesktopThumbnailer",
-                                                    &xfdesktop_thumbnailer_info,
-                                                    0);
-    }
-    return xfdesktop_thumbnailer_type;
-}
-
-struct _XfdesktopThumbnailerPriv
-{
-    TumblerThumbnailer1      *proxy;
-
-    GSList                   *queue;
-    gchar                   **supported_mimetypes;
-    gboolean                  big_thumbnails;
-    guint                     handle;
-
-    gint                      request_timer_id;
-};
 
 static void
-xfdesktop_thumbnailer_init(GTypeInstance *instance,
-                           gpointer g_class)
+xfdesktop_thumbnailer_class_init(XfdesktopThumbnailerClass *klass)
 {
-    XfdesktopThumbnailer *thumbnailer;
-    GDBusConnection      *connection;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    thumbnailer = XFDESKTOP_THUMBNAILER(instance);
+    object_class->dispose = xfdesktop_thumbnailer_dispose;
+    object_class->finalize = xfdesktop_thumbnailer_finalize;
 
-    thumbnailer->priv = g_new0(XfdesktopThumbnailerPriv, 1);
+    thumbnailer_signals[THUMBNAIL_READY] = g_signal_new (
+                        "thumbnail-ready",
+                        G_OBJECT_CLASS_TYPE (object_class),
+                        G_SIGNAL_RUN_LAST,
+                        0,
+                        NULL, NULL,
+                        xfdesktop_marshal_VOID__STRING_STRING,
+                        G_TYPE_NONE, 2,
+                        G_TYPE_STRING, G_TYPE_STRING);
+}
+
+static void
+xfdesktop_thumbnailer_init(XfdesktopThumbnailer *thumbnailer)
+{
+    GDBusConnection *connection;
 
     connection = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, NULL);
 
     if(connection) {
-        thumbnailer->priv->proxy = tumbler_thumbnailer1_proxy_new_sync(
-                                    connection,
-                                    G_DBUS_PROXY_FLAGS_NONE,
-                                    "org.freedesktop.thumbnails.Thumbnailer1",
-                                    "/org/freedesktop/thumbnails/Thumbnailer1",
-                                    NULL,
-                                    NULL);
+        thumbnailer->proxy = tumbler_thumbnailer1_proxy_new_sync(connection,
+                                                                 G_DBUS_PROXY_FLAGS_NONE,
+                                                                 "org.freedesktop.thumbnails.Thumbnailer1",
+                                                                 "/org/freedesktop/thumbnails/Thumbnailer1",
+                                                                 NULL,
+                                                                 NULL);
 
-        if(thumbnailer->priv->proxy) {
+        if(thumbnailer->proxy) {
             gchar **supported_uris = NULL;
             gchar **supported_flavors = NULL;
 
 
-            g_signal_connect(thumbnailer->priv->proxy,
+            g_signal_connect(thumbnailer->proxy,
                              "finished",
                              G_CALLBACK (xfdesktop_thumbnailer_request_finished_dbus),
                              thumbnailer);
-            g_signal_connect(thumbnailer->priv->proxy,
+            g_signal_connect(thumbnailer->proxy,
                              "ready",
                              G_CALLBACK(xfdesktop_thumbnailer_thumbnail_ready_dbus),
                              thumbnailer);
 
-            tumbler_thumbnailer1_call_get_supported_sync(thumbnailer->priv->proxy,
+            tumbler_thumbnailer1_call_get_supported_sync(thumbnailer->proxy,
                                                          &supported_uris,
-                                                         &thumbnailer->priv->supported_mimetypes,
+                                                         &thumbnailer->supported_mimetypes,
                                                          NULL,
                                                          NULL);
 
-            tumbler_thumbnailer1_call_get_flavors_sync(thumbnailer->priv->proxy,
+            tumbler_thumbnailer1_call_get_flavors_sync(thumbnailer->proxy,
                                                        &supported_flavors,
                                                        NULL,
                                                        NULL);
@@ -164,11 +148,11 @@ xfdesktop_thumbnailer_init(GTypeInstance *instance,
                 gint n;
                 for(n = 0; supported_flavors[n] != NULL; ++n) {
                     if(g_strcmp0(supported_flavors[n], "large")) {
-                        thumbnailer->priv->big_thumbnails = TRUE;
+                        thumbnailer->big_thumbnails = TRUE;
                     }
                 }
             } else {
-                thumbnailer->priv->big_thumbnails = FALSE;
+                thumbnailer->big_thumbnails = FALSE;
                 g_warning("Thumbnailer failed calling GetFlavors");
             }
 
@@ -178,29 +162,6 @@ xfdesktop_thumbnailer_init(GTypeInstance *instance,
 
         g_object_unref(connection);
     }
-}
-
-static void
-xfdesktop_thumbnailer_class_init (gpointer g_class,
-                                  gpointer class_data)
-{
-    GObjectClass              *object_class = g_class;
-    XfdesktopThumbnailerClass *thumbnailer_class = XFDESKTOP_THUMBNAILER_CLASS(object_class);
-
-    parent_class = g_type_class_peek_parent(thumbnailer_class);
-
-    object_class->dispose = xfdesktop_thumbnailer_dispose;
-    object_class->finalize = xfdesktop_thumbnailer_finalize;
-
-    thumbnailer_signals[THUMBNAIL_READY] = g_signal_new (
-                        "thumbnail-ready",
-                        G_OBJECT_CLASS_TYPE (object_class),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET(XfdesktopThumbnailerClass, thumbnail_ready),
-                        NULL, NULL,
-                        xfdesktop_marshal_VOID__STRING_STRING,
-                        G_TYPE_NONE, 2,
-                        G_TYPE_STRING, G_TYPE_STRING);
 }
 
 /**
@@ -213,18 +174,18 @@ xfdesktop_thumbnailer_dispose(GObject *object)
 {
     XfdesktopThumbnailer *thumbnailer = XFDESKTOP_THUMBNAILER(object);
 
-    if(thumbnailer->priv) {
-        if(thumbnailer->priv->proxy)
-            g_object_unref(thumbnailer->priv->proxy);
-
-        if(thumbnailer->priv->supported_mimetypes)
-            g_strfreev(thumbnailer->priv->supported_mimetypes);
-
-        g_free(thumbnailer->priv);
-        thumbnailer->priv = NULL;
+    if (thumbnailer->request_timer_id != 0) {
+        g_source_remove(thumbnailer->request_timer_id);
+        thumbnailer->request_timer_id = 0;
     }
 
-    thumbnailer_object = NULL;
+    g_clear_object(&thumbnailer->proxy);
+
+    if (thumbnailer == thumbnailer_object) {
+        thumbnailer_object = NULL;
+    }
+
+    G_OBJECT_CLASS(xfdesktop_thumbnailer_parent_class)->dispose(object);
 }
 
 /**
@@ -235,6 +196,15 @@ xfdesktop_thumbnailer_dispose(GObject *object)
 static void
 xfdesktop_thumbnailer_finalize(GObject *object)
 {
+    XfdesktopThumbnailer *thumbnailer = XFDESKTOP_THUMBNAILER(object);
+
+    g_slist_free(thumbnailer->queue);
+
+    if (thumbnailer->supported_mimetypes != NULL) {
+        g_strfreev(thumbnailer->supported_mimetypes);
+    }
+
+    G_OBJECT_CLASS(xfdesktop_thumbnailer_parent_class)->finalize(object);
 }
 
 /**
@@ -258,33 +228,31 @@ xfdesktop_thumbnailer_new(void)
 gboolean xfdesktop_thumbnailer_service_available(XfdesktopThumbnailer *thumbnailer)
 {
     g_return_val_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer), FALSE);
-
-    if(thumbnailer->priv->proxy == NULL)
-        return FALSE;
-
-    return TRUE;
+    return thumbnailer->proxy != NULL;
 }
 
 gboolean
 xfdesktop_thumbnailer_is_supported(XfdesktopThumbnailer *thumbnailer,
-                                   gchar *file)
+                                   gchar *filename)
 {
     guint        n;
     gchar       *mime_type = NULL;
 
     g_return_val_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer), FALSE);
-    g_return_val_if_fail(file != NULL, FALSE);
+    g_return_val_if_fail(filename != NULL, FALSE);
 
+    GFile *file = g_file_new_for_path(filename);
     mime_type = xfdesktop_get_file_mimetype(file);
+    g_object_unref(file);
 
     if(mime_type == NULL) {
-        XF_DEBUG("File %s has no mime type", file);
+        XF_DEBUG("File %s has no mime type", filename);
         return FALSE;
     }
 
-    if(thumbnailer->priv->supported_mimetypes != NULL) {
-        for(n = 0; thumbnailer->priv->supported_mimetypes[n] != NULL; ++n) {
-            if(g_content_type_is_a (mime_type, thumbnailer->priv->supported_mimetypes[n])) {
+    if (thumbnailer->supported_mimetypes != NULL) {
+        for(n = 0; thumbnailer->supported_mimetypes[n] != NULL; ++n) {
+            if(g_content_type_is_a (mime_type, thumbnailer->supported_mimetypes[n])) {
                 g_free(mime_type);
                 return TRUE;
             }
@@ -315,36 +283,34 @@ xfdesktop_thumbnailer_queue_thumbnail(XfdesktopThumbnailer *thumbnailer,
         XF_DEBUG("file: %s not supported", file);
         return FALSE;
     }
-    if(thumbnailer->priv->request_timer_id) {
-        g_source_remove(thumbnailer->priv->request_timer_id);
+    if (thumbnailer->request_timer_id != 0) {
+        g_source_remove(thumbnailer->request_timer_id);
 
-        if(thumbnailer->priv->handle && thumbnailer->priv->proxy != NULL) {
-            if(tumbler_thumbnailer1_call_dequeue_sync(thumbnailer->priv->proxy,
-                                                      thumbnailer->priv->handle,
-                                                      NULL,
-                                                      NULL) == FALSE)
+        if (thumbnailer->handle != 0 && thumbnailer->proxy != NULL) {
+            if (!tumbler_thumbnailer1_call_dequeue_sync(thumbnailer->proxy,
+                                                        thumbnailer->handle,
+                                                        NULL,
+                                                        NULL))
             {
                 /* If this fails it usually means there's a thumbnail already
                  * being processed, no big deal */
-                XF_DEBUG("Dequeue of thumbnailer->priv->handle: %d failed",
-                         thumbnailer->priv->handle);
+                XF_DEBUG("Dequeue of thumbnailer->handle: %d failed",
+                         thumbnailer->handle);
             }
 
-            thumbnailer->priv->handle = 0;
+            thumbnailer->handle = 0;
         }
     }
 
-    if(g_slist_find(thumbnailer->priv->queue, file) == NULL) {
-        thumbnailer->priv->queue = g_slist_prepend(thumbnailer->priv->queue,
-                                                   g_strdup(file));
+    if (g_slist_find(thumbnailer->queue, file) == NULL) {
+        thumbnailer->queue = g_slist_prepend(thumbnailer->queue, g_strdup(file));
     }
 
-    thumbnailer->priv->request_timer_id = g_timeout_add_full(
-                        G_PRIORITY_LOW,
-                        300,
-                        xfdesktop_thumbnailer_queue_request_timer,
-                        thumbnailer,
-                        NULL);
+    thumbnailer->request_timer_id = g_timeout_add_full(G_PRIORITY_LOW,
+                                                       300,
+                                                       xfdesktop_thumbnailer_queue_request_timer,
+                                                       thumbnailer,
+                                                       NULL);
 
     return TRUE;
 }
@@ -371,44 +337,43 @@ xfdesktop_thumbnailer_dequeue_thumbnail(XfdesktopThumbnailer *thumbnailer,
     g_return_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer));
     g_return_if_fail(file != NULL);
 
-    if(thumbnailer->priv->request_timer_id) {
-        g_source_remove(thumbnailer->priv->request_timer_id);
+    if (thumbnailer->request_timer_id != 0) {
+        g_source_remove(thumbnailer->request_timer_id);
 
-        if(thumbnailer->priv->handle && thumbnailer->priv->proxy) {
-            if(tumbler_thumbnailer1_call_dequeue_sync(thumbnailer->priv->proxy,
-                                                      thumbnailer->priv->handle,
-                                                      NULL,
-                                                      NULL) == FALSE)
+        if (thumbnailer->handle != 0 && thumbnailer->proxy != NULL) {
+            if (!tumbler_thumbnailer1_call_dequeue_sync(thumbnailer->proxy,
+                                                        thumbnailer->handle,
+                                                        NULL,
+                                                        NULL))
             {
                 /* If this fails it usually means there's a thumbnail already
                  * being processed, no big deal */
-                XF_DEBUG("Dequeue of thumbnailer->priv->handle: %d failed",
-                         thumbnailer->priv->handle);
+                XF_DEBUG("Dequeue of thumbnailer->handle: %d failed",
+                         thumbnailer->handle);
             }
         }
-        thumbnailer->priv->handle = 0;
+        thumbnailer->handle = 0;
     }
 
-    item = g_slist_find(thumbnailer->priv->queue, file);
+    item = g_slist_find(thumbnailer->queue, file);
     if(item != NULL) {
         g_free(item->data);
-        thumbnailer->priv->queue = g_slist_remove(thumbnailer->priv->queue,
+        thumbnailer->queue = g_slist_remove(thumbnailer->queue,
                                                   file);
     }
 
-    thumbnailer->priv->request_timer_id = g_timeout_add_full(
-                        G_PRIORITY_LOW,
-                        300,
-                        xfdesktop_thumbnailer_queue_request_timer,
-                        thumbnailer,
-                        NULL);
+    thumbnailer->request_timer_id = g_timeout_add_full(G_PRIORITY_LOW,
+                                                       300,
+                                                       xfdesktop_thumbnailer_queue_request_timer,
+                                                       thumbnailer,
+                                                       NULL);
 }
 
 void xfdesktop_thumbnailer_dequeue_all_thumbnails(XfdesktopThumbnailer *thumbnailer)
 {
     g_return_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer));
 
-    g_slist_foreach(thumbnailer->priv->queue, (GFunc)xfdesktop_thumbnailer_dequeue_foreach, thumbnailer);
+    g_slist_foreach(thumbnailer->queue, (GFunc)xfdesktop_thumbnailer_dequeue_foreach, thumbnailer);
 }
 
 static gboolean
@@ -425,17 +390,15 @@ xfdesktop_thumbnailer_queue_request_timer(gpointer user_data)
 
     g_return_val_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer), FALSE);
 
-    uris = g_new0(gchar *,
-                  g_slist_length(thumbnailer->priv->queue) + 1);
-    mimetypes = g_new0(gchar *,
-                       g_slist_length (thumbnailer->priv->queue) + 1);
+    uris = g_new0(gchar *, g_slist_length(thumbnailer->queue) + 1);
+    mimetypes = g_new0(gchar *, g_slist_length (thumbnailer->queue) + 1);
 
-    iter = thumbnailer->priv->queue;
+    iter = thumbnailer->queue;
     while(iter) {
         if(iter->data) {
             file = g_file_new_for_path(iter->data);
             uris[i] = g_file_get_uri(file);
-            mimetypes[i] = xfdesktop_get_file_mimetype(iter->data);
+            mimetypes[i] = xfdesktop_get_file_mimetype(file);
 
             g_object_unref(file);
         }
@@ -443,21 +406,22 @@ xfdesktop_thumbnailer_queue_request_timer(gpointer user_data)
         i++;
     }
 
-    if(thumbnailer->priv->big_thumbnails == TRUE)
+    if (thumbnailer->big_thumbnails) {
         thumbnail_flavor = "large";
-    else
+    } else {
         thumbnail_flavor = "normal";
+    }
 
-    if(thumbnailer->priv->proxy != NULL) {
-        if(tumbler_thumbnailer1_call_queue_sync(thumbnailer->priv->proxy,
-                                                (const gchar * const*)uris,
-                                                (const gchar * const*)mimetypes,
-                                                thumbnail_flavor,
-                                                "default",
-                                                0,
-                                                &thumbnailer->priv->handle,
-                                                NULL,
-                                                &error) == FALSE)
+    if (thumbnailer->proxy != NULL) {
+        if (!tumbler_thumbnailer1_call_queue_sync(thumbnailer->proxy,
+                                                  (const gchar * const*)uris,
+                                                  (const gchar * const*)mimetypes,
+                                                  thumbnail_flavor,
+                                                  "default",
+                                                  0,
+                                                  &thumbnailer->handle,
+                                                  NULL,
+                                                  &error))
         {
             if(error != NULL)
                 g_warning("DBUS-call failed: %s", error->message);
@@ -466,7 +430,7 @@ xfdesktop_thumbnailer_queue_request_timer(gpointer user_data)
 
     /* Free the memory */
     i = 0;
-    iter = thumbnailer->priv->queue;
+    iter = thumbnailer->queue;
     while(iter) {
         if(iter->data) {
             g_free(uris[i]);
@@ -480,7 +444,7 @@ xfdesktop_thumbnailer_queue_request_timer(gpointer user_data)
     g_free(mimetypes);
     g_clear_error(&error);
 
-    thumbnailer->priv->request_timer_id = 0;
+    thumbnailer->request_timer_id = 0;
 
     return FALSE;
 }
@@ -494,7 +458,7 @@ xfdesktop_thumbnailer_request_finished_dbus(TumblerThumbnailer1 *proxy,
 
     g_return_if_fail(XFDESKTOP_IS_THUMBNAILER(thumbnailer));
 
-    thumbnailer->priv->handle = 0;
+    thumbnailer->handle = 0;
 }
 
 static void
@@ -506,7 +470,7 @@ xfdesktop_thumbnailer_thumbnail_ready_dbus(TumblerThumbnailer1 *proxy,
     XfdesktopThumbnailer *thumbnailer = XFDESKTOP_THUMBNAILER(data);
     gchar *thumbnail_location;
     GFile *file;
-    GSList *iter = thumbnailer->priv->queue;
+    GSList *iter = thumbnailer->queue;
     gchar *f_uri, *f_uri_checksum, *filename, *temp;
     gchar *thumbnail_flavor;
     gint x = 0;
@@ -532,10 +496,11 @@ xfdesktop_thumbnailer_thumbnail_ready_dbus(TumblerThumbnailer1 *proxy,
             f_uri_checksum = g_compute_checksum_for_string(G_CHECKSUM_MD5,
                                                            f_uri, strlen (f_uri));
 
-            if(thumbnailer->priv->big_thumbnails == TRUE)
+            if (thumbnailer->big_thumbnails) {
                 thumbnail_flavor = "large";
-            else
+            } else {
                 thumbnail_flavor = "normal";
+            }
 
             filename = g_strconcat(f_uri_checksum, ".png", NULL);
 
@@ -566,10 +531,9 @@ xfdesktop_thumbnailer_thumbnail_ready_dbus(TumblerThumbnailer1 *proxy,
             }
 
             temp = iter->data;
-            thumbnailer->priv->queue = g_slist_remove(thumbnailer->priv->queue,
-                                                      temp);
+            thumbnailer->queue = g_slist_remove(thumbnailer->queue, temp);
 
-            iter = thumbnailer->priv->queue;
+            iter = thumbnailer->queue;
             x++;
 
             g_free(filename);

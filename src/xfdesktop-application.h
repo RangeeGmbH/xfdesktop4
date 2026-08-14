@@ -1,7 +1,7 @@
 /*
  *  xfdesktop - xfce4's desktop manager
  *
- *  Copyright (c) 2006      Brian Tarricone, <bjt23@cornell.edu>
+ *  Copyright (c) 2006      Brian Tarricone, <brian@tarricone.org>
  *  Copyright (c) 2010-2011 Jannis Pohlmann, <jannis@xfce.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -39,8 +39,6 @@ typedef struct _XfdesktopApplicationClass   XfdesktopApplicationClass;
 GType xfdesktop_application_get_type(void) G_GNUC_CONST;
 
 XfdesktopApplication *xfdesktop_application_get(void);
-
-gint xfdesktop_application_run(XfdesktopApplication *app, int argc, char **argv);
 
 G_END_DECLS
 

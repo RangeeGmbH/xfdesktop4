@@ -91,28 +91,40 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = xfdesktop$(EXEEXT)
-@BUILD_DESKTOP_MENU_TRUE@am__append_1 = \
+@ENABLE_X11_TRUE@am__append_1 = \
+@ENABLE_X11_TRUE@	xfdesktop-x11.c \
+@ENABLE_X11_TRUE@	xfdesktop-x11.h
+
+@BUILD_DESKTOP_MENU_TRUE@am__append_2 = \
 @BUILD_DESKTOP_MENU_TRUE@	$(GARCON_CFLAGS) \
 @BUILD_DESKTOP_MENU_TRUE@	$(GARCON_GTK3_CFLAGS)
 
-@BUILD_DESKTOP_MENU_TRUE@am__append_2 = \
+@BUILD_DESKTOP_MENU_TRUE@am__append_3 = \
 @BUILD_DESKTOP_MENU_TRUE@	$(GARCON_LIBS) \
 @BUILD_DESKTOP_MENU_TRUE@	$(GARCON_GTK3_LIBS)
 
-@ENABLE_DESKTOP_ICONS_TRUE@am__append_3 = $(desktop_icon_sources)
-@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_4 = $(desktop_file_icon_sources)
+@ENABLE_DESKTOP_ICONS_TRUE@am__append_4 = $(desktop_icon_sources)
 @ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_5 = \
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@	xfdesktop-monitor-chooser-ui.c \
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@	xfdesktop-monitor-chooser-ui.h
+
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_6 = $(desktop_file_icon_sources)
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_7 = \
 @ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@	$(THUNARX_CFLAGS)
 
-@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_6 = \
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__append_8 = \
 @ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@	$(THUNARX_LIBS)
 
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intlmacosx.m4 \
+	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
+	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
 	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -122,63 +134,81 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__xfdesktop_SOURCES_DIST = xfce-desktop-enum-types.c \
-	xfce-desktop-enum-types.h xfdesktop-file-manager-fdo-proxy.c \
-	xfdesktop-file-manager-fdo-proxy.h \
-	xfdesktop-file-manager-proxy.c xfdesktop-file-manager-proxy.h \
-	xfdesktop-thunar-proxy.c xfdesktop-thunar-proxy.h \
-	xfdesktop-trash-proxy.c xfdesktop-trash-proxy.h \
-	xfdesktop-notify.c xfdesktop-notify.h main.c menu.c menu.h \
-	windowlist.c windowlist.h xfce-backdrop.c xfce-backdrop.h \
-	xfce-workspace.c xfce-workspace.h xfce-desktop.c \
+am__xfdesktop_SOURCES_DIST = xfdesktop-notify.c xfdesktop-notify.h \
+	main.c menu.c menu.h windowlist.c windowlist.h xfce-desktop.c \
 	xfce-desktop.h xfdesktop-application.c xfdesktop-application.h \
-	xfdesktop-icon.c xfdesktop-icon.h xfdesktop-icon-view.c \
-	xfdesktop-icon-view.h xfdesktop-icon-view-manager.c \
-	xfdesktop-icon-view-manager.h xfdesktop-window-icon.c \
-	xfdesktop-window-icon.h xfdesktop-window-icon-manager.c \
-	xfdesktop-window-icon-manager.h xfdesktop-clipboard-manager.c \
+	xfdesktop-backdrop-cycler.c xfdesktop-backdrop-cycler.h \
+	xfdesktop-backdrop-manager.c xfdesktop-backdrop-manager.h \
+	xfdesktop-backdrop-renderer.c xfdesktop-backdrop-renderer.h \
+	xfdesktop-x11.c xfdesktop-x11.h \
+	xfdesktop-cell-renderer-icon-label.c \
+	xfdesktop-cell-renderer-icon-label.h xfdesktop-icon.c \
+	xfdesktop-icon.h xfdesktop-icon-view.c xfdesktop-icon-view.h \
+	xfdesktop-icon-view-holder.c xfdesktop-icon-view-holder.h \
+	xfdesktop-icon-view-manager.c xfdesktop-icon-view-manager.h \
+	xfdesktop-icon-view-model.c xfdesktop-icon-view-model.h \
+	xfdesktop-window-icon-manager.c \
+	xfdesktop-window-icon-manager.h xfdesktop-window-icon-model.c \
+	xfdesktop-window-icon-model.h xfdesktop-clipboard-manager.c \
 	xfdesktop-clipboard-manager.h xfdesktop-file-icon.c \
 	xfdesktop-file-icon.h xfdesktop-file-icon-manager.c \
-	xfdesktop-file-icon-manager.h xfdesktop-file-utils.c \
-	xfdesktop-file-utils.h xfdesktop-regular-file-icon.c \
-	xfdesktop-regular-file-icon.h xfdesktop-special-file-icon.c \
-	xfdesktop-special-file-icon.h xfdesktop-volume-icon.c \
-	xfdesktop-volume-icon.h
-am__objects_1 = xfdesktop-xfce-desktop-enum-types.$(OBJEXT) \
-	xfdesktop-xfdesktop-file-manager-fdo-proxy.$(OBJEXT) \
-	xfdesktop-xfdesktop-file-manager-proxy.$(OBJEXT) \
-	xfdesktop-xfdesktop-thunar-proxy.$(OBJEXT) \
-	xfdesktop-xfdesktop-trash-proxy.$(OBJEXT)
-@HAVE_LIBNOTIFY_TRUE@am__objects_2 =  \
+	xfdesktop-file-icon-manager.h xfdesktop-file-icon-model.c \
+	xfdesktop-file-icon-model.h xfdesktop-file-icon-model-filter.c \
+	xfdesktop-file-icon-model-filter.h xfdesktop-file-utils.c \
+	xfdesktop-file-utils.h xfdesktop-icon-position-configs.c \
+	xfdesktop-icon-position-configs.h \
+	xfdesktop-icon-position-migration.c \
+	xfdesktop-icon-position-migration.h \
+	xfdesktop-regular-file-icon.c xfdesktop-regular-file-icon.h \
+	xfdesktop-special-file-icon.c xfdesktop-special-file-icon.h \
+	xfdesktop-volume-icon.c xfdesktop-volume-icon.h
+@HAVE_LIBNOTIFY_TRUE@am__objects_1 =  \
 @HAVE_LIBNOTIFY_TRUE@	xfdesktop-xfdesktop-notify.$(OBJEXT)
-am__objects_3 = xfdesktop-xfdesktop-icon.$(OBJEXT) \
+@ENABLE_X11_TRUE@am__objects_2 = xfdesktop-xfdesktop-x11.$(OBJEXT)
+am__objects_3 =  \
+	xfdesktop-xfdesktop-cell-renderer-icon-label.$(OBJEXT) \
+	xfdesktop-xfdesktop-icon.$(OBJEXT) \
 	xfdesktop-xfdesktop-icon-view.$(OBJEXT) \
+	xfdesktop-xfdesktop-icon-view-holder.$(OBJEXT) \
 	xfdesktop-xfdesktop-icon-view-manager.$(OBJEXT) \
-	xfdesktop-xfdesktop-window-icon.$(OBJEXT) \
-	xfdesktop-xfdesktop-window-icon-manager.$(OBJEXT)
+	xfdesktop-xfdesktop-icon-view-model.$(OBJEXT) \
+	xfdesktop-xfdesktop-window-icon-manager.$(OBJEXT) \
+	xfdesktop-xfdesktop-window-icon-model.$(OBJEXT)
 @ENABLE_DESKTOP_ICONS_TRUE@am__objects_4 = $(am__objects_3)
 am__objects_5 = xfdesktop-xfdesktop-clipboard-manager.$(OBJEXT) \
 	xfdesktop-xfdesktop-file-icon.$(OBJEXT) \
 	xfdesktop-xfdesktop-file-icon-manager.$(OBJEXT) \
+	xfdesktop-xfdesktop-file-icon-model.$(OBJEXT) \
+	xfdesktop-xfdesktop-file-icon-model-filter.$(OBJEXT) \
 	xfdesktop-xfdesktop-file-utils.$(OBJEXT) \
+	xfdesktop-xfdesktop-icon-position-configs.$(OBJEXT) \
+	xfdesktop-xfdesktop-icon-position-migration.$(OBJEXT) \
 	xfdesktop-xfdesktop-regular-file-icon.$(OBJEXT) \
 	xfdesktop-xfdesktop-special-file-icon.$(OBJEXT) \
 	xfdesktop-xfdesktop-volume-icon.$(OBJEXT)
 @ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__objects_6 = $(am__objects_5)
-am_xfdesktop_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	xfdesktop-main.$(OBJEXT) xfdesktop-menu.$(OBJEXT) \
-	xfdesktop-windowlist.$(OBJEXT) \
-	xfdesktop-xfce-backdrop.$(OBJEXT) \
-	xfdesktop-xfce-workspace.$(OBJEXT) \
+am_xfdesktop_OBJECTS = $(am__objects_1) xfdesktop-main.$(OBJEXT) \
+	xfdesktop-menu.$(OBJEXT) xfdesktop-windowlist.$(OBJEXT) \
 	xfdesktop-xfce-desktop.$(OBJEXT) \
-	xfdesktop-xfdesktop-application.$(OBJEXT) $(am__objects_4) \
-	$(am__objects_6)
-xfdesktop_OBJECTS = $(am_xfdesktop_OBJECTS)
+	xfdesktop-xfdesktop-application.$(OBJEXT) \
+	xfdesktop-xfdesktop-backdrop-cycler.$(OBJEXT) \
+	xfdesktop-xfdesktop-backdrop-manager.$(OBJEXT) \
+	xfdesktop-xfdesktop-backdrop-renderer.$(OBJEXT) \
+	$(am__objects_2) $(am__objects_4) $(am__objects_6)
+@ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__objects_7 = xfdesktop-xfdesktop-monitor-chooser-ui.$(OBJEXT)
+am__objects_8 = xfdesktop-xfdesktop-file-manager-fdo-proxy.$(OBJEXT) \
+	xfdesktop-xfdesktop-file-manager-proxy.$(OBJEXT) \
+	xfdesktop-xfdesktop-thunar-proxy.$(OBJEXT) \
+	xfdesktop-xfdesktop-trash-proxy.$(OBJEXT) $(am__objects_7)
+nodist_xfdesktop_OBJECTS = $(am__objects_8)
+xfdesktop_OBJECTS = $(am_xfdesktop_OBJECTS) \
+	$(nodist_xfdesktop_OBJECTS)
 am__DEPENDENCIES_1 =
 @BUILD_DESKTOP_MENU_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) \
 @BUILD_DESKTOP_MENU_TRUE@	$(am__DEPENDENCIES_1)
 @ENABLE_DESKTOP_ICONS_TRUE@@ENABLE_FILE_ICONS_TRUE@am__DEPENDENCIES_3 = $(am__DEPENDENCIES_1)
 xfdesktop_DEPENDENCIES = $(top_builddir)/common/libxfdesktop.la \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -211,20 +241,28 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/xfdesktop-main.Po \
 	./$(DEPDIR)/xfdesktop-menu.Po \
 	./$(DEPDIR)/xfdesktop-windowlist.Po \
-	./$(DEPDIR)/xfdesktop-xfce-backdrop.Po \
-	./$(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po \
 	./$(DEPDIR)/xfdesktop-xfce-desktop.Po \
-	./$(DEPDIR)/xfdesktop-xfce-workspace.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-application.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-clipboard-manager.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-manager.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-file-icon.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-file-utils.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-icon-view.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-icon.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-notify.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-regular-file-icon.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-special-file-icon.Po \
@@ -232,7 +270,8 @@ am__depfiles_remade = ./$(DEPDIR)/xfdesktop-main.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-volume-icon.Po \
 	./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-manager.Po \
-	./$(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po
+	./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po \
+	./$(DEPDIR)/xfdesktop-xfdesktop-x11.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -252,7 +291,7 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(xfdesktop_SOURCES)
+SOURCES = $(xfdesktop_SOURCES) $(nodist_xfdesktop_SOURCES)
 DIST_SOURCES = $(am__xfdesktop_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -279,7 +318,6 @@ am__define_uniq_tagged_files = \
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
-ALL_LINGUAS = @ALL_LINGUAS@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
@@ -299,6 +337,7 @@ CPPFLAGS = @CPPFLAGS@
 CSCOPE = @CSCOPE@
 CTAGS = @CTAGS@
 CYGPATH_W = @CYGPATH_W@
+DEFAULT_BACKDROP = @DEFAULT_BACKDROP@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
@@ -311,6 +350,7 @@ EGREP = @EGREP@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+FILECMD = @FILECMD@
 GARCON_CFLAGS = @GARCON_CFLAGS@
 GARCON_GTK3_CFLAGS = @GARCON_GTK3_CFLAGS@
 GARCON_GTK3_LIBS = @GARCON_GTK3_LIBS@
@@ -319,6 +359,16 @@ GARCON_GTK3_VERSION = @GARCON_GTK3_VERSION@
 GARCON_LIBS = @GARCON_LIBS@
 GARCON_REQUIRED_VERSION = @GARCON_REQUIRED_VERSION@
 GARCON_VERSION = @GARCON_VERSION@
+GDBUS_CODEGEN = @GDBUS_CODEGEN@
+GDK_WAYLAND_CFLAGS = @GDK_WAYLAND_CFLAGS@
+GDK_WAYLAND_LIBS = @GDK_WAYLAND_LIBS@
+GDK_WAYLAND_REQUIRED_VERSION = @GDK_WAYLAND_REQUIRED_VERSION@
+GDK_WAYLAND_VERSION = @GDK_WAYLAND_VERSION@
+GDK_X11_CFLAGS = @GDK_X11_CFLAGS@
+GDK_X11_LIBS = @GDK_X11_LIBS@
+GDK_X11_REQUIRED_VERSION = @GDK_X11_REQUIRED_VERSION@
+GDK_X11_VERSION = @GDK_X11_VERSION@
+GETTEXT_MACRO_VERSION = @GETTEXT_MACRO_VERSION@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GIO_CFLAGS = @GIO_CFLAGS@
 GIO_LIBS = @GIO_LIBS@
@@ -328,11 +378,15 @@ GIO_UNIX_LIBS = @GIO_UNIX_LIBS@
 GIO_UNIX_REQUIRED_VERSION = @GIO_UNIX_REQUIRED_VERSION@
 GIO_UNIX_VERSION = @GIO_UNIX_VERSION@
 GIO_VERSION = @GIO_VERSION@
+GLIB_COMPILE_RESOURCES = @GLIB_COMPILE_RESOURCES@
+GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
+GLIB_MKENUMS = @GLIB_MKENUMS@
 GMODULE_CFLAGS = @GMODULE_CFLAGS@
 GMODULE_LIBS = @GMODULE_LIBS@
 GMODULE_REQUIRED_VERSION = @GMODULE_REQUIRED_VERSION@
 GMODULE_VERSION = @GMODULE_VERSION@
 GMSGFMT = @GMSGFMT@
+GMSGFMT_015 = @GMSGFMT_015@
 GOBJECT_CFLAGS = @GOBJECT_CFLAGS@
 GOBJECT_LIBS = @GOBJECT_LIBS@
 GOBJECT_REQUIRED_VERSION = @GOBJECT_REQUIRED_VERSION@
@@ -343,6 +397,10 @@ GTHREAD_LIBS = @GTHREAD_LIBS@
 GTHREAD_REQUIRED_VERSION = @GTHREAD_REQUIRED_VERSION@
 GTHREAD_VERSION = @GTHREAD_VERSION@
 GTK_CFLAGS = @GTK_CFLAGS@
+GTK_LAYER_SHELL_CFLAGS = @GTK_LAYER_SHELL_CFLAGS@
+GTK_LAYER_SHELL_LIBS = @GTK_LAYER_SHELL_LIBS@
+GTK_LAYER_SHELL_REQUIRED_VERSION = @GTK_LAYER_SHELL_REQUIRED_VERSION@
+GTK_LAYER_SHELL_VERSION = @GTK_LAYER_SHELL_VERSION@
 GTK_LIBS = @GTK_LIBS@
 GTK_REQUIRED_VERSION = @GTK_REQUIRED_VERSION@
 GTK_VERSION = @GTK_VERSION@
@@ -351,20 +409,16 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
-INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
-INTLTOOL_MERGE = @INTLTOOL_MERGE@
-INTLTOOL_PERL = @INTLTOOL_PERL@
-INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
-INTLTOOL_V_MERGE = @INTLTOOL_V_MERGE@
-INTLTOOL_V_MERGE_OPTIONS = @INTLTOOL_V_MERGE_OPTIONS@
-INTLTOOL__v_MERGE_ = @INTLTOOL__v_MERGE_@
-INTLTOOL__v_MERGE_0 = @INTLTOOL__v_MERGE_0@
+INTLLIBS = @INTLLIBS@
+INTL_MACOSX_LIBS = @INTL_MACOSX_LIBS@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBEXO_CFLAGS = @LIBEXO_CFLAGS@
 LIBEXO_LIBS = @LIBEXO_LIBS@
 LIBEXO_REQUIRED_VERSION = @LIBEXO_REQUIRED_VERSION@
 LIBEXO_VERSION = @LIBEXO_VERSION@
+LIBICONV = @LIBICONV@
+LIBINTL = @LIBINTL@
 LIBNOTIFY_CFLAGS = @LIBNOTIFY_CFLAGS@
 LIBNOTIFY_LIBS = @LIBNOTIFY_LIBS@
 LIBNOTIFY_REQUIRED_VERSION = @LIBNOTIFY_REQUIRED_VERSION@
@@ -372,13 +426,14 @@ LIBNOTIFY_VERSION = @LIBNOTIFY_VERSION@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
-LIBWNCK_CFLAGS = @LIBWNCK_CFLAGS@
-LIBWNCK_LIBS = @LIBWNCK_LIBS@
-LIBWNCK_REQUIRED_VERSION = @LIBWNCK_REQUIRED_VERSION@
-LIBWNCK_VERSION = @LIBWNCK_VERSION@
 LIBX11_CFLAGS = @LIBX11_CFLAGS@
-LIBX11_LDFLAGS = @LIBX11_LDFLAGS@
 LIBX11_LIBS = @LIBX11_LIBS@
+LIBX11_REQUIRED_VERSION = @LIBX11_REQUIRED_VERSION@
+LIBX11_VERSION = @LIBX11_VERSION@
+LIBXFCE4KBD_PRIVATE_CFLAGS = @LIBXFCE4KBD_PRIVATE_CFLAGS@
+LIBXFCE4KBD_PRIVATE_LIBS = @LIBXFCE4KBD_PRIVATE_LIBS@
+LIBXFCE4KBD_PRIVATE_REQUIRED_VERSION = @LIBXFCE4KBD_PRIVATE_REQUIRED_VERSION@
+LIBXFCE4KBD_PRIVATE_VERSION = @LIBXFCE4KBD_PRIVATE_VERSION@
 LIBXFCE4UI_CFLAGS = @LIBXFCE4UI_CFLAGS@
 LIBXFCE4UI_LIBS = @LIBXFCE4UI_LIBS@
 LIBXFCE4UI_REQUIRED_VERSION = @LIBXFCE4UI_REQUIRED_VERSION@
@@ -387,8 +442,26 @@ LIBXFCE4UTIL_CFLAGS = @LIBXFCE4UTIL_CFLAGS@
 LIBXFCE4UTIL_LIBS = @LIBXFCE4UTIL_LIBS@
 LIBXFCE4UTIL_REQUIRED_VERSION = @LIBXFCE4UTIL_REQUIRED_VERSION@
 LIBXFCE4UTIL_VERSION = @LIBXFCE4UTIL_VERSION@
+LIBXFCE4WINDOWINGUI_CFLAGS = @LIBXFCE4WINDOWINGUI_CFLAGS@
+LIBXFCE4WINDOWINGUI_LIBS = @LIBXFCE4WINDOWINGUI_LIBS@
+LIBXFCE4WINDOWINGUI_REQUIRED_VERSION = @LIBXFCE4WINDOWINGUI_REQUIRED_VERSION@
+LIBXFCE4WINDOWINGUI_VERSION = @LIBXFCE4WINDOWINGUI_VERSION@
+LIBXFCE4WINDOWING_CFLAGS = @LIBXFCE4WINDOWING_CFLAGS@
+LIBXFCE4WINDOWING_LIBS = @LIBXFCE4WINDOWING_LIBS@
+LIBXFCE4WINDOWING_REQUIRED_VERSION = @LIBXFCE4WINDOWING_REQUIRED_VERSION@
+LIBXFCE4WINDOWING_VERSION = @LIBXFCE4WINDOWING_VERSION@
+LIBXFCE4WINDOWING_X11_CFLAGS = @LIBXFCE4WINDOWING_X11_CFLAGS@
+LIBXFCE4WINDOWING_X11_LIBS = @LIBXFCE4WINDOWING_X11_LIBS@
+LIBXFCE4WINDOWING_X11_REQUIRED_VERSION = @LIBXFCE4WINDOWING_X11_REQUIRED_VERSION@
+LIBXFCE4WINDOWING_X11_VERSION = @LIBXFCE4WINDOWING_X11_VERSION@
+LIBYAML_CFLAGS = @LIBYAML_CFLAGS@
+LIBYAML_LIBS = @LIBYAML_LIBS@
+LIBYAML_REQUIRED_VERSION = @LIBYAML_REQUIRED_VERSION@
+LIBYAML_VERSION = @LIBYAML_VERSION@
 LIPO = @LIPO@
 LN_S = @LN_S@
+LTLIBICONV = @LTLIBICONV@
+LTLIBINTL = @LTLIBINTL@
 LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
@@ -396,6 +469,7 @@ MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
 MSGFMT = @MSGFMT@
+MSGFMT_015 = @MSGFMT_015@
 MSGMERGE = @MSGMERGE@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -414,6 +488,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
+POSUB = @POSUB@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -425,17 +500,14 @@ THUNARX_REQUIRED_VERSION = @THUNARX_REQUIRED_VERSION@
 THUNARX_VERSION = @THUNARX_VERSION@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
+VERSION_VERSION = @VERSION_VERSION@
 XFCONF_CFLAGS = @XFCONF_CFLAGS@
 XFCONF_LIBS = @XFCONF_LIBS@
 XFCONF_REQUIRED_VERSION = @XFCONF_REQUIRED_VERSION@
 XFCONF_VERSION = @XFCONF_VERSION@
-XFDESKTOP_VERSION_SHORT = @XFDESKTOP_VERSION_SHORT@
 XGETTEXT = @XGETTEXT@
-XMKMF = @XMKMF@
-X_CFLAGS = @X_CFLAGS@
-X_EXTRA_LIBS = @X_EXTRA_LIBS@
-X_LIBS = @X_LIBS@
-X_PRE_LIBS = @X_PRE_LIBS@
+XGETTEXT_015 = @XGETTEXT_015@
+XGETTEXT_EXTRA_OPTIONS = @XGETTEXT_EXTRA_OPTIONS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -469,8 +541,6 @@ htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
-intltool__v_merge_options_ = @intltool__v_merge_options_@
-intltool__v_merge_options_0 = @intltool__v_merge_options_0@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
@@ -491,39 +561,40 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-xfdesktop_built_sources = \
-	xfce-desktop-enum-types.c \
-	xfce-desktop-enum-types.h \
-	xfdesktop-file-manager-fdo-proxy.c \
+xfdesktop_built_sources = xfdesktop-file-manager-fdo-proxy.c \
 	xfdesktop-file-manager-fdo-proxy.h \
-	xfdesktop-file-manager-proxy.c \
-	xfdesktop-file-manager-proxy.h \
-	xfdesktop-thunar-proxy.c \
-	xfdesktop-thunar-proxy.h \
-	xfdesktop-trash-proxy.c \
-	xfdesktop-trash-proxy.h
-
+	xfdesktop-file-manager-proxy.c xfdesktop-file-manager-proxy.h \
+	xfdesktop-thunar-proxy.c xfdesktop-thunar-proxy.h \
+	xfdesktop-trash-proxy.c xfdesktop-trash-proxy.h \
+	$(am__append_5)
 @HAVE_LIBNOTIFY_TRUE@xfdesktop_notify_sources = \
 @HAVE_LIBNOTIFY_TRUE@	xfdesktop-notify.c \
 @HAVE_LIBNOTIFY_TRUE@	xfdesktop-notify.h
 
-xfdesktop_SOURCES = $(xfdesktop_built_sources) \
-	$(xfdesktop_notify_sources) main.c menu.c menu.h windowlist.c \
-	windowlist.h xfce-backdrop.c xfce-backdrop.h xfce-workspace.c \
-	xfce-workspace.h xfce-desktop.c xfce-desktop.h \
+xfdesktop_SOURCES = $(xfdesktop_notify_sources) main.c menu.c menu.h \
+	windowlist.c windowlist.h xfce-desktop.c xfce-desktop.h \
 	xfdesktop-application.c xfdesktop-application.h \
-	$(am__append_3) $(am__append_4)
+	xfdesktop-backdrop-cycler.c xfdesktop-backdrop-cycler.h \
+	xfdesktop-backdrop-manager.c xfdesktop-backdrop-manager.h \
+	xfdesktop-backdrop-renderer.c xfdesktop-backdrop-renderer.h \
+	$(am__append_1) $(am__append_4) $(am__append_6)
 desktop_icon_sources = \
+	xfdesktop-cell-renderer-icon-label.c \
+	xfdesktop-cell-renderer-icon-label.h \
 	xfdesktop-icon.c \
 	xfdesktop-icon.h \
 	xfdesktop-icon-view.c \
 	xfdesktop-icon-view.h \
+	xfdesktop-icon-view-holder.c \
+	xfdesktop-icon-view-holder.h \
 	xfdesktop-icon-view-manager.c \
 	xfdesktop-icon-view-manager.h \
-	xfdesktop-window-icon.c \
-	xfdesktop-window-icon.h \
+	xfdesktop-icon-view-model.c \
+	xfdesktop-icon-view-model.h \
 	xfdesktop-window-icon-manager.c \
-	xfdesktop-window-icon-manager.h
+	xfdesktop-window-icon-manager.h \
+	xfdesktop-window-icon-model.c \
+	xfdesktop-window-icon-model.h
 
 desktop_file_icon_sources = \
 	xfdesktop-clipboard-manager.c \
@@ -532,8 +603,16 @@ desktop_file_icon_sources = \
 	xfdesktop-file-icon.h \
 	xfdesktop-file-icon-manager.c \
 	xfdesktop-file-icon-manager.h \
+	xfdesktop-file-icon-model.c \
+	xfdesktop-file-icon-model.h \
+	xfdesktop-file-icon-model-filter.c \
+	xfdesktop-file-icon-model-filter.h \
 	xfdesktop-file-utils.c \
 	xfdesktop-file-utils.h \
+	xfdesktop-icon-position-configs.c \
+	xfdesktop-icon-position-configs.h \
+	xfdesktop-icon-position-migration.c \
+	xfdesktop-icon-position-migration.h \
 	xfdesktop-regular-file-icon.c \
 	xfdesktop-regular-file-icon.h \
 	xfdesktop-special-file-icon.c \
@@ -542,16 +621,19 @@ desktop_file_icon_sources = \
 	xfdesktop-volume-icon.h
 
 xfdesktop_CFLAGS = -I$(top_srcdir) -I$(top_srcdir)/common \
-	-I$(top_builddir)/common -DWNCK_I_KNOW_THIS_IS_UNSTABLE \
-	-DBINDIR=\"$(bindir)\" -DLOCALEDIR=\"$(localedir)\" \
-	-DDATADIR=\"$(datadir)\" -DSYSCONFDIR=\"$(sysconfdir)\" \
-	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" $(GIO_CFLAGS) \
+	-I$(top_builddir)/common -DBINDIR=\"$(bindir)\" \
+	-DLOCALEDIR=\"$(localedir)\" -DDATADIR=\"$(datadir)\" \
+	-DSYSCONFDIR=\"$(sysconfdir)\" \
+	-DXFCEMODDIR=\"$(libdir)/xfce4/modules\" \
+	-DDEFAULT_BACKDROP=\"$(DEFAULT_BACKDROP)\" $(GIO_CFLAGS) \
 	$(GIO_UNIX_CFLAGS) $(GLIB_CFLAGS) $(GTHREAD_CFLAGS) \
 	$(GTK_CFLAGS) $(LIBNOTIFY_CFLAGS) $(LIBX11_CFLAGS) \
 	$(LIBXFCE4UTIL_CFLAGS) $(LIBXFCE4UI_CFLAGS) \
-	$(LIBXFCE4SMCLIENT_PRIVATE_CFLAGS) $(LIBWNCK_CFLAGS) \
-	$(XFCONF_CFLAGS) -DEXO_API_SUBJECT_TO_CHANGE $(LIBEXO_CFLAGS) \
-	$(am__append_1) $(am__append_5)
+	$(LIBXFCE4WINDOWING_CFLAGS) $(LIBXFCE4WINDOWINGUI_CFLAGS) \
+	$(LIBXFCE4SMCLIENT_PRIVATE_CFLAGS) $(XFCONF_CFLAGS) \
+	-DEXO_API_SUBJECT_TO_CHANGE $(LIBEXO_CFLAGS) \
+	$(GTK_LAYER_SHELL_CFLAGS) $(LIBYAML_CFLAGS) $(am__append_2) \
+	$(am__append_7)
 xfdesktop_LDFLAGS = \
 	-export-dynamic
 
@@ -561,23 +643,32 @@ xfdesktop_LDADD = $(top_builddir)/common/libxfdesktop.la $(GIO_LIBS) \
 	$(GIO_UNIX_LIBS) $(GLIB_LIBS) $(GTHREAD_LIBS) $(GTK_LIBS) \
 	$(LIBNOTIFY_LIBS) $(LIBX11_LDFLAGS) $(LIBX11_LIBS) \
 	$(LIBXFCE4UTIL_LIBS) $(LIBXFCE4UI_LIBS) \
-	$(LIBXFCE4SMCLIENT_PRIVATE_LIBS) $(LIBWNCK_LIBS) \
-	$(XFCONF_LIBS) $(LIBEXO_LIBS) -lm $(am__append_2) \
-	$(am__append_6)
-@MAINTAINER_MODE_TRUE@BUILT_SOURCES = \
-@MAINTAINER_MODE_TRUE@	$(xfdesktop_built_sources)
+	$(LIBXFCE4WINDOWING_LIBS) $(LIBXFCE4WINDOWINGUI_LIBS) \
+	$(LIBXFCE4SMCLIENT_PRIVATE_LIBS) $(XFCONF_LIBS) $(LIBEXO_LIBS) \
+	$(GTK_LAYER_SHELL_LIBS) $(LIBYAML_LIBS) -lm $(am__append_3) \
+	$(am__append_8)
+nodist_xfdesktop_SOURCES = \
+	$(xfdesktop_built_sources)
 
-@MAINTAINER_MODE_TRUE@DISTCLEANFILES = \
-@MAINTAINER_MODE_TRUE@	$(xfdesktop_built_sources) \
-@MAINTAINER_MODE_TRUE@	stamp-xfce-desktop-enum-types.h
+glade_files = \
+	xfdesktop-monitor-chooser-ui.glade
 
-@MAINTAINER_MODE_TRUE@enum_headers = \
-@MAINTAINER_MODE_TRUE@	xfce-backdrop.h \
-@MAINTAINER_MODE_TRUE@	xfce-desktop.h
+BUILT_SOURCES = \
+	$(xfdesktop_built_sources)
+
+CLEANFILES = \
+	$(xfdesktop_built_sources)
 
 EXTRA_DIST = \
 	$(desktop_icon_sources) \
-	$(desktop_file_icon_sources)
+	$(desktop_file_icon_sources) \
+	$(glade_files) \
+	meson.build \
+	xfdesktop-file-manager-fdo-dbus.xml \
+	xfdesktop-file-manager-dbus.xml \
+	xfdesktop-monitor-chooser-ui.gresource.xml \
+	xfdesktop-thunar-dbus.xml \
+	xfdesktop-trash-dbus.xml
 
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -676,20 +767,28 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-main.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-menu.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-windowlist.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfce-backdrop.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfce-desktop.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfce-workspace.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-application.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-clipboard-manager.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-manager.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-icon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-file-utils.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon-view.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-icon.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-notify.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-regular-file-icon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-special-file-icon.Po@am__quote@ # am--include-marker
@@ -697,7 +796,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-volume-icon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-manager.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xfdesktop-xfdesktop-x11.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -706,95 +806,28 @@ $(am__depfiles_remade):
 am--depfiles: $(am__depfiles_remade)
 
 .c.o:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-
-xfdesktop-xfce-desktop-enum-types.o: xfce-desktop-enum-types.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-desktop-enum-types.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Tpo -c -o xfdesktop-xfce-desktop-enum-types.o `test -f 'xfce-desktop-enum-types.c' || echo '$(srcdir)/'`xfce-desktop-enum-types.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Tpo $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-desktop-enum-types.c' object='xfdesktop-xfce-desktop-enum-types.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-desktop-enum-types.o `test -f 'xfce-desktop-enum-types.c' || echo '$(srcdir)/'`xfce-desktop-enum-types.c
-
-xfdesktop-xfce-desktop-enum-types.obj: xfce-desktop-enum-types.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-desktop-enum-types.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Tpo -c -o xfdesktop-xfce-desktop-enum-types.obj `if test -f 'xfce-desktop-enum-types.c'; then $(CYGPATH_W) 'xfce-desktop-enum-types.c'; else $(CYGPATH_W) '$(srcdir)/xfce-desktop-enum-types.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Tpo $(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-desktop-enum-types.c' object='xfdesktop-xfce-desktop-enum-types.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-desktop-enum-types.obj `if test -f 'xfce-desktop-enum-types.c'; then $(CYGPATH_W) 'xfce-desktop-enum-types.c'; else $(CYGPATH_W) '$(srcdir)/xfce-desktop-enum-types.c'; fi`
-
-xfdesktop-xfdesktop-file-manager-fdo-proxy.o: xfdesktop-file-manager-fdo-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-fdo-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.o `test -f 'xfdesktop-file-manager-fdo-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-fdo-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-fdo-proxy.c' object='xfdesktop-xfdesktop-file-manager-fdo-proxy.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.o `test -f 'xfdesktop-file-manager-fdo-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-fdo-proxy.c
-
-xfdesktop-xfdesktop-file-manager-fdo-proxy.obj: xfdesktop-file-manager-fdo-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-fdo-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.obj `if test -f 'xfdesktop-file-manager-fdo-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-fdo-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-fdo-proxy.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-fdo-proxy.c' object='xfdesktop-xfdesktop-file-manager-fdo-proxy.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.obj `if test -f 'xfdesktop-file-manager-fdo-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-fdo-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-fdo-proxy.c'; fi`
-
-xfdesktop-xfdesktop-file-manager-proxy.o: xfdesktop-file-manager-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-proxy.o `test -f 'xfdesktop-file-manager-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-proxy.c' object='xfdesktop-xfdesktop-file-manager-proxy.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-proxy.o `test -f 'xfdesktop-file-manager-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-proxy.c
-
-xfdesktop-xfdesktop-file-manager-proxy.obj: xfdesktop-file-manager-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-proxy.obj `if test -f 'xfdesktop-file-manager-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-proxy.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-proxy.c' object='xfdesktop-xfdesktop-file-manager-proxy.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-proxy.obj `if test -f 'xfdesktop-file-manager-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-proxy.c'; fi`
-
-xfdesktop-xfdesktop-thunar-proxy.o: xfdesktop-thunar-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-thunar-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo -c -o xfdesktop-xfdesktop-thunar-proxy.o `test -f 'xfdesktop-thunar-proxy.c' || echo '$(srcdir)/'`xfdesktop-thunar-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-thunar-proxy.c' object='xfdesktop-xfdesktop-thunar-proxy.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-thunar-proxy.o `test -f 'xfdesktop-thunar-proxy.c' || echo '$(srcdir)/'`xfdesktop-thunar-proxy.c
-
-xfdesktop-xfdesktop-thunar-proxy.obj: xfdesktop-thunar-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-thunar-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo -c -o xfdesktop-xfdesktop-thunar-proxy.obj `if test -f 'xfdesktop-thunar-proxy.c'; then $(CYGPATH_W) 'xfdesktop-thunar-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-thunar-proxy.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-thunar-proxy.c' object='xfdesktop-xfdesktop-thunar-proxy.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-thunar-proxy.obj `if test -f 'xfdesktop-thunar-proxy.c'; then $(CYGPATH_W) 'xfdesktop-thunar-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-thunar-proxy.c'; fi`
-
-xfdesktop-xfdesktop-trash-proxy.o: xfdesktop-trash-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-trash-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo -c -o xfdesktop-xfdesktop-trash-proxy.o `test -f 'xfdesktop-trash-proxy.c' || echo '$(srcdir)/'`xfdesktop-trash-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-trash-proxy.c' object='xfdesktop-xfdesktop-trash-proxy.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-trash-proxy.o `test -f 'xfdesktop-trash-proxy.c' || echo '$(srcdir)/'`xfdesktop-trash-proxy.c
-
-xfdesktop-xfdesktop-trash-proxy.obj: xfdesktop-trash-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-trash-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo -c -o xfdesktop-xfdesktop-trash-proxy.obj `if test -f 'xfdesktop-trash-proxy.c'; then $(CYGPATH_W) 'xfdesktop-trash-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-trash-proxy.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-trash-proxy.c' object='xfdesktop-xfdesktop-trash-proxy.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-trash-proxy.obj `if test -f 'xfdesktop-trash-proxy.c'; then $(CYGPATH_W) 'xfdesktop-trash-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-trash-proxy.c'; fi`
 
 xfdesktop-xfdesktop-notify.o: xfdesktop-notify.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-notify.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-notify.Tpo -c -o xfdesktop-xfdesktop-notify.o `test -f 'xfdesktop-notify.c' || echo '$(srcdir)/'`xfdesktop-notify.c
@@ -852,34 +885,6 @@ xfdesktop-windowlist.obj: windowlist.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-windowlist.obj `if test -f 'windowlist.c'; then $(CYGPATH_W) 'windowlist.c'; else $(CYGPATH_W) '$(srcdir)/windowlist.c'; fi`
 
-xfdesktop-xfce-backdrop.o: xfce-backdrop.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-backdrop.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-backdrop.Tpo -c -o xfdesktop-xfce-backdrop.o `test -f 'xfce-backdrop.c' || echo '$(srcdir)/'`xfce-backdrop.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-backdrop.Tpo $(DEPDIR)/xfdesktop-xfce-backdrop.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-backdrop.c' object='xfdesktop-xfce-backdrop.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-backdrop.o `test -f 'xfce-backdrop.c' || echo '$(srcdir)/'`xfce-backdrop.c
-
-xfdesktop-xfce-backdrop.obj: xfce-backdrop.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-backdrop.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-backdrop.Tpo -c -o xfdesktop-xfce-backdrop.obj `if test -f 'xfce-backdrop.c'; then $(CYGPATH_W) 'xfce-backdrop.c'; else $(CYGPATH_W) '$(srcdir)/xfce-backdrop.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-backdrop.Tpo $(DEPDIR)/xfdesktop-xfce-backdrop.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-backdrop.c' object='xfdesktop-xfce-backdrop.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-backdrop.obj `if test -f 'xfce-backdrop.c'; then $(CYGPATH_W) 'xfce-backdrop.c'; else $(CYGPATH_W) '$(srcdir)/xfce-backdrop.c'; fi`
-
-xfdesktop-xfce-workspace.o: xfce-workspace.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-workspace.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-workspace.Tpo -c -o xfdesktop-xfce-workspace.o `test -f 'xfce-workspace.c' || echo '$(srcdir)/'`xfce-workspace.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-workspace.Tpo $(DEPDIR)/xfdesktop-xfce-workspace.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-workspace.c' object='xfdesktop-xfce-workspace.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-workspace.o `test -f 'xfce-workspace.c' || echo '$(srcdir)/'`xfce-workspace.c
-
-xfdesktop-xfce-workspace.obj: xfce-workspace.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-workspace.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-workspace.Tpo -c -o xfdesktop-xfce-workspace.obj `if test -f 'xfce-workspace.c'; then $(CYGPATH_W) 'xfce-workspace.c'; else $(CYGPATH_W) '$(srcdir)/xfce-workspace.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-workspace.Tpo $(DEPDIR)/xfdesktop-xfce-workspace.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfce-workspace.c' object='xfdesktop-xfce-workspace.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfce-workspace.obj `if test -f 'xfce-workspace.c'; then $(CYGPATH_W) 'xfce-workspace.c'; else $(CYGPATH_W) '$(srcdir)/xfce-workspace.c'; fi`
-
 xfdesktop-xfce-desktop.o: xfce-desktop.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfce-desktop.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfce-desktop.Tpo -c -o xfdesktop-xfce-desktop.o `test -f 'xfce-desktop.c' || echo '$(srcdir)/'`xfce-desktop.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfce-desktop.Tpo $(DEPDIR)/xfdesktop-xfce-desktop.Po
@@ -907,6 +912,76 @@ xfdesktop-xfdesktop-application.obj: xfdesktop-application.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-application.c' object='xfdesktop-xfdesktop-application.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-application.obj `if test -f 'xfdesktop-application.c'; then $(CYGPATH_W) 'xfdesktop-application.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-application.c'; fi`
+
+xfdesktop-xfdesktop-backdrop-cycler.o: xfdesktop-backdrop-cycler.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-cycler.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Tpo -c -o xfdesktop-xfdesktop-backdrop-cycler.o `test -f 'xfdesktop-backdrop-cycler.c' || echo '$(srcdir)/'`xfdesktop-backdrop-cycler.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-cycler.c' object='xfdesktop-xfdesktop-backdrop-cycler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-cycler.o `test -f 'xfdesktop-backdrop-cycler.c' || echo '$(srcdir)/'`xfdesktop-backdrop-cycler.c
+
+xfdesktop-xfdesktop-backdrop-cycler.obj: xfdesktop-backdrop-cycler.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-cycler.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Tpo -c -o xfdesktop-xfdesktop-backdrop-cycler.obj `if test -f 'xfdesktop-backdrop-cycler.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-cycler.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-cycler.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-cycler.c' object='xfdesktop-xfdesktop-backdrop-cycler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-cycler.obj `if test -f 'xfdesktop-backdrop-cycler.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-cycler.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-cycler.c'; fi`
+
+xfdesktop-xfdesktop-backdrop-manager.o: xfdesktop-backdrop-manager.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-manager.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Tpo -c -o xfdesktop-xfdesktop-backdrop-manager.o `test -f 'xfdesktop-backdrop-manager.c' || echo '$(srcdir)/'`xfdesktop-backdrop-manager.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-manager.c' object='xfdesktop-xfdesktop-backdrop-manager.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-manager.o `test -f 'xfdesktop-backdrop-manager.c' || echo '$(srcdir)/'`xfdesktop-backdrop-manager.c
+
+xfdesktop-xfdesktop-backdrop-manager.obj: xfdesktop-backdrop-manager.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-manager.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Tpo -c -o xfdesktop-xfdesktop-backdrop-manager.obj `if test -f 'xfdesktop-backdrop-manager.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-manager.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-manager.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-manager.c' object='xfdesktop-xfdesktop-backdrop-manager.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-manager.obj `if test -f 'xfdesktop-backdrop-manager.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-manager.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-manager.c'; fi`
+
+xfdesktop-xfdesktop-backdrop-renderer.o: xfdesktop-backdrop-renderer.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-renderer.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Tpo -c -o xfdesktop-xfdesktop-backdrop-renderer.o `test -f 'xfdesktop-backdrop-renderer.c' || echo '$(srcdir)/'`xfdesktop-backdrop-renderer.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-renderer.c' object='xfdesktop-xfdesktop-backdrop-renderer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-renderer.o `test -f 'xfdesktop-backdrop-renderer.c' || echo '$(srcdir)/'`xfdesktop-backdrop-renderer.c
+
+xfdesktop-xfdesktop-backdrop-renderer.obj: xfdesktop-backdrop-renderer.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-backdrop-renderer.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Tpo -c -o xfdesktop-xfdesktop-backdrop-renderer.obj `if test -f 'xfdesktop-backdrop-renderer.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-renderer.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-renderer.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Tpo $(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-backdrop-renderer.c' object='xfdesktop-xfdesktop-backdrop-renderer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-backdrop-renderer.obj `if test -f 'xfdesktop-backdrop-renderer.c'; then $(CYGPATH_W) 'xfdesktop-backdrop-renderer.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-backdrop-renderer.c'; fi`
+
+xfdesktop-xfdesktop-x11.o: xfdesktop-x11.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-x11.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-x11.Tpo -c -o xfdesktop-xfdesktop-x11.o `test -f 'xfdesktop-x11.c' || echo '$(srcdir)/'`xfdesktop-x11.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-x11.Tpo $(DEPDIR)/xfdesktop-xfdesktop-x11.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-x11.c' object='xfdesktop-xfdesktop-x11.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-x11.o `test -f 'xfdesktop-x11.c' || echo '$(srcdir)/'`xfdesktop-x11.c
+
+xfdesktop-xfdesktop-x11.obj: xfdesktop-x11.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-x11.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-x11.Tpo -c -o xfdesktop-xfdesktop-x11.obj `if test -f 'xfdesktop-x11.c'; then $(CYGPATH_W) 'xfdesktop-x11.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-x11.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-x11.Tpo $(DEPDIR)/xfdesktop-xfdesktop-x11.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-x11.c' object='xfdesktop-xfdesktop-x11.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-x11.obj `if test -f 'xfdesktop-x11.c'; then $(CYGPATH_W) 'xfdesktop-x11.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-x11.c'; fi`
+
+xfdesktop-xfdesktop-cell-renderer-icon-label.o: xfdesktop-cell-renderer-icon-label.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-cell-renderer-icon-label.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Tpo -c -o xfdesktop-xfdesktop-cell-renderer-icon-label.o `test -f 'xfdesktop-cell-renderer-icon-label.c' || echo '$(srcdir)/'`xfdesktop-cell-renderer-icon-label.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Tpo $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-cell-renderer-icon-label.c' object='xfdesktop-xfdesktop-cell-renderer-icon-label.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-cell-renderer-icon-label.o `test -f 'xfdesktop-cell-renderer-icon-label.c' || echo '$(srcdir)/'`xfdesktop-cell-renderer-icon-label.c
+
+xfdesktop-xfdesktop-cell-renderer-icon-label.obj: xfdesktop-cell-renderer-icon-label.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-cell-renderer-icon-label.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Tpo -c -o xfdesktop-xfdesktop-cell-renderer-icon-label.obj `if test -f 'xfdesktop-cell-renderer-icon-label.c'; then $(CYGPATH_W) 'xfdesktop-cell-renderer-icon-label.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-cell-renderer-icon-label.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Tpo $(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-cell-renderer-icon-label.c' object='xfdesktop-xfdesktop-cell-renderer-icon-label.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-cell-renderer-icon-label.obj `if test -f 'xfdesktop-cell-renderer-icon-label.c'; then $(CYGPATH_W) 'xfdesktop-cell-renderer-icon-label.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-cell-renderer-icon-label.c'; fi`
 
 xfdesktop-xfdesktop-icon.o: xfdesktop-icon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon.Tpo -c -o xfdesktop-xfdesktop-icon.o `test -f 'xfdesktop-icon.c' || echo '$(srcdir)/'`xfdesktop-icon.c
@@ -936,6 +1011,20 @@ xfdesktop-xfdesktop-icon-view.obj: xfdesktop-icon-view.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view.obj `if test -f 'xfdesktop-icon-view.c'; then $(CYGPATH_W) 'xfdesktop-icon-view.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view.c'; fi`
 
+xfdesktop-xfdesktop-icon-view-holder.o: xfdesktop-icon-view-holder.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-view-holder.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Tpo -c -o xfdesktop-xfdesktop-icon-view-holder.o `test -f 'xfdesktop-icon-view-holder.c' || echo '$(srcdir)/'`xfdesktop-icon-view-holder.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-view-holder.c' object='xfdesktop-xfdesktop-icon-view-holder.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view-holder.o `test -f 'xfdesktop-icon-view-holder.c' || echo '$(srcdir)/'`xfdesktop-icon-view-holder.c
+
+xfdesktop-xfdesktop-icon-view-holder.obj: xfdesktop-icon-view-holder.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-view-holder.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Tpo -c -o xfdesktop-xfdesktop-icon-view-holder.obj `if test -f 'xfdesktop-icon-view-holder.c'; then $(CYGPATH_W) 'xfdesktop-icon-view-holder.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view-holder.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-view-holder.c' object='xfdesktop-xfdesktop-icon-view-holder.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view-holder.obj `if test -f 'xfdesktop-icon-view-holder.c'; then $(CYGPATH_W) 'xfdesktop-icon-view-holder.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view-holder.c'; fi`
+
 xfdesktop-xfdesktop-icon-view-manager.o: xfdesktop-icon-view-manager.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-view-manager.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Tpo -c -o xfdesktop-xfdesktop-icon-view-manager.o `test -f 'xfdesktop-icon-view-manager.c' || echo '$(srcdir)/'`xfdesktop-icon-view-manager.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Po
@@ -950,19 +1039,19 @@ xfdesktop-xfdesktop-icon-view-manager.obj: xfdesktop-icon-view-manager.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view-manager.obj `if test -f 'xfdesktop-icon-view-manager.c'; then $(CYGPATH_W) 'xfdesktop-icon-view-manager.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view-manager.c'; fi`
 
-xfdesktop-xfdesktop-window-icon.o: xfdesktop-window-icon.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-window-icon.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Tpo -c -o xfdesktop-xfdesktop-window-icon.o `test -f 'xfdesktop-window-icon.c' || echo '$(srcdir)/'`xfdesktop-window-icon.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Tpo $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-window-icon.c' object='xfdesktop-xfdesktop-window-icon.o' libtool=no @AMDEPBACKSLASH@
+xfdesktop-xfdesktop-icon-view-model.o: xfdesktop-icon-view-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-view-model.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Tpo -c -o xfdesktop-xfdesktop-icon-view-model.o `test -f 'xfdesktop-icon-view-model.c' || echo '$(srcdir)/'`xfdesktop-icon-view-model.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-view-model.c' object='xfdesktop-xfdesktop-icon-view-model.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-window-icon.o `test -f 'xfdesktop-window-icon.c' || echo '$(srcdir)/'`xfdesktop-window-icon.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view-model.o `test -f 'xfdesktop-icon-view-model.c' || echo '$(srcdir)/'`xfdesktop-icon-view-model.c
 
-xfdesktop-xfdesktop-window-icon.obj: xfdesktop-window-icon.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-window-icon.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Tpo -c -o xfdesktop-xfdesktop-window-icon.obj `if test -f 'xfdesktop-window-icon.c'; then $(CYGPATH_W) 'xfdesktop-window-icon.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-window-icon.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Tpo $(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-window-icon.c' object='xfdesktop-xfdesktop-window-icon.obj' libtool=no @AMDEPBACKSLASH@
+xfdesktop-xfdesktop-icon-view-model.obj: xfdesktop-icon-view-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-view-model.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Tpo -c -o xfdesktop-xfdesktop-icon-view-model.obj `if test -f 'xfdesktop-icon-view-model.c'; then $(CYGPATH_W) 'xfdesktop-icon-view-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view-model.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-view-model.c' object='xfdesktop-xfdesktop-icon-view-model.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-window-icon.obj `if test -f 'xfdesktop-window-icon.c'; then $(CYGPATH_W) 'xfdesktop-window-icon.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-window-icon.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-view-model.obj `if test -f 'xfdesktop-icon-view-model.c'; then $(CYGPATH_W) 'xfdesktop-icon-view-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-view-model.c'; fi`
 
 xfdesktop-xfdesktop-window-icon-manager.o: xfdesktop-window-icon-manager.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-window-icon-manager.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-window-icon-manager.Tpo -c -o xfdesktop-xfdesktop-window-icon-manager.o `test -f 'xfdesktop-window-icon-manager.c' || echo '$(srcdir)/'`xfdesktop-window-icon-manager.c
@@ -977,6 +1066,20 @@ xfdesktop-xfdesktop-window-icon-manager.obj: xfdesktop-window-icon-manager.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-window-icon-manager.c' object='xfdesktop-xfdesktop-window-icon-manager.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-window-icon-manager.obj `if test -f 'xfdesktop-window-icon-manager.c'; then $(CYGPATH_W) 'xfdesktop-window-icon-manager.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-window-icon-manager.c'; fi`
+
+xfdesktop-xfdesktop-window-icon-model.o: xfdesktop-window-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-window-icon-model.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Tpo -c -o xfdesktop-xfdesktop-window-icon-model.o `test -f 'xfdesktop-window-icon-model.c' || echo '$(srcdir)/'`xfdesktop-window-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-window-icon-model.c' object='xfdesktop-xfdesktop-window-icon-model.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-window-icon-model.o `test -f 'xfdesktop-window-icon-model.c' || echo '$(srcdir)/'`xfdesktop-window-icon-model.c
+
+xfdesktop-xfdesktop-window-icon-model.obj: xfdesktop-window-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-window-icon-model.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Tpo -c -o xfdesktop-xfdesktop-window-icon-model.obj `if test -f 'xfdesktop-window-icon-model.c'; then $(CYGPATH_W) 'xfdesktop-window-icon-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-window-icon-model.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-window-icon-model.c' object='xfdesktop-xfdesktop-window-icon-model.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-window-icon-model.obj `if test -f 'xfdesktop-window-icon-model.c'; then $(CYGPATH_W) 'xfdesktop-window-icon-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-window-icon-model.c'; fi`
 
 xfdesktop-xfdesktop-clipboard-manager.o: xfdesktop-clipboard-manager.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-clipboard-manager.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-clipboard-manager.Tpo -c -o xfdesktop-xfdesktop-clipboard-manager.o `test -f 'xfdesktop-clipboard-manager.c' || echo '$(srcdir)/'`xfdesktop-clipboard-manager.c
@@ -1020,6 +1123,34 @@ xfdesktop-xfdesktop-file-icon-manager.obj: xfdesktop-file-icon-manager.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-icon-manager.obj `if test -f 'xfdesktop-file-icon-manager.c'; then $(CYGPATH_W) 'xfdesktop-file-icon-manager.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-icon-manager.c'; fi`
 
+xfdesktop-xfdesktop-file-icon-model.o: xfdesktop-file-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-icon-model.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Tpo -c -o xfdesktop-xfdesktop-file-icon-model.o `test -f 'xfdesktop-file-icon-model.c' || echo '$(srcdir)/'`xfdesktop-file-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-icon-model.c' object='xfdesktop-xfdesktop-file-icon-model.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-icon-model.o `test -f 'xfdesktop-file-icon-model.c' || echo '$(srcdir)/'`xfdesktop-file-icon-model.c
+
+xfdesktop-xfdesktop-file-icon-model.obj: xfdesktop-file-icon-model.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-icon-model.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Tpo -c -o xfdesktop-xfdesktop-file-icon-model.obj `if test -f 'xfdesktop-file-icon-model.c'; then $(CYGPATH_W) 'xfdesktop-file-icon-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-icon-model.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-icon-model.c' object='xfdesktop-xfdesktop-file-icon-model.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-icon-model.obj `if test -f 'xfdesktop-file-icon-model.c'; then $(CYGPATH_W) 'xfdesktop-file-icon-model.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-icon-model.c'; fi`
+
+xfdesktop-xfdesktop-file-icon-model-filter.o: xfdesktop-file-icon-model-filter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-icon-model-filter.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Tpo -c -o xfdesktop-xfdesktop-file-icon-model-filter.o `test -f 'xfdesktop-file-icon-model-filter.c' || echo '$(srcdir)/'`xfdesktop-file-icon-model-filter.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-icon-model-filter.c' object='xfdesktop-xfdesktop-file-icon-model-filter.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-icon-model-filter.o `test -f 'xfdesktop-file-icon-model-filter.c' || echo '$(srcdir)/'`xfdesktop-file-icon-model-filter.c
+
+xfdesktop-xfdesktop-file-icon-model-filter.obj: xfdesktop-file-icon-model-filter.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-icon-model-filter.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Tpo -c -o xfdesktop-xfdesktop-file-icon-model-filter.obj `if test -f 'xfdesktop-file-icon-model-filter.c'; then $(CYGPATH_W) 'xfdesktop-file-icon-model-filter.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-icon-model-filter.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-icon-model-filter.c' object='xfdesktop-xfdesktop-file-icon-model-filter.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-icon-model-filter.obj `if test -f 'xfdesktop-file-icon-model-filter.c'; then $(CYGPATH_W) 'xfdesktop-file-icon-model-filter.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-icon-model-filter.c'; fi`
+
 xfdesktop-xfdesktop-file-utils.o: xfdesktop-file-utils.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-utils.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-utils.Tpo -c -o xfdesktop-xfdesktop-file-utils.o `test -f 'xfdesktop-file-utils.c' || echo '$(srcdir)/'`xfdesktop-file-utils.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-utils.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-utils.Po
@@ -1033,6 +1164,34 @@ xfdesktop-xfdesktop-file-utils.obj: xfdesktop-file-utils.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-utils.c' object='xfdesktop-xfdesktop-file-utils.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-utils.obj `if test -f 'xfdesktop-file-utils.c'; then $(CYGPATH_W) 'xfdesktop-file-utils.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-utils.c'; fi`
+
+xfdesktop-xfdesktop-icon-position-configs.o: xfdesktop-icon-position-configs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-position-configs.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Tpo -c -o xfdesktop-xfdesktop-icon-position-configs.o `test -f 'xfdesktop-icon-position-configs.c' || echo '$(srcdir)/'`xfdesktop-icon-position-configs.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-position-configs.c' object='xfdesktop-xfdesktop-icon-position-configs.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-position-configs.o `test -f 'xfdesktop-icon-position-configs.c' || echo '$(srcdir)/'`xfdesktop-icon-position-configs.c
+
+xfdesktop-xfdesktop-icon-position-configs.obj: xfdesktop-icon-position-configs.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-position-configs.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Tpo -c -o xfdesktop-xfdesktop-icon-position-configs.obj `if test -f 'xfdesktop-icon-position-configs.c'; then $(CYGPATH_W) 'xfdesktop-icon-position-configs.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-position-configs.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-position-configs.c' object='xfdesktop-xfdesktop-icon-position-configs.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-position-configs.obj `if test -f 'xfdesktop-icon-position-configs.c'; then $(CYGPATH_W) 'xfdesktop-icon-position-configs.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-position-configs.c'; fi`
+
+xfdesktop-xfdesktop-icon-position-migration.o: xfdesktop-icon-position-migration.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-position-migration.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Tpo -c -o xfdesktop-xfdesktop-icon-position-migration.o `test -f 'xfdesktop-icon-position-migration.c' || echo '$(srcdir)/'`xfdesktop-icon-position-migration.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-position-migration.c' object='xfdesktop-xfdesktop-icon-position-migration.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-position-migration.o `test -f 'xfdesktop-icon-position-migration.c' || echo '$(srcdir)/'`xfdesktop-icon-position-migration.c
+
+xfdesktop-xfdesktop-icon-position-migration.obj: xfdesktop-icon-position-migration.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-icon-position-migration.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Tpo -c -o xfdesktop-xfdesktop-icon-position-migration.obj `if test -f 'xfdesktop-icon-position-migration.c'; then $(CYGPATH_W) 'xfdesktop-icon-position-migration.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-position-migration.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Tpo $(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-icon-position-migration.c' object='xfdesktop-xfdesktop-icon-position-migration.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-icon-position-migration.obj `if test -f 'xfdesktop-icon-position-migration.c'; then $(CYGPATH_W) 'xfdesktop-icon-position-migration.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-icon-position-migration.c'; fi`
 
 xfdesktop-xfdesktop-regular-file-icon.o: xfdesktop-regular-file-icon.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-regular-file-icon.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-regular-file-icon.Tpo -c -o xfdesktop-xfdesktop-regular-file-icon.o `test -f 'xfdesktop-regular-file-icon.c' || echo '$(srcdir)/'`xfdesktop-regular-file-icon.c
@@ -1075,6 +1234,76 @@ xfdesktop-xfdesktop-volume-icon.obj: xfdesktop-volume-icon.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-volume-icon.c' object='xfdesktop-xfdesktop-volume-icon.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-volume-icon.obj `if test -f 'xfdesktop-volume-icon.c'; then $(CYGPATH_W) 'xfdesktop-volume-icon.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-volume-icon.c'; fi`
+
+xfdesktop-xfdesktop-file-manager-fdo-proxy.o: xfdesktop-file-manager-fdo-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-fdo-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.o `test -f 'xfdesktop-file-manager-fdo-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-fdo-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-fdo-proxy.c' object='xfdesktop-xfdesktop-file-manager-fdo-proxy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.o `test -f 'xfdesktop-file-manager-fdo-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-fdo-proxy.c
+
+xfdesktop-xfdesktop-file-manager-fdo-proxy.obj: xfdesktop-file-manager-fdo-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-fdo-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.obj `if test -f 'xfdesktop-file-manager-fdo-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-fdo-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-fdo-proxy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-fdo-proxy.c' object='xfdesktop-xfdesktop-file-manager-fdo-proxy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-fdo-proxy.obj `if test -f 'xfdesktop-file-manager-fdo-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-fdo-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-fdo-proxy.c'; fi`
+
+xfdesktop-xfdesktop-file-manager-proxy.o: xfdesktop-file-manager-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-proxy.o `test -f 'xfdesktop-file-manager-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-proxy.c' object='xfdesktop-xfdesktop-file-manager-proxy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-proxy.o `test -f 'xfdesktop-file-manager-proxy.c' || echo '$(srcdir)/'`xfdesktop-file-manager-proxy.c
+
+xfdesktop-xfdesktop-file-manager-proxy.obj: xfdesktop-file-manager-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-file-manager-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo -c -o xfdesktop-xfdesktop-file-manager-proxy.obj `if test -f 'xfdesktop-file-manager-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-proxy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-file-manager-proxy.c' object='xfdesktop-xfdesktop-file-manager-proxy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-file-manager-proxy.obj `if test -f 'xfdesktop-file-manager-proxy.c'; then $(CYGPATH_W) 'xfdesktop-file-manager-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-file-manager-proxy.c'; fi`
+
+xfdesktop-xfdesktop-thunar-proxy.o: xfdesktop-thunar-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-thunar-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo -c -o xfdesktop-xfdesktop-thunar-proxy.o `test -f 'xfdesktop-thunar-proxy.c' || echo '$(srcdir)/'`xfdesktop-thunar-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-thunar-proxy.c' object='xfdesktop-xfdesktop-thunar-proxy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-thunar-proxy.o `test -f 'xfdesktop-thunar-proxy.c' || echo '$(srcdir)/'`xfdesktop-thunar-proxy.c
+
+xfdesktop-xfdesktop-thunar-proxy.obj: xfdesktop-thunar-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-thunar-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo -c -o xfdesktop-xfdesktop-thunar-proxy.obj `if test -f 'xfdesktop-thunar-proxy.c'; then $(CYGPATH_W) 'xfdesktop-thunar-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-thunar-proxy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-thunar-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-thunar-proxy.c' object='xfdesktop-xfdesktop-thunar-proxy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-thunar-proxy.obj `if test -f 'xfdesktop-thunar-proxy.c'; then $(CYGPATH_W) 'xfdesktop-thunar-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-thunar-proxy.c'; fi`
+
+xfdesktop-xfdesktop-trash-proxy.o: xfdesktop-trash-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-trash-proxy.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo -c -o xfdesktop-xfdesktop-trash-proxy.o `test -f 'xfdesktop-trash-proxy.c' || echo '$(srcdir)/'`xfdesktop-trash-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-trash-proxy.c' object='xfdesktop-xfdesktop-trash-proxy.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-trash-proxy.o `test -f 'xfdesktop-trash-proxy.c' || echo '$(srcdir)/'`xfdesktop-trash-proxy.c
+
+xfdesktop-xfdesktop-trash-proxy.obj: xfdesktop-trash-proxy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-trash-proxy.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo -c -o xfdesktop-xfdesktop-trash-proxy.obj `if test -f 'xfdesktop-trash-proxy.c'; then $(CYGPATH_W) 'xfdesktop-trash-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-trash-proxy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Tpo $(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-trash-proxy.c' object='xfdesktop-xfdesktop-trash-proxy.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-trash-proxy.obj `if test -f 'xfdesktop-trash-proxy.c'; then $(CYGPATH_W) 'xfdesktop-trash-proxy.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-trash-proxy.c'; fi`
+
+xfdesktop-xfdesktop-monitor-chooser-ui.o: xfdesktop-monitor-chooser-ui.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-monitor-chooser-ui.o -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Tpo -c -o xfdesktop-xfdesktop-monitor-chooser-ui.o `test -f 'xfdesktop-monitor-chooser-ui.c' || echo '$(srcdir)/'`xfdesktop-monitor-chooser-ui.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Tpo $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-monitor-chooser-ui.c' object='xfdesktop-xfdesktop-monitor-chooser-ui.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-monitor-chooser-ui.o `test -f 'xfdesktop-monitor-chooser-ui.c' || echo '$(srcdir)/'`xfdesktop-monitor-chooser-ui.c
+
+xfdesktop-xfdesktop-monitor-chooser-ui.obj: xfdesktop-monitor-chooser-ui.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -MT xfdesktop-xfdesktop-monitor-chooser-ui.obj -MD -MP -MF $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Tpo -c -o xfdesktop-xfdesktop-monitor-chooser-ui.obj `if test -f 'xfdesktop-monitor-chooser-ui.c'; then $(CYGPATH_W) 'xfdesktop-monitor-chooser-ui.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-monitor-chooser-ui.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Tpo $(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xfdesktop-monitor-chooser-ui.c' object='xfdesktop-xfdesktop-monitor-chooser-ui.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xfdesktop_CFLAGS) $(CFLAGS) -c -o xfdesktop-xfdesktop-monitor-chooser-ui.obj `if test -f 'xfdesktop-monitor-chooser-ui.c'; then $(CYGPATH_W) 'xfdesktop-monitor-chooser-ui.c'; else $(CYGPATH_W) '$(srcdir)/xfdesktop-monitor-chooser-ui.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1198,11 +1427,11 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1216,20 +1445,28 @@ distclean: distclean-am
 		-rm -f ./$(DEPDIR)/xfdesktop-main.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-menu.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-windowlist.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-backdrop.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfce-desktop.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-workspace.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-application.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-clipboard-manager.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-utils.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-notify.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-regular-file-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-special-file-icon.Po
@@ -1237,7 +1474,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-volume-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-manager.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-x11.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1286,20 +1524,28 @@ maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/xfdesktop-main.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-menu.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-windowlist.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-backdrop.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-desktop-enum-types.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfce-desktop.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfce-workspace.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-application.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-cycler.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-backdrop-renderer.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-cell-renderer-icon-label.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-clipboard-manager.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model-filter.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon-model.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-fdo-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-manager-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-file-utils.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-configs.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-position-migration.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-holder.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-manager.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view-model.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon-view.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-icon.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-monitor-chooser-ui.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-notify.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-regular-file-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-special-file-icon.Po
@@ -1307,7 +1553,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-trash-proxy.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-volume-icon.Po
 	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-manager.Po
-	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-window-icon-model.Po
+	-rm -f ./$(DEPDIR)/xfdesktop-xfdesktop-x11.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -1345,56 +1592,39 @@ uninstall-am: uninstall-binPROGRAMS
 .PRECIOUS: Makefile
 
 
-@MAINTAINER_MODE_TRUE@xfce-desktop-enum-types.h: stamp-xfce-desktop-enum-types.h
-@MAINTAINER_MODE_TRUE@	@true
-@MAINTAINER_MODE_TRUE@stamp-xfce-desktop-enum-types.h: $(enum_headers) Makefile
-@MAINTAINER_MODE_TRUE@	$(AM_V_GEN) ( cd $(srcdir) && glib-mkenums \
-@MAINTAINER_MODE_TRUE@	      --fhead "#ifndef __XFCE_DESKTOP_ENUM_TYPES_H__\n#define __XFCE_DESKTOP_ENUM_TYPES_H__\nG_BEGIN_DECLS\n" \
-@MAINTAINER_MODE_TRUE@	      --fprod "/* enumerations from \"@filename@\" */\n" \
-@MAINTAINER_MODE_TRUE@	      --vhead "GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define XFCE_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
-@MAINTAINER_MODE_TRUE@	      --ftail "G_END_DECLS\n\n#endif /* !__XFCE_DESKTOP_ENUM_TYPES_H__ */" \
-@MAINTAINER_MODE_TRUE@	      $(enum_headers) ) >> xgen-xdeth \
-@MAINTAINER_MODE_TRUE@	      && ( cmp -s xgen-xdeth xfce-desktop-enum-types.h || cp xgen-xdeth xfce-desktop-enum-types.h ) \
-@MAINTAINER_MODE_TRUE@	      && rm -f xgen-xdeth \
-@MAINTAINER_MODE_TRUE@		  && echo timestamp > $(@F)
-@MAINTAINER_MODE_TRUE@xfce-desktop-enum-types.c: $(enum_headers) Makefile
-@MAINTAINER_MODE_TRUE@	$(AM_V_GEN) ( cd $(srcdir) && glib-mkenums \
-@MAINTAINER_MODE_TRUE@	      --fhead "#undef GTK_DISABLE_DEPRECATED\n#define GTK_ENABLE_BROKEN\n#include \"xfce-desktop.h\"\n#include \"xfce-backdrop.h\"\n#include \"xfce-desktop-enum-types.h\"" \
-@MAINTAINER_MODE_TRUE@	      --fprod "\n/* enumerations from \"@filename@\" */" \
-@MAINTAINER_MODE_TRUE@	      --vhead "GType\n@enum_name@_get_type (void)\n{\n\tstatic GType type = 0;\n\tif (type == 0) {\n\tstatic const G@Type@Value values[] = {"\
-@MAINTAINER_MODE_TRUE@	      --vprod "\t{ @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
-@MAINTAINER_MODE_TRUE@	      --vtail "\t{ 0, NULL, NULL }\n\t};\n\ttype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n\treturn type;\n}\n" \
-@MAINTAINER_MODE_TRUE@	      $(enum_headers) ) >> xgen-xdetc \
-@MAINTAINER_MODE_TRUE@	      && cp xgen-xdetc xfce-desktop-enum-types.c \
-@MAINTAINER_MODE_TRUE@	      && rm -f xgen-xdetc
+xfdesktop-file-manager-fdo-proxy.c xfdesktop-file-manager-fdo-proxy.h : $(srcdir)/xfdesktop-file-manager-fdo-dbus.xml Makefile
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.freedesktop. \
+		--generate-c-code=xfdesktop-file-manager-fdo-proxy \
+		$<
 
-@MAINTAINER_MODE_TRUE@xfdesktop-file-manager-fdo-proxy.c xfdesktop-file-manager-fdo-proxy.h : $(srcdir)/xfdesktop-file-manager-fdo-dbus.xml Makefile
-@MAINTAINER_MODE_TRUE@	gdbus-codegen \
-@MAINTAINER_MODE_TRUE@		--c-namespace=Xfdesktop \
-@MAINTAINER_MODE_TRUE@		--interface-prefix=org.freedesktop. \
-@MAINTAINER_MODE_TRUE@		--generate-c-code=xfdesktop-file-manager-fdo-proxy \
-@MAINTAINER_MODE_TRUE@		$(srcdir)/xfdesktop-file-manager-fdo-dbus.xml
+xfdesktop-file-manager-proxy.c xfdesktop-file-manager-proxy.h : $(srcdir)/xfdesktop-file-manager-dbus.xml Makefile
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-file-manager-proxy \
+		$<
 
-@MAINTAINER_MODE_TRUE@xfdesktop-file-manager-proxy.c xfdesktop-file-manager-proxy.h : $(srcdir)/xfdesktop-file-manager-dbus.xml Makefile
-@MAINTAINER_MODE_TRUE@	gdbus-codegen \
-@MAINTAINER_MODE_TRUE@		--c-namespace=Xfdesktop \
-@MAINTAINER_MODE_TRUE@		--interface-prefix=org.xfce. \
-@MAINTAINER_MODE_TRUE@		--generate-c-code=xfdesktop-file-manager-proxy \
-@MAINTAINER_MODE_TRUE@		$(srcdir)/xfdesktop-file-manager-dbus.xml
+xfdesktop-thunar-proxy.c xfdesktop-thunar-proxy.h : $(srcdir)/xfdesktop-thunar-dbus.xml Makefile
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-thunar-proxy \
+		$<
 
-@MAINTAINER_MODE_TRUE@xfdesktop-thunar-proxy.c xfdesktop-thunar-proxy.h : $(srcdir)/xfdesktop-thunar-dbus.xml Makefile
-@MAINTAINER_MODE_TRUE@	gdbus-codegen \
-@MAINTAINER_MODE_TRUE@		--c-namespace=Xfdesktop \
-@MAINTAINER_MODE_TRUE@		--interface-prefix=org.xfce. \
-@MAINTAINER_MODE_TRUE@		--generate-c-code=xfdesktop-thunar-proxy \
-@MAINTAINER_MODE_TRUE@		$(srcdir)/xfdesktop-thunar-dbus.xml
+xfdesktop-trash-proxy.c xfdesktop-trash-proxy.h : $(srcdir)/xfdesktop-trash-dbus.xml Makefile
+	$(AM_V_GEN) $(GDBUS_CODEGEN) \
+		--c-namespace=Xfdesktop \
+		--interface-prefix=org.xfce. \
+		--generate-c-code=xfdesktop-trash-proxy \
+		$<
 
-@MAINTAINER_MODE_TRUE@xfdesktop-trash-proxy.c xfdesktop-trash-proxy.h : $(srcdir)/xfdesktop-trash-dbus.xml Makefile
-@MAINTAINER_MODE_TRUE@	gdbus-codegen \
-@MAINTAINER_MODE_TRUE@		--c-namespace=Xfdesktop \
-@MAINTAINER_MODE_TRUE@		--interface-prefix=org.xfce. \
-@MAINTAINER_MODE_TRUE@		--generate-c-code=xfdesktop-trash-proxy \
-@MAINTAINER_MODE_TRUE@		$(srcdir)/xfdesktop-trash-dbus.xml
+%-ui.h: $(srcdir)/%-ui.gresource.xml $(glade_files) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-header --manual-register $<
+
+%-ui.c: $(srcdir)/%-ui.gresource.xml $(glade_files) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source --manual-register $<
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
