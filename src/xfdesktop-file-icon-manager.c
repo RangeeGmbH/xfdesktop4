@@ -268,7 +268,8 @@ static XfceDesktop *xfdesktop_file_icon_manager_get_focused_desktop(XfdesktopIco
 static GtkMenu *xfdesktop_file_icon_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                                              XfceDesktop *desktop,
                                                              gint popup_x,
-                                                             gint popup_y);
+                                                             gint popup_y,
+                                                             gboolean *is_icon_specific);
 static void xfdesktop_file_icon_manager_activate_icons(XfdesktopIconViewManager *manager);
 static void xfdesktop_file_icon_manager_toggle_cursor_icon(XfdesktopIconViewManager *manager);
 static void xfdesktop_file_icon_manager_select_all_icons(XfdesktopIconViewManager *manager);
@@ -1640,7 +1641,8 @@ static GtkMenu *
 xfdesktop_file_icon_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                              XfceDesktop *desktop,
                                              gint popup_x,
-                                             gint popup_y)
+                                             gint popup_y,
+                                             gboolean *is_icon_specific)
 {
     XfdesktopFileIconManager *fmanager = XFDESKTOP_FILE_ICON_MANAGER(manager);
 
@@ -1657,6 +1659,13 @@ xfdesktop_file_icon_manager_get_context_menu(XfdesktopIconViewManager *manager,
     xfdesktop_icon_view_widget_coords_to_slot_coords(icon_view, popup_x, popup_y, &dest_row, &dest_col);
 
     GList *selected = xfdesktop_file_icon_manager_get_selected_icons(fmanager, icon_view);
+    /* If nothing is actually selected, we fall back to building a menu for
+     * the special "desktop" pseudo-icon (paste/new folder/arrange icons/...),
+     * i.e. the general desktop-area context menu rather than an icon-specific
+     * one. */
+    if (is_icon_specific != NULL) {
+        *is_icon_specific = (selected != NULL);
+    }
     if(!selected) {
         /* assume click on the desktop itself */
         selected = g_list_append(selected, fmanager->desktop_icon);

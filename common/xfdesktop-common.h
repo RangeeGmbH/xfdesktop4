@@ -73,6 +73,7 @@
 #define SINGLE_WORKSPACE_NUMBER   "/backdrop/single-workspace-number"
 
 #define ENABLE_CONTEXT_MENU_PROP  "/general/enable-context-menu"
+#define ENABLE_ICON_CONTEXT_MENU_PROP  "/general/enable-icon-context-menu"
 
 #define DESKTOP_MENU_SHOW_PROP "/desktop-menu/show"
 #define DESKTOP_MENU_SHOW_ICONS_PROP "/desktop-menu/show-icons"

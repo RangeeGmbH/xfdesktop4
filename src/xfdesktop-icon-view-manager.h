@@ -55,7 +55,8 @@ struct _XfdesktopIconViewManagerClass
     GtkMenu *(*get_context_menu)(XfdesktopIconViewManager *manager,
                                  XfceDesktop *desktop,
                                  gint popup_x,
-                                 gint popup_y);
+                                 gint popup_y,
+                                 gboolean *is_icon_specific);
 
     void (*activate_icons)(XfdesktopIconViewManager *manager);
     void (*toggle_cursor_icon)(XfdesktopIconViewManager *manager);
@@ -88,7 +89,8 @@ XfceDesktop *xfdesktop_icon_view_manager_get_focused_desktop(XfdesktopIconViewMa
 GtkMenu *xfdesktop_icon_view_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                                       XfceDesktop *desktop,
                                                       gint popup_x,
-                                                      gint popup_y);
+                                                      gint popup_y,
+                                                      gboolean *is_icon_specific);
 void xfdesktop_icon_view_manager_sort_icons(XfdesktopIconViewManager *manager,
                                             GtkSortType sort_type,
                                             XfdesktopIconViewManagerSortFlags flags);

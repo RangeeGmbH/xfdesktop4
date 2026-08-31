@@ -77,7 +77,8 @@ static XfceDesktop *xfdesktop_window_icon_manager_get_focused_desktop(XfdesktopI
 static GtkMenu *xfdesktop_window_icon_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                                                XfceDesktop *desktop,
                                                                gint popup_x,
-                                                               gint popup_y);
+                                                               gint popup_y,
+                                                               gboolean *is_icon_specific);
 static void xfdesktop_window_icon_manager_activate_icons(XfdesktopIconViewManager *manager);
 static void xfdesktop_window_icon_manager_toggle_cursor_icon(XfdesktopIconViewManager *manager);
 static void xfdesktop_window_icon_manager_unselect_all_icons(XfdesktopIconViewManager *manager);
@@ -346,7 +347,8 @@ static GtkMenu *
 xfdesktop_window_icon_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                                XfceDesktop *desktop,
                                                gint popup_x,
-                                               gint popup_y)
+                                               gint popup_y,
+                                               gboolean *is_icon_specific)
 {
     XfdesktopWindowIconManager *wmanager = XFDESKTOP_WINDOW_ICON_MANAGER(manager);
     GHashTableIter iter;
@@ -365,6 +367,10 @@ xfdesktop_window_icon_manager_get_context_menu(XfdesktopIconViewManager *manager
                 menu = GTK_MENU(xfw_window_action_menu_new(window));
             } else {
                 menu = build_root_context_menu(mdata);
+            }
+
+            if (is_icon_specific != NULL) {
+                *is_icon_specific = (window != NULL);
             }
 
             g_list_free_full(selected, (GDestroyNotify)gtk_tree_path_free);

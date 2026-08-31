@@ -1314,12 +1314,9 @@ do_menu_popup(XfdesktopApplication *app,
 {
     GdkScreen *screen;
     GtkMenu *menu = NULL;
+    gboolean is_icon_specific = FALSE;
 
     DBG("entering");
-
-    if (!xfce_desktop_get_enable_context_menu(desktop)) {
-        return;
-    }
 
     if (app->active_root_menu != NULL) {
         gtk_menu_shell_deactivate(GTK_MENU_SHELL(app->active_root_menu));
@@ -1334,9 +1331,24 @@ do_menu_popup(XfdesktopApplication *app,
 
 #ifdef ENABLE_DESKTOP_ICONS
     if (populate_from_icon_view && app->icon_view_manager != NULL) {
-        menu = xfdesktop_icon_view_manager_get_context_menu(app->icon_view_manager, desktop, x, y);
+        menu = xfdesktop_icon_view_manager_get_context_menu(app->icon_view_manager, desktop, x, y, &is_icon_specific);
     }
 #endif
+
+    /* The icon-specific context menu (an actual file/window icon is
+     * targeted) and the general desktop-area context menu (empty desktop,
+     * "Applications" menu, window list, ...) are gated by two independent
+     * xfconf properties. This allows e.g. a kiosk setup to disable the
+     * general desktop menu while still letting users manage files via the
+     * icon context menu, or vice-versa. */
+    if (is_icon_specific ? !xfce_desktop_get_enable_icon_context_menu(desktop)
+                         : !xfce_desktop_get_enable_context_menu(desktop))
+    {
+        if (menu != NULL) {
+            gtk_widget_destroy(GTK_WIDGET(menu));
+        }
+        return;
+    }
 
     menu = (*populate_func)(menu, gtk_widget_get_scale_factor(GTK_WIDGET(desktop)));
 

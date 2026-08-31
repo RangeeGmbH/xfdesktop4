@@ -106,6 +106,7 @@ struct _XfceDesktop {
     XfwWorkspace *single_workspace;
 
     gboolean enable_context_menu;
+    gboolean enable_icon_context_menu;
 
     XfwWorkspace *backdrop_workspace;
     GCancellable *backdrop_load_cancellable;
@@ -132,6 +133,7 @@ enum
     PROP_SINGLE_WORKSPACE_NUMBER,
     PROP_ACTIVE,
     PROP_ENABLE_CONTEXT_MENU,
+    PROP_ENABLE_ICON_CONTEXT_MENU,
 };
 
 
@@ -174,6 +176,7 @@ static struct
     { SINGLE_WORKSPACE_MODE, G_TYPE_BOOLEAN, "single-workspace-mode" },
     { SINGLE_WORKSPACE_NUMBER, G_TYPE_INT, "single-workspace-number" },
     { ENABLE_CONTEXT_MENU_PROP, G_TYPE_BOOLEAN, "enable-context-menu" },
+    { ENABLE_ICON_CONTEXT_MENU_PROP, G_TYPE_BOOLEAN, "enable-icon-context-menu" },
 };
 
 /* private functions */
@@ -546,6 +549,13 @@ xfce_desktop_class_init(XfceDesktopClass *klass)
                                                          "enable-context-menu",
                                                          TRUE,
                                                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+    g_object_class_install_property(gobject_class, PROP_ENABLE_ICON_CONTEXT_MENU,
+                                    g_param_spec_boolean("enable-icon-context-menu",
+                                                         "enable-icon-context-menu",
+                                                         "enable-icon-context-menu",
+                                                         TRUE,
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 static void
@@ -554,6 +564,7 @@ xfce_desktop_init(XfceDesktop *desktop)
     desktop->single_workspace_mode = TRUE;
     desktop->single_workspace_num = -1;
     desktop->enable_context_menu = TRUE;
+    desktop->enable_icon_context_menu = TRUE;
 }
 
 static void
@@ -695,6 +706,10 @@ xfce_desktop_set_property(GObject *object,
             desktop->enable_context_menu = g_value_get_boolean(value);
             break;
 
+        case PROP_ENABLE_ICON_CONTEXT_MENU:
+            desktop->enable_icon_context_menu = g_value_get_boolean(value);
+            break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);
             break;
@@ -744,6 +759,10 @@ xfce_desktop_get_property(GObject *object,
 
         case PROP_ENABLE_CONTEXT_MENU:
             g_value_set_boolean(value, desktop->enable_context_menu);
+            break;
+
+        case PROP_ENABLE_ICON_CONTEXT_MENU:
+            g_value_set_boolean(value, desktop->enable_icon_context_menu);
             break;
 
         default:
@@ -1160,6 +1179,12 @@ gboolean
 xfce_desktop_get_enable_context_menu(XfceDesktop *desktop) {
     g_return_val_if_fail(XFCE_IS_DESKTOP(desktop), TRUE);
     return desktop->enable_context_menu;
+}
+
+gboolean
+xfce_desktop_get_enable_icon_context_menu(XfceDesktop *desktop) {
+    g_return_val_if_fail(XFCE_IS_DESKTOP(desktop), TRUE);
+    return desktop->enable_icon_context_menu;
 }
 
 void

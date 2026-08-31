@@ -458,15 +458,20 @@ GtkMenu *
 xfdesktop_icon_view_manager_get_context_menu(XfdesktopIconViewManager *manager,
                                              XfceDesktop *desktop,
                                              gint popup_x,
-                                             gint popup_y)
+                                             gint popup_y,
+                                             gboolean *is_icon_specific)
 {
     XfdesktopIconViewManagerClass *klass;
 
     g_return_val_if_fail(XFDESKTOP_IS_ICON_VIEW_MANAGER(manager), NULL);
 
+    if (is_icon_specific != NULL) {
+        *is_icon_specific = FALSE;
+    }
+
     klass = XFDESKTOP_ICON_VIEW_MANAGER_GET_CLASS(manager);
     if (klass->get_context_menu != NULL) {
-        return klass->get_context_menu(manager, desktop, popup_x, popup_y);
+        return klass->get_context_menu(manager, desktop, popup_x, popup_y, is_icon_specific);
     } else {
         return NULL;
     }
